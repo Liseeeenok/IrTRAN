@@ -4,6 +4,6 @@ import CommercialActCreateComponent from '../components/CommercialActCreateCompo
 </script>
 
 <template>
-    <HeaderComponent/>
+    <HeaderComponent title="Коммерческий акт (Новый документ) №"/>
     <CommercialActCreateComponent/>
 </template>

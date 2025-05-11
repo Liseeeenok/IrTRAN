@@ -1,9 +1,9 @@
 <script setup>
-    import HeaderComponent from "../components/HeaderComponent.vue";
-    import AdvancedScenarioMenuComponent from "../components/AdvancedScenarioMenuComponent.vue";
+import HeaderComponent from "../components/HeaderComponent.vue";
+import AdvancedScenarioMenuComponent from "../components/AdvancedScenarioMenuComponent.vue";
 </script>
 
 <template>
-    <HeaderComponent />
+    <HeaderComponent title='Тренажер ЭТРАН - Сценарий обучения "Продвинутый"' />
     <AdvancedScenarioMenuComponent />
 </template>

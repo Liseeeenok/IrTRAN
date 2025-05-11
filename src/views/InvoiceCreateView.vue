@@ -4,6 +4,6 @@ import InvoiceCreateComponent from '../components/InvoiceCreateComponent.vue';
 </script>
 
 <template>
-    <HeaderComponent/>
+    <HeaderComponent title="Накладная (Новый документ)"/>
     <InvoiceCreateComponent/>
 </template>

@@ -4,6 +4,6 @@ import TransportationCreateComponent from '../components/TransportationCreateCom
 </script>
 
 <template>
-    <HeaderComponent/>
+    <HeaderComponent title="Заявка на перевозку (Новый документ)"/>
     <TransportationCreateComponent/>
 </template>

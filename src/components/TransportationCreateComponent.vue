@@ -1,8 +1,5 @@
 <script setup>
 import { ref } from "vue";
-import router from "../router";
-import { authorization } from "../helpers/API.js";
-
 const page = ref("document");
 </script>
 
@@ -22,14 +19,14 @@ const page = ref("document");
     <div class="content-container">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link" v-bind:class="page === 'document' ? 'active' : ''" id="home-tab" data-toggle="tab" data-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Документ</button>
+                <button class="nav-link active" id="home-tab" data-toggle="tab" data-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Документ</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" v-bind:class="page === 'card' ? 'active' : ''" id="profile-tab" data-toggle="tab" data-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Учетная карточка</button>
+                <button class="nav-link" id="profile-tab" data-toggle="tab" data-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Учетная карточка</button>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show" v-bind:class="page === 'document' ? 'active' : ''" style="margin-top: 1em" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+            <div class="tab-pane fade show active" style="margin-top: 1em" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Тип документа</label>
                     <div class="col-auto">

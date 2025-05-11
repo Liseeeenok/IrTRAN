@@ -1,10 +1,4 @@
-<script setup>
-import { ref } from "vue";
-import router from "../router";
-import { authorization } from "../helpers/API.js";
-
-const page = ref("document");
-</script>
+<script setup></script>
 
 <template>
     <div class="search-box">
@@ -501,25 +495,6 @@ const page = ref("document");
 </template>
 
 <style scoped>
-.header {
-    background-color: #7da5f0;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 15px;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-}
-
-.header .title {
-    flex-grow: 1;
-    text-align: center;
-}
-
 .dropdown {
     margin-left: 0 5px;
 }
@@ -552,7 +527,7 @@ body {
 }
 
 .content-container {
-    padding: 70px 15px;
+    padding: 120px 15px;
     top: 100px;
 }
 .span-custom {

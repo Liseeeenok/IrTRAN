@@ -1,10 +1,4 @@
-<script setup>
-import { ref } from "vue";
-import router from "../router";
-import { authorization } from "../helpers/API.js";
-
-const page = ref("document");
-</script>
+<script setup></script>
 
 <template>
     <div class="search-box">

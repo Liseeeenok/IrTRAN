@@ -4,6 +4,6 @@ import CumulativeStatementMenuComponent from '../components/CumulativeStatementM
 </script>
 
 <template>
-    <HeaderComponent/>
+    <HeaderComponent title="Тренажер ЭТРАН - Накопительная ведомость"/>
     <CumulativeStatementMenuComponent/>
 </template>

@@ -4,6 +4,6 @@ import TransportationMenuComponent from '../components/TransportationMenuCompone
 </script>
 
 <template>
-    <HeaderComponent/>
+    <HeaderComponent title="Тренажер ЭТРАН - Заявка на грузоперевозку"/>
     <TransportationMenuComponent/>
 </template>

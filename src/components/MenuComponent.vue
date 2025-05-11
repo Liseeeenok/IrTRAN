@@ -1,8 +1,4 @@
-<script setup>
-    import { ref } from "vue";
-    import router from "../router";
-    import { authorization } from "../helpers/API.js";
-</script>
+<script setup></script>
 
 <template>
     <div class="content-container">
@@ -66,62 +62,57 @@
 </template>
 
 <style scoped>
-    .content-container {
-        padding: 100px 300px;
-    }
-
-    .card-square {
-        width: 200px;
-        /* Ширина квадрата */
-        height: 200px;
-        /* Высота квадрата */
-        background-color: #efefef;
-        /* Цвет фона */
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        /* Центрирование по вертикали */
-        justify-content: center;
-        /* Центрирование по горизонтали */
-        position: relative;
-        transition: background-color 0.3s;
-        /* Плавный переход цвета */
-        cursor: pointer;
-        /* Изменение курсора при наведении */
-        text-align: center;
-        /* Центрирование текста */
-        margin: 5px;
-        /* Центрирование карточки в родительском элементе */
-        padding: 8px;
-        margin-bottom: 20px;
-    }
-
-    .card-square:hover {
-        background-color: #4f85eb;
-        /* Цвет при наведении */
-    }
-
-    .card-square img {
-        max-width: 50%;
-        /* Ограничение размера иконки */
-        max-height: 50%;
-        /* Ограничение размера иконки */
-        margin-bottom: 5px;
-        /* Отступ между иконкой и текстом */
-    }
-
-    .card-text {
-        font-weight: bold;
-        margin: 0;
-        /* Убираем отступы у текста */
-        font-size: 16px;
-        /* Размер шрифта */
-        color: #545556;
-        /* Цвет текста */
-    }
-
-    .card-square:hover .card-text {
-        color: white;
-        /* Цвет текста при наведении */
-    }
+.content-container {
+    padding: 100px 300px;
+}
+.card-square {
+    width: 200px;
+    /* Ширина квадрата */
+    height: 200px;
+    /* Высота квадрата */
+    background-color: #efefef;
+    /* Цвет фона */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Центрирование по вертикали */
+    justify-content: center;
+    /* Центрирование по горизонтали */
+    position: relative;
+    transition: background-color 0.3s;
+    /* Плавный переход цвета */
+    cursor: pointer;
+    /* Изменение курсора при наведении */
+    text-align: center;
+    /* Центрирование текста */
+    margin: 5px;
+    /* Центрирование карточки в родительском элементе */
+    padding: 8px;
+    margin-bottom: 20px;
+}
+.card-square:hover {
+    background-color: #4f85eb;
+    /* Цвет при наведении */
+}
+.card-square img {
+    max-width: 50%;
+    /* Ограничение размера иконки */
+    max-height: 50%;
+    /* Ограничение размера иконки */
+    margin-bottom: 5px;
+    /* Отступ между иконкой и текстом */
+}
+.card-text {
+    font-weight: bold;
+    margin: 0;
+    /* Убираем отступы у текста */
+    font-size: 16px;
+    /* Размер шрифта */
+    color: #545556;
+    /* Цвет текста */
+}
+.card-square:hover .card-text {
+    color: white;
+    /* Цвет текста при наведении */
+}
 </style>

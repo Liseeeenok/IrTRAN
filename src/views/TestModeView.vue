@@ -4,6 +4,6 @@ import TestModeComponent from '../components/TestModeComponent.vue';
 </script>
 
 <template>
-    <HeaderComponent/>
+    <HeaderComponent title="Тренажер ЭТРАН - Режим теста"/>
     <TestModeComponent/>
 </template>

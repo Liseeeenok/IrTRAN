@@ -4,6 +4,6 @@ import FillingStatementCreateComponent from '../components/FillingStatementCreat
 </script>
 
 <template>
-    <HeaderComponent/>
+    <HeaderComponent title="Ведомость подачи и уборки (Новый документ)"/>
     <FillingStatementCreateComponent/>
 </template>

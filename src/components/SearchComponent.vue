@@ -1,18 +1,17 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 </script>
 
 <template>
     <div class="search-box">
         <div class="search-container">
-            <input type="text" class="form-control" placeholder="Поиск">
+            <input type="text" class="form-control" placeholder="Поиск" />
         </div>
     </div>
 </template>
 
 <style scoped>
-.search-box 
-{
+.search-box {
     background-color: white;
     height: 100px;
     width: 100%; /* Ширина на всю страницу */
@@ -23,8 +22,7 @@ import { ref } from 'vue';
     border-bottom: solid gray 1px;
 }
 
-.search-container 
-{
+.search-container {
     margin: 20px 0; /* Отступы сверху и снизу для контейнера поиска */
     padding: 0 300px;
 }

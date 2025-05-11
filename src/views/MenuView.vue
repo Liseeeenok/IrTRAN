@@ -4,6 +4,6 @@ import MenuComponent from '../components/MenuComponent.vue';
 </script>
 
 <template>
-    <HeaderComponent/>
+    <HeaderComponent title="Тренажер ЭТРАН"/>
     <MenuComponent/>
 </template>

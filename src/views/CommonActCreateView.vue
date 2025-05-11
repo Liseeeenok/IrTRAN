@@ -4,6 +4,6 @@ import CommonActCreateComponent from '../components/CommonActCreateComponent.vue
 </script>
 
 <template>
-    <HeaderComponent/>
+    <HeaderComponent title="Акты (Новый документ) №"/>
     <CommonActCreateComponent/>
 </template>

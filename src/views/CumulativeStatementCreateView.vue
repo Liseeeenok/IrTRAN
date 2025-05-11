@@ -4,6 +4,6 @@ import CumulativeStatementCreateComponent from '../components/CumulativeStatemen
 </script>
 
 <template>
-    <HeaderComponent/>
+    <HeaderComponent title="Дополнительные сборы (Новый документ)"/>
     <CumulativeStatementCreateComponent/>
 </template>

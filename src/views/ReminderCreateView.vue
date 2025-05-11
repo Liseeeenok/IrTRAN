@@ -4,6 +4,6 @@ import ReminderCreateComponent from '../components/ReminderCreateComponent.vue';
 </script>
 
 <template>
-    <HeaderComponent/>
+    <HeaderComponent title="Памятка приемасдатчика (Заготовка №----)"/>
     <ReminderCreateComponent/>
 </template>

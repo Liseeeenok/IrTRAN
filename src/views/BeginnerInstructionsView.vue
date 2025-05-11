@@ -1,9 +1,9 @@
 <script setup>
-    import HeaderComponent from "../components/HeaderComponent.vue";
-    import BeginnerInstructionsComponent from "../components/BeginnerInstructionsComponent.vue";
+import HeaderComponent from "../components/HeaderComponent.vue";
+import BeginnerInstructionsComponent from "../components/BeginnerInstructionsComponent.vue";
 </script>
 
 <template>
-    <HeaderComponent />
+    <HeaderComponent title='Тренажер ЭТРАН - Сценарий "Новичок" - Инструкции' />
     <BeginnerInstructionsComponent />
 </template>

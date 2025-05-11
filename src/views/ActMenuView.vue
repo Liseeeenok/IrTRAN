@@ -4,6 +4,6 @@
 </script>
 
 <template>
-    <HeaderComponent />
+    <HeaderComponent title="Тренажер ЭТРАН - Акты"/>
     <ActMenuComponent />
 </template>

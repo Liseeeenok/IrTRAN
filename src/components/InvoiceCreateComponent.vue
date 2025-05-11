@@ -1,9 +1,5 @@
 <script setup>
-    import { ref } from "vue";
-    import router from "../router";
-    import { authorization } from "../helpers/API.js";
-
-    const page = ref("document");
+import { ref } from "vue";
 </script>
 
 <template>
@@ -15,17 +11,11 @@
             </div>
         </div>
     </div>
-    
+
     <div class="content-container">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="home-tab" data-toggle="tab" data-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Документ</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="" data-toggle="tab" data-target="#-tab-pane" type="button" role="tab" aria-controls="-tab-pane" aria-selected="true">Что-то еще</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="" data-toggle="tab" data-target="#-tab-pane" type="button" role="tab" aria-controls="-tab-pane" aria-selected="true">Что-то еще</button>
             </li>
         </ul>
 
@@ -3778,117 +3768,117 @@
 </template>
 
 <style scoped>
-    .dropdown {
-        margin-left: 0 5px;
-    }
+.dropdown {
+    margin-left: 0 5px;
+}
 
-    .btn-custom {
-        width: auto;
-        background-color: #7da5f0;
-        color: white;
-        margin: 3px;
-    }
+.btn-custom {
+    width: auto;
+    background-color: #7da5f0;
+    color: white;
+    margin: 3px;
+}
 
-    .btn-custom:hover {
-        background-color: #3e6cb4;
-        color: white;
-    }
+.btn-custom:hover {
+    background-color: #3e6cb4;
+    color: white;
+}
 
-    body {
-        font-family: "Open Sans", sans-serif;
-        font-size: 14px;
-        padding-top: 50px;
-    }
+body {
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    padding-top: 50px;
+}
 
-    .search-box {
-        padding-top: 10px;
-        padding-bottom: 10px;
-        background-color: white;
-        height: 70px;
-        width: 100%;
-        position: fixed;
-        top: 50px;
-        left: 15px;
-        z-index: 1000;
-    }
+.search-box {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: white;
+    height: 70px;
+    width: 100%;
+    position: fixed;
+    top: 50px;
+    left: 15px;
+    z-index: 1000;
+}
 
-    .content-container {
-        padding: 120px 15px;
-        top: 100px;
-        font-size: 14px;
-    }
+.content-container {
+    padding: 120px 15px;
+    top: 100px;
+    font-size: 14px;
+}
 
-    .span-custom {
-        background-color: #ffffde;
-        border: solid #a8a8a8 1px;
-        color: black;
-        height: 30px;
-        padding: 3px 50px;
-    }
+.span-custom {
+    background-color: #ffffde;
+    border: solid #a8a8a8 1px;
+    color: black;
+    height: 30px;
+    padding: 3px 50px;
+}
 
-    .disabled-input {
-        background-color: #ffffde;
-        opacity: 1;
-        height: 30px;
-        width: 270px;
-        font-family: "Open Sans", sans-serif;
-        font-size: 14px;
-        border: 1px solid #c1c1c1;
-    }
+.disabled-input {
+    background-color: #ffffde;
+    opacity: 1;
+    height: 30px;
+    width: 270px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    border: 1px solid #c1c1c1;
+}
 
-    .custom-input {
-        background-color: #e3e2ff;
-        height: 30px;
-        font-family: "Open Sans", sans-serif;
-        font-size: 14px;
-        width: 270px;
-        border: 1px solid #c1c1c1;
-    }
+.custom-input {
+    background-color: #e3e2ff;
+    height: 30px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+    width: 270px;
+    border: 1px solid #c1c1c1;
+}
 
-    .input-group .form-control {
-        background-color: #e3e2ff;
-        border: 1px solid #c1c1c1;
-        height: 30px;
-        font-family: "Open Sans", sans-serif;
-        font-size: 14px;
-    }
+.input-group .form-control {
+    background-color: #e3e2ff;
+    border: 1px solid #c1c1c1;
+    height: 30px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+}
 
-    .input-group .btn {
-        background-color: #e3e2ff;
-        /* Цвет кнопки */
-        border: 1px solid #c1c1c1;
-        /* Цвет границы кнопки */
-        height: 30px;
-        font-family: "Open Sans", sans-serif;
-        font-size: 14px;
-    }
+.input-group .btn {
+    background-color: #e3e2ff;
+    /* Цвет кнопки */
+    border: 1px solid #c1c1c1;
+    /* Цвет границы кнопки */
+    height: 30px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 14px;
+}
 
-    .input-group .btn:hover {
-        background-color: #d1d0ff;
-        /* Цвет кнопки при наведении */
-    }
+.input-group .btn:hover {
+    background-color: #d1d0ff;
+    /* Цвет кнопки при наведении */
+}
 
-    .label-custom {
-        width: 180px;
-    }
+.label-custom {
+    width: 180px;
+}
 
-    .form-check-input-checked-bg-color {
-        background-color: #7da5f0;
-    }
+.form-check-input-checked-bg-color {
+    background-color: #7da5f0;
+}
 
-    .btn-box {
-        width: 90%;
-        position: fixed;
-        /* Закрепление шапки в верхней части страницы */
-    }
+.btn-box {
+    width: 90%;
+    position: fixed;
+    /* Закрепление шапки в верхней части страницы */
+}
 
-    .modal-title {
-        text-align: center !important;
-    }
+.modal-title {
+    text-align: center !important;
+}
 
-    .selected {
-        background-color: #2165b6;
-        /* Цвет выделения строки */
-        color: white;
-    }
+.selected {
+    background-color: #2165b6;
+    /* Цвет выделения строки */
+    color: white;
+}
 </style>

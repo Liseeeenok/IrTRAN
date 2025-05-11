@@ -1,9 +1,9 @@
 <script setup>
-    import HeaderComponent from "../components/HeaderComponent.vue";
-    import CommercialActMenuComponent from "../components/CommercialActMenuComponent.vue";
+import HeaderComponent from "../components/HeaderComponent.vue";
+import CommercialActMenuComponent from "../components/CommercialActMenuComponent.vue";
 </script>
 
 <template>
-    <HeaderComponent />
+    <HeaderComponent title="Тренажер ЭТРАН - Коммерческий акт" />
     <CommercialActMenuComponent />
 </template>

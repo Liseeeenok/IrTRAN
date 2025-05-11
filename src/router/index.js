@@ -75,17 +75,17 @@ const router = createRouter({
                     ],
                 },
                 {
-                    path: "commercial", //Страница общих актов
+                    path: "commercial", //Страница коммерческих актов
                     redirect: "/act/commercial/menu",
                     name: "act-commercial",
                     children: [
                         {
-                            path: "menu", //Страница меню общих актов
+                            path: "menu", //Страница меню коммерческих актов
                             name: "act-commercial-menu",
                             component: () => import("../views/CommercialActMenuView.vue"),
                         },
                         {
-                            path: "create", //Страница создания общего акта
+                            path: "create", //Страница создания коммерческих акта
                             name: "act-commercial-create",
                             component: () => import("../views/CommercialActCreateView.vue"),
                         },
@@ -128,17 +128,17 @@ const router = createRouter({
             ],
         },
         {
-            path: "/cumulative-statement", //Страница ведомости подачи и уборки
+            path: "/cumulative-statement", //Страница накопительной ведомости
             name: "cumulative-statement",
             redirect: "/cumulative-statement/menu",
             children: [
                 {
-                    path: "menu", //Страница меню ведомости подачи и уборки
+                    path: "menu", //Страница меню накопительной ведомости
                     name: "cumulative-statement-menu",
                     component: () => import("../views/CumulativeStatementMenuView.vue"),
                 },
                 {
-                    path: "create", //Страница создания ведомости подачи и уборки
+                    path: "create", //Страница создания накопительной ведомости
                     name: "cumulative-statement-create",
                     component: () => import("../views/CumulativeStatementCreateView.vue"),
                 },
@@ -205,7 +205,7 @@ const PAGE_TITLE = {
 };
 
 router.afterEach((toRoute, fromRoute) => {
-    window.document.title = PAGE_TITLE[toRoute.name];
+    window.document.title = PAGE_TITLE[toRoute.name] ?? 'Тренажер ЭТРАН';
     console.log(toRoute); // this lets you check what else is available to you here
 });
 

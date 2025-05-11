@@ -1,44 +1,40 @@
 <script setup>
-import router from '../router';
-
-function logOut() 
-{
-    router.push('/');
-}
+const props = defineProps(["title"]);
 </script>
 
 <template>
     <div class="header">
         <router-link to="/menu">
-            <img src="@/assets/icons8-меню-50.png" alt="В меню" style="height: 20px; width: 20px;">
+            <img src="@/assets/icons8-меню-50.png" alt="В меню" style="height: 20px; width: 20px" />
         </router-link>
         <router-link to="/menu" class="logo">
-            <img src="@/assets/syspanellogo_2.png" alt="Логотип" height="30px">
+            <img src="@/assets/syspanellogo_2.png" alt="Логотип" height="30px" />
         </router-link>
         <div class="title">
-            <h5 class="mb-0" style="color: white;"><b>Тренажер ЭТРАН</b></h5>
+            <h5 class="mb-0" style="color: white">
+                <b>{{ title ?? "Тренажер ЭТРАН" }}</b>
+            </h5>
         </div>
         <div class="dropdown">
-            <span style="color: white;"><b>Обучающийся</b></span><br>
-            <span style="color: white;">ИрГУПС</span>
+            <span style="color: white"><b>Обучающийся</b></span
+            ><br />
+            <span style="color: white">ИрГУПС</span>
         </div>
         <router-link to="/" class="logo">
-            <img src="@/assets/icons8-выход-50.png" alt="Выйти" style="height: 30px; width: 30px;">
+            <img src="@/assets/icons8-выход-50.png" alt="Выйти" style="height: 30px; width: 30px" />
         </router-link>
     </div>
 </template>
 
 <style scoped>
-a
-{
+a {
     cursor: pointer;
 }
-.logo
-{
+.logo {
     cursor: pointer;
 }
 .header {
-    background-color: #7DA5F0;
+    background-color: #7da5f0;
     height: 50px;
     display: flex;
     align-items: center;
@@ -62,7 +58,7 @@ a
 .dropdown-toggle::after {
     margin-left: 0.255em;
     vertical-align: 0.255em;
-    content: '';
+    content: "";
     border: solid transparent;
     border-width: 0.2em 0.2em 0 0.2em;
     border-top-color: #000;
