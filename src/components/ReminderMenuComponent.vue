@@ -1,4 +1,5 @@
 <script setup>
+import ModalSearchDocumentLarge from "./ModalSearchDocumentLarge.vue";
 import ModalSearchDocumentMini from "./ModalSearchDocumentMini.vue";
 </script>
 
@@ -8,7 +9,35 @@ import ModalSearchDocumentMini from "./ModalSearchDocumentMini.vue";
             <button type="button" class="btn btn-custom">Создать документ</button>
         </router-link>
         <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Найти документ</button>
-        <ModalSearchDocumentMini />
+        <ModalSearchDocumentLarge />
+    </div>
+    <div class="container">
+        <div class="table-responsive" style="border: gray solid 1px">
+            <table class="table table-hover table-bordered border-white">
+                <thead style="background-color: #7DA5F0; color: white;">
+                    <tr>
+                        <th>ID документа</th>
+                        <th>Состояние документа</th>
+                        <th>Дата создания документа</th>
+                        <th>Тип памятки</th>
+                        <th>Наим. станции</th>
+                        <th>Наим. владельца п/п(клиента)</th>
+			            <th>Подача производилась локомотивом</th>
+                      </tr>
+                 </thead>
+                <tbody class="table-group-divider">
+                    <tr>
+                        <td></td> 
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
     </div>
 </template>
 
