@@ -78,7 +78,7 @@ const page = ref("document");
                         <div class="input-group" style="width: 270px">
                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#OrganizaciaPerevozchika">
-                                <i class="fas fa-search"></i>
+                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                             </button>
                         </div>
                     </div>
@@ -107,7 +107,7 @@ const page = ref("document");
                         <div class="input-group" style="width: 270px">
                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#PlatelshikPoSboru">
-                                <i class="fas fa-search"></i>
+                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                             </button>
                         </div>
                     </div>
@@ -149,10 +149,10 @@ const page = ref("document");
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -204,10 +204,10 @@ const page = ref("document");
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -365,7 +365,7 @@ const page = ref("document");
                                         <div class="input-group" style="width: 270px">
                                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#NomerDocumenta">
-                                                <i class="fas fa-search"></i>
+                                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                             </button>
                                         </div>
                                     </div>
@@ -392,7 +392,7 @@ const page = ref("document");
                                         <div class="input-group" style="min-width: 100%">
                                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#StatiaSbora">
-                                                <i class="fas fa-search"></i>
+                                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                             </button>
                                         </div>
                                     </div>
@@ -421,7 +421,7 @@ const page = ref("document");
                                         <div class="input-group" style="width: 270px">
                                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#DopKod">
-                                                <i class="fas fa-search"></i>
+                                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                             </button>
                                         </div>
                                     </div>
@@ -561,10 +561,10 @@ const page = ref("document");
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -614,10 +614,10 @@ const page = ref("document");
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -667,10 +667,10 @@ const page = ref("document");
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>

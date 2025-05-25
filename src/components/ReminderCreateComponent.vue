@@ -48,7 +48,7 @@
                         <div class="input-group" style="width: 270px">
                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#Staition">
-                                <i class="fas fa-search"></i>
+                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                             </button>
                         </div>
                     </div>
@@ -69,7 +69,7 @@
                         <div class="input-group" style="width: 270px">
                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#NaimenovanieVladelca">
-                                <i class="fas fa-search"></i>
+                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                             </button>
                         </div>
                     </div>
@@ -234,7 +234,7 @@
                                         <div class="input-group" style="width: 270px">
                                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#NaimenovanieGruza">
-                                                <i class="fas fa-search"></i>
+                                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                             </button>
                                         </div>
                                     </div>
@@ -448,10 +448,10 @@
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -501,10 +501,10 @@
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -558,10 +558,10 @@
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>

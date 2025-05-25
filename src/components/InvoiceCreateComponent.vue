@@ -48,7 +48,7 @@ import { ref } from "vue";
                         <div class="input-group" style="width: 870px">
                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#TipBlanka">
-                                <i class="fas fa-search"></i>
+                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                             </button>
                         </div>
                     </div>
@@ -73,10 +73,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -117,7 +117,7 @@ import { ref } from "vue";
                         <div class="input-group" style="width: 270px">
                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#VidOtpravky">
-                                <i class="fas fa-search"></i>
+                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                             </button>
                         </div>
                     </div>
@@ -138,10 +138,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -186,7 +186,7 @@ import { ref } from "vue";
                         <div class="input-group" style="width: 670px">
                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#GruzootInvoice">
-                                <i class="fas fa-search"></i>
+                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                             </button>
                         </div>
                     </div>
@@ -215,10 +215,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -289,7 +289,7 @@ import { ref } from "vue";
                         <div class="input-group" style="width: 270px">
                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#Zaivka">
-                                <i class="fas fa-search"></i>
+                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                             </button>
                         </div>
                     </div>
@@ -310,10 +310,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -356,7 +356,7 @@ import { ref } from "vue";
                         <div class="input-group" style="width: 670px">
                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#GruzopolInvoice">
-                                <i class="fas fa-search"></i>
+                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                             </button>
                         </div>
                     </div>
@@ -385,10 +385,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -459,7 +459,7 @@ import { ref } from "vue";
                         <div class="input-group" style="width: 1000px">
                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#VidGruzRabot">
-                                <i class="fas fa-search"></i>
+                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                             </button>
                         </div>
                     </div>
@@ -480,10 +480,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -522,7 +522,7 @@ import { ref } from "vue";
                         <div class="input-group" style="width: 270px">
                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#StranaOtprInvoce">
-                                <i class="fas fa-search"></i>
+                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                             </button>
                         </div>
                     </div>
@@ -547,10 +547,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -591,7 +591,7 @@ import { ref } from "vue";
                         <div class="input-group" style="width: 270px">
                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#StranaNaznachInvoce">
-                                <i class="fas fa-search"></i>
+                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                             </button>
                         </div>
                     </div>
@@ -616,10 +616,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -660,7 +660,7 @@ import { ref } from "vue";
                         <div class="input-group" style="width: 270px">
                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#StanciaOtprVhodaInvoice">
-                                <i class="fas fa-search"></i>
+                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                             </button>
                         </div>
                     </div>
@@ -701,10 +701,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -752,7 +752,7 @@ import { ref } from "vue";
                         <div class="input-group" style="width: 270px">
                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#StanciaNaznachVihodaInvoice">
-                                <i class="fas fa-search"></i>
+                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                             </button>
                         </div>
                     </div>
@@ -793,10 +793,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -855,7 +855,7 @@ import { ref } from "vue";
                         <div class="input-group" style="width: 270px">
                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#MestoOplat">
-                                <i class="fas fa-search"></i>
+                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                             </button>
                         </div>
                     </div>
@@ -876,10 +876,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -920,7 +920,7 @@ import { ref } from "vue";
                         <div class="input-group" style="width: 270px">
                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#FormaOplat">
-                                <i class="fas fa-search"></i>
+                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                             </button>
                         </div>
                     </div>
@@ -941,10 +941,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -992,7 +992,7 @@ import { ref } from "vue";
                         <div class="input-group" style="width: 470px">
                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#PlanRodVagona">
-                                <i class="fas fa-search"></i>
+                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                             </button>
                         </div>
                     </div>
@@ -1013,10 +1013,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -1076,7 +1076,7 @@ import { ref } from "vue";
                         <div class="input-group" style="width: 270px">
                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#GruzopodCont">
-                                <i class="fas fa-search"></i>
+                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                             </button>
                         </div>
                     </div>
@@ -1102,10 +1102,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -1280,7 +1280,7 @@ import { ref } from "vue";
                                         <div class="input-group" style="width: 460px">
                                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#GruzGNG">
-                                                <i class="fas fa-search"></i>
+                                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                             </button>
                                         </div>
                                     </div>
@@ -1313,7 +1313,7 @@ import { ref } from "vue";
                                         <div class="input-group" style="width: 670px">
                                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#GruzETSNG">
-                                                <i class="fas fa-search"></i>
+                                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                             </button>
                                         </div>
                                     </div>
@@ -1444,10 +1444,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -1499,10 +1499,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -1568,7 +1568,7 @@ import { ref } from "vue";
                                         <div class="input-group" style="width: 670px">
                                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#NaityOtmetkyNaGruz">
-                                                <i class="fas fa-search"></i>
+                                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                             </button>
                                         </div>
                                     </div>
@@ -1593,10 +1593,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -1802,7 +1802,7 @@ import { ref } from "vue";
                                         <div class="input-group" style="width: 670px">
                                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#NaitySpecOtmetky">
-                                                <i class="fas fa-search"></i>
+                                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                             </button>
                                         </div>
                                     </div>
@@ -1827,10 +1827,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -1961,7 +1961,7 @@ import { ref } from "vue";
                                         <div class="input-group" style="width: 570px">
                                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#NaityPrilagDoc">
-                                                <i class="fas fa-search"></i>
+                                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                             </button>
                                         </div>
                                     </div>
@@ -1993,10 +1993,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -2140,7 +2140,7 @@ import { ref } from "vue";
                                         <div class="input-group" style="width: 270px">
                                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#GruzopodTonn">
-                                                <i class="fas fa-search"></i>
+                                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                             </button>
                                         </div>
                                     </div>
@@ -2192,7 +2192,7 @@ import { ref } from "vue";
                                         <div class="input-group" style="width: 470px">
                                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#AdminSobst">
-                                                <i class="fas fa-search"></i>
+                                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                             </button>
                                         </div>
                                     </div>
@@ -2221,7 +2221,7 @@ import { ref } from "vue";
                                         <div class="input-group" style="width: 270px">
                                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#Sobstvennik">
-                                                <i class="fas fa-search"></i>
+                                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                             </button>
                                         </div>
                                     </div>
@@ -2317,10 +2317,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -2372,10 +2372,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -2427,10 +2427,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -2494,7 +2494,7 @@ import { ref } from "vue";
                                         <div class="input-group" style="width: 370px">
                                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#NaityTipZPU">
-                                                <i class="fas fa-search"></i>
+                                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                             </button>
                                         </div>
                                     </div>
@@ -2537,7 +2537,7 @@ import { ref } from "vue";
                                         <div class="input-group" style="width: 655px">
                                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#NaityDorogu">
-                                                <i class="fas fa-search"></i>
+                                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                             </button>
                                         </div>
                                     </div>
@@ -2562,10 +2562,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -2615,10 +2615,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -2779,7 +2779,7 @@ import { ref } from "vue";
                                         <div class="input-group" style="width: 270px">
                                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#NaityRodVagona">
-                                                <i class="fas fa-search"></i>
+                                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                             </button>
                                         </div>
                                     </div>
@@ -2826,7 +2826,7 @@ import { ref } from "vue";
                                         <div class="input-group" style="width: 270px">
                                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#NaityAdminSobst">
-                                                <i class="fas fa-search"></i>
+                                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                             </button>
                                         </div>
                                     </div>
@@ -2855,7 +2855,7 @@ import { ref } from "vue";
                                         <div class="input-group" style="width: 470px">
                                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#NaitySobst">
-                                                <i class="fas fa-search"></i>
+                                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                             </button>
                                         </div>
                                     </div>
@@ -2963,7 +2963,7 @@ import { ref } from "vue";
                                         <div class="input-group" style="width: 370px">
                                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#NaityRaneePerevozGruzGNG">
-                                                <i class="fas fa-search"></i>
+                                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                             </button>
                                         </div>
                                     </div>
@@ -2980,7 +2980,7 @@ import { ref } from "vue";
                                         <div class="input-group" style="width: 370px">
                                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#NaityRaneePerevozGruzETSNG">
-                                                <i class="fas fa-search"></i>
+                                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                             </button>
                                         </div>
                                     </div>
@@ -3065,10 +3065,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -3118,10 +3118,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -3173,10 +3173,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -3228,10 +3228,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -3283,10 +3283,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -3403,7 +3403,7 @@ import { ref } from "vue";
                                         <div class="input-group" style="width: 670px">
                                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#NaityVagonOtmetku">
-                                                <i class="fas fa-search"></i>
+                                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                             </button>
                                         </div>
                                     </div>
@@ -3430,10 +3430,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -3483,10 +3483,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -3532,7 +3532,7 @@ import { ref } from "vue";
                         <div class="input-group" style="width: 270px">
                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#SposobOpredMass">
-                                <i class="fas fa-search"></i>
+                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                             </button>
                         </div>
                     </div>
@@ -3553,10 +3553,10 @@ import { ref } from "vue";
                                             <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                             <div class="input-group-append">
                                                 <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                    <i class="fas fa-times"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
                                                 </button>
                                                 <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                 </button>
                                             </div>
                                         </div>
@@ -3628,7 +3628,7 @@ import { ref } from "vue";
                             <div class="input-group" style="width: 270px">
                                 <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                                 <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#GruzZariRazmeh">
-                                    <i class="fas fa-search"></i>
+                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                 </button>
                             </div>
                         </div>
@@ -3649,10 +3649,10 @@ import { ref } from "vue";
                                                 <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                                 <div class="input-group-append">
                                                     <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                        <i class="fas fa-times"></i>
+                                                        <font-awesome-icon icon="fa-solid fa-xmark" />
                                                     </button>
                                                     <button class="btn btn-outline-secondary" type="button">
-                                                        <i class="fas fa-search"></i>
+                                                        <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                     </button>
                                                 </div>
                                             </div>
@@ -3722,10 +3722,10 @@ import { ref } from "vue";
                                                 <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
                                                 <div class="input-group-append">
                                                     <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                        <i class="fas fa-times"></i>
+                                                        <font-awesome-icon icon="fa-solid fa-xmark" />
                                                     </button>
                                                     <button class="btn btn-outline-secondary" type="button">
-                                                        <i class="fas fa-search"></i>
+                                                        <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                                     </button>
                                                 </div>
                                             </div>
