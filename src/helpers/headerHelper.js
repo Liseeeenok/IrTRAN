@@ -5,3 +5,8 @@ export function updateTitle(title)
 {
     mainStore.title = title;
 }
+
+export function updateSubtitle(subtitle) 
+{
+    mainStore.subtitle = subtitle;
+}

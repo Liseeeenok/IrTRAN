@@ -1,5 +1,6 @@
 <script setup>
-const props = defineProps(["title"]);
+import { useMainStore } from '../stores/main';
+const mainStore = useMainStore();
 </script>
 
 <template>
@@ -12,8 +13,9 @@ const props = defineProps(["title"]);
         </router-link>
         <div class="title">
             <h5 class="mb-0" style="color: white">
-                <b>{{ title ?? "Тренажер ЭТРАН" }}</b>
+                <b>{{ mainStore.title ?? "Тренажер ЭТРАН" }}</b>
             </h5>
+            <span style="background-color: red; color: white;">{{ mainStore.subtitle }}</span>
         </div>
         <div class="dropdown">
             <span style="color: white"><b>Обучающийся</b></span

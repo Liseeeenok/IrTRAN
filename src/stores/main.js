@@ -1,11 +1,11 @@
-import { ref, computed } from 'vue'
-import { defineStore } from 'pinia'
+import { defineStore } from "pinia";
 
-export const useMainStore = defineStore('main', {
+export const useMainStore = defineStore("main", {
     state: () => {
-        return { 
-            title: 'test',
-         }
+        return {
+            title: "",
+            subtitle: "",
+        };
     },
     actions: {},
 });

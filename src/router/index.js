@@ -194,8 +194,8 @@ const router = createRouter({
 });
 
 const PAGE_TITLE = {
-    "authotrization": "Авторизация",
-    "menu": "Тренажер ЭТРАН главное меню",
+    authotrization: "Авторизация",
+    menu: "Тренажер ЭТРАН главное меню",
     "transporation-menu": "Заявка на грузоперевозку",
     "transporation-create": "Заявка на грузоперевозку",
     "invoice-menu": "Накладная",
@@ -205,7 +205,7 @@ const PAGE_TITLE = {
 };
 
 router.afterEach((toRoute, fromRoute) => {
-    window.document.title = PAGE_TITLE[toRoute.name] ?? 'Тренажер ЭТРАН';
+    window.document.title = PAGE_TITLE[toRoute.name] ?? "Тренажер ЭТРАН";
     console.log(toRoute); // this lets you check what else is available to you here
 });
 

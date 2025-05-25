@@ -1,10 +1,12 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { saveTransporation, deleteTransporation, getDocumentTypes, getMessageTypes, getSignsSending, getCountries, getLegalEntities, getOwnerships, getOwnersNonPublicRailway, getApprovalsWithOwner, getCargoGroups, getMethodsSubmission, getTransportation } from "@/helpers/API";
-import { updateTitle } from "@/helpers/headerHelper";
+import { updateTitle, updateSubtitle } from "@/helpers/headerHelper";
 import router from "@/router";
 import { useRoute } from "vue-router";
+import { getDiffDays } from "@/helpers/dateHelper";
 const route = useRoute();
+const date = (new Date()).toISOString().split('T')[0];
 const document_types = ref({});
 const message_types = ref({});
 const signs_sending = ref({});
@@ -15,16 +17,65 @@ const owners_non_public_railway = ref({});
 const approvals_with_owner = ref({});
 const cargo_groups = ref({});
 const methods_submission = ref({});
-const document = ref({
-    id_document_type: 1,
-});
-function saveDocument() {
-    const saveDoc = saveTransporation(document.value);
-    //Либо тут роут на сохраненный документ
-    updateTitle("Заявка на перевозку №" + saveDoc.number);
+const document = ref(getDefaultDocument());
+const requiredFields = {
+    id_document_type: "Нет типа документа",
+    registration_date: "Нет даты регистрации документа",
+    transportation_date_from: "Нет дат периода перевозок",
+    transportation_date_to: "Нет дат периода перевозок",
+    id_message_type: "Не выбран вид сообщения",
+    id_sign_sending: "Не указан признак отправки",
+    id_country_departure: "Не указана страна отправления",
+};
+function checkRequiredFields() {
+    //скип проверки если документ подписан
+
+    updateSubtitle('');
+
+    for (let field in requiredFields) {
+        if (!document.value[field]) {
+            updateSubtitle(requiredFields[field]);
+            return;
+        }
+    }
+
+    checkCorrectDate();
+}
+function checkCorrectDate() {
+    if (document.value.registration_date < date)
+    {
+        updateSubtitle('Дата регистрации должна быть не раньше текущей даты');
+        return;
+    }
+    if (document.value.transportation_date_from > document.value.transportation_date_to)
+    {
+        updateSubtitle('Начало перевозки должно быть раньше конца перевозки');
+        return;
+    }
+    if (document.value.transportation_date_from < date || document.value.transportation_date_to < date)
+    {
+        updateSubtitle('Период перевозок должен быть не раньше текущей даты');
+        return;
+    }
+    if (getDiffDays(document.value.transportation_date_from, document.value.transportation_date_to) > 45)
+    {
+        updateSubtitle('Перевозка превышает 45 дней');
+        return;
+    }
+}
+function getDefaultDocument() {
+    return {
+        id_document_type: 1,
+        registration_date: date,
+    };
+}
+async function saveDocument() {
+    let saveDoc = await saveTransporation(document.value);
+    document.value = saveDoc;
+    router.push("/transporation/create/" + saveDoc.id);
 }
 function copyDocument() {
-    //unset id для создания нового документа
+    document.id = null;
     saveDocument();
 }
 function signDocument() {
@@ -35,7 +86,7 @@ function deleteDocument() {
     deleteTransporation(document.value);
     router.push("/menu");
 }
-const fetchData = async () => {
+async function fetchData() {
     document_types.value = await getDocumentTypes();
     message_types.value = await getMessageTypes();
     signs_sending.value = await getSignsSending();
@@ -52,7 +103,8 @@ const fetchData = async () => {
     } else {
         updateTitle("Заявка на перевозку (Новый документ)");
     }
-};
+    checkRequiredFields();
+}
 onMounted(() => {
     fetchData();
 });
@@ -63,9 +115,9 @@ onMounted(() => {
         <div class="row">
             <div class="col-auto">
                 <button type="button" class="btn btn-custom" v-on:click="saveDocument">Сохранить</button>
-                <button type="button" class="btn btn-custom" v-on:click="copyDocument">Копировать</button>
-                <button type="button" class="btn btn-custom" v-on:click="signDocument">Отправить на согласование</button>
-                <button type="button" class="btn btn-custom" v-on:click="deleteDocument">Испортить</button>
+                <button type="button" class="btn btn-custom" v-on:click="copyDocument" v-if="document.id">Копировать</button>
+                <button type="button" class="btn btn-custom" v-on:click="signDocument" v-if="document.id">Отправить на согласование</button>
+                <button type="button" class="btn btn-custom" v-on:click="deleteDocument" v-if="document.id">Испортить</button>
             </div>
         </div>
     </div>
@@ -84,33 +136,33 @@ onMounted(() => {
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom" required>Тип документа</label>
                     <div class="col-auto" v-if="document_types[document.id_document_type]">
-                        <input type="text" class="form-control mt-0 disabled-input" v-model="document_types[document.id_document_type].name" disabled="disabled" required />
+                        <input type="text" class="form-control mt-0 disabled-input" v-model="document_types[document.id_document_type].name" disabled="disabled" required v-on:change="checkRequiredFields" />
                     </div>
                 </div>
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom" required>Дата регистрации</label>
                     <div class="col-auto">
-                        <input type="date" class="form-control mt-0 custom-input" v-model="document.registration_date" style="width: 150px" required />
+                        <input type="date" class="form-control mt-0 custom-input" v-model="document.registration_date" style="width: 150px" required v-on:change="checkRequiredFields" />
                     </div>
                 </div>
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom" required>Период перевозок с</label>
                     <div class="col-auto">
-                        <input type="date" class="form-control mt-0 custom-input" v-model="document.transportation_date_from" style="width: 150px" required />
+                        <input type="date" class="form-control mt-0 custom-input" v-model="document.transportation_date_from" style="width: 150px" required v-on:change="checkRequiredFields" />
                     </div>
 
                     <label class="col-auto col-form-label mb-0" required>по</label>
                     <div class="col-auto">
-                        <input type="date" class="form-control mt-0 custom-input" v-model="document.transportation_date_to" style="width: 150px" required />
+                        <input type="date" class="form-control mt-0 custom-input" v-model="document.transportation_date_to" style="width: 150px" required v-on:change="checkRequiredFields" />
                     </div>
                 </div>
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom" required>Вид сообщения</label>
                     <div class="col-3">
-                        <select class="form-select mt-0 custom-input" v-model="document.id_message_type">
+                        <select class="form-select mt-0 custom-input" v-model="document.id_message_type" v-on:change="checkRequiredFields">
                             <option value="">Выберете элемент списка</option>
                             <option v-for="message_type in message_types" :value="message_type.id">{{ message_type.name }}</option>
                         </select>
@@ -120,7 +172,7 @@ onMounted(() => {
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom" required>Признак отправки</label>
                     <div class="col-3">
-                        <select class="form-select mt-0 custom-input" v-model="document.id_sign_sending">
+                        <select class="form-select mt-0 custom-input" v-model="document.id_sign_sending" v-on:change="checkRequiredFields">
                             <option value="">Выберете элемент списка</option>
                             <option v-for="sign_sending in signs_sending" :value="sign_sending.id">{{ sign_sending.name }}</option>
                         </select>
@@ -139,7 +191,7 @@ onMounted(() => {
                     </div>
                 </div>
 
-                <!--Найти Страну отправления модальное окно -->
+                <!--Найти Страну отправления модальное окно-->
                 <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg">
                         <div class="modal-content">
@@ -173,10 +225,10 @@ onMounted(() => {
                                             </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                            <tr v-for="country in countries">
+                                                <td>{{ country.OSCM_code }}</td>
+                                                <td>{{ country.name }}</td>
+                                                <td>{{ country.short_name }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -190,7 +242,7 @@ onMounted(() => {
                         </div>
                     </div>
                 </div>
-                <!----------------------------- -->
+                <!------------------------------->
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom" required>Страна отправления/входа в СНГ</label>
@@ -205,21 +257,21 @@ onMounted(() => {
 
                     <label class="col-1 col-form-label mb-0 label-custom" style="width: auto">Код дороги</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled="disabled" />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled="disabled" v-if="countries[document.id_country_departure_point]" />
                     </div>
 
                     <label class="col-1 col-form-label mb-0 label-custom" style="width: auto">Код станции</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled="disabled" />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled="disabled" v-if="countries[document.id_country_departure_point]" />
                     </div>
 
                     <label class="col-1 col-form-label mb-0 label-custom" style="width: auto">Параграфы</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" style="width: auto" placeholder="" disabled="disabled" />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: auto" placeholder="" disabled="disabled" v-if="countries[document.id_country_departure_point]" />
                     </div>
                 </div>
 
-                <!--Найти Страна отправления/входа в СНГ модальное окно -->
+                <!--Найти Страна отправления/входа в СНГ модальное окно-->
                 <div class="modal fade" id="staticVhodSNG" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg">
                         <div class="modal-content">
@@ -253,10 +305,10 @@ onMounted(() => {
                                             </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                            <tr v-for="country in countries">
+                                                <td>{{ country.OSCM_code }}</td>
+                                                <td>{{ country.name }}</td>
+                                                <td>{{ country.short_name }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -270,7 +322,7 @@ onMounted(() => {
                         </div>
                     </div>
                 </div>
-                <!----------------------------- -->
+                <!------------------------------->
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom" required>Грузоотправитель</label>
@@ -285,21 +337,21 @@ onMounted(() => {
 
                     <label class="col-1 col-form-label mb-0 label-custom" style="width: auto">ОКПО</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled="disabled" />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled="disabled" v-if="legal_entities[document.id_shipper]" v-model="legal_entities[document.id_shipper].OKPO" />
                     </div>
 
                     <label class="col-1 col-form-label mb-0 label-custom" style="width: auto">Код ТГНЛ</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled="disabled" />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled="disabled" v-if="legal_entities[document.id_shipper]" v-model="legal_entities[document.id_shipper].TGNL_code" />
                     </div>
 
                     <label class="col-1 col-form-label mb-0 label-custom" style="width: auto">ИНН</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" style="width: auto" placeholder="" disabled="disabled" />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: auto" placeholder="" disabled="disabled" v-if="legal_entities[document.id_shipper]" v-model="legal_entities[document.id_shipper].INN" />
                     </div>
                 </div>
 
-                <!--Найти Грузоотправитель модальное окно -->
+                <!--Найти Грузоотправитель модальное окно-->
                 <div class="modal fade" id="staticGruzootpravitel" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg">
                         <div class="modal-content">
@@ -335,12 +387,12 @@ onMounted(() => {
                                             </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                            <tr v-for="legal_entity in legal_entities">
+                                                <td>{{ legal_entity.OKPO }}</td>
+                                                <td>{{ legal_entity.name }}</td>
+                                                <td>Нет полей</td>
+                                                <td>Нет полей</td>
+                                                <td>Нет полей</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -354,7 +406,7 @@ onMounted(() => {
                         </div>
                     </div>
                 </div>
-                <!----------------------------- -->
+                <!------------------------------->
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0" for="customCheck1" style="width: auto">Среди организаций при станции отправления</label>
@@ -2429,9 +2481,5 @@ body {
 .selected {
     background-color: #2165b6; /* Цвет выделения строки */
     color: white;
-}
-label[required]::after {
-    content: "*";
-    color: red;
 }
 </style>
