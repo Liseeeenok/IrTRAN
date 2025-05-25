@@ -24,7 +24,7 @@ const router = createRouter({
                     component: () => import("../views/TransportationMenuView.vue"),
                 },
                 {
-                    path: "create", //Страница создания заявки на грузоперевозку
+                    path: "create/:id?", //Страница создания заявки на грузоперевозку
                     name: "transporation-create",
                     component: () => import("../views/TransportationCreateView.vue"),
                 },

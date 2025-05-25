@@ -1,17 +1,71 @@
 <script setup>
-import { ref } from "vue";
-const page = ref("document");
+import { onMounted, ref } from "vue";
+import { saveTransporation, deleteTransporation, getDocumentTypes, getMessageTypes, getSignsSending, getCountries, getLegalEntities, getOwnerships, getOwnersNonPublicRailway, getApprovalsWithOwner, getCargoGroups, getMethodsSubmission, getTransportation } from "@/helpers/API";
+import { updateTitle } from "@/helpers/headerHelper";
+import router from "@/router";
+import { useRoute } from "vue-router";
+const route = useRoute();
+const document_types = ref({});
+const message_types = ref({});
+const signs_sending = ref({});
+const countries = ref({});
+const legal_entities = ref({});
+const ownerships = ref({});
+const owners_non_public_railway = ref({});
+const approvals_with_owner = ref({});
+const cargo_groups = ref({});
+const methods_submission = ref({});
+const document = ref({
+    id_document_type: 1,
+});
+function saveDocument() {
+    const saveDoc = saveTransporation(document.value);
+    //Либо тут роут на сохраненный документ
+    updateTitle("Заявка на перевозку №" + saveDoc.number);
+}
+function copyDocument() {
+    //unset id для создания нового документа
+    saveDocument();
+}
+function signDocument() {
+    //смена типа документа на "Подписан"
+    saveDocument();
+}
+function deleteDocument() {
+    deleteTransporation(document.value);
+    router.push("/menu");
+}
+const fetchData = async () => {
+    document_types.value = await getDocumentTypes();
+    message_types.value = await getMessageTypes();
+    signs_sending.value = await getSignsSending();
+    countries.value = await getCountries();
+    legal_entities.value = await getLegalEntities();
+    ownerships.value = await getOwnerships();
+    owners_non_public_railway.value = await getOwnersNonPublicRailway();
+    approvals_with_owner.value = await getApprovalsWithOwner();
+    cargo_groups.value = await getCargoGroups();
+    methods_submission.value = await getMethodsSubmission();
+    if (route.params.id) {
+        document.value = await getTransportation(route.params.id);
+        updateTitle("Заявка на перевозку №" + document.value.id);
+    } else {
+        updateTitle("Заявка на перевозку (Новый документ)");
+    }
+};
+onMounted(() => {
+    fetchData();
+});
 </script>
 
 <template>
     <div class="search-box">
         <div class="row">
             <div class="col-auto">
-                <button type="button" class="btn btn-custom">Сохранить</button>
-                <button type="button" class="btn btn-custom">Обновить</button>
-                <button type="button" class="btn btn-custom">Копировать</button>
-                <button type="button" class="btn btn-custom">Отправить на согласование</button>
-                <button type="button" class="btn btn-custom">Испортить</button>
+                <button type="button" class="btn btn-custom" v-on:click="saveDocument">Сохранить</button>
+                <button type="button" class="btn btn-custom" v-on:click="copyDocument">Копировать</button>
+                <button type="button" class="btn btn-custom" v-on:click="signDocument">Отправить на согласование</button>
+                <button type="button" class="btn btn-custom" v-on:click="deleteDocument">Испортить</button>
             </div>
         </div>
     </div>
@@ -28,63 +82,53 @@ const page = ref("document");
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" style="margin-top: 1em" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                 <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Тип документа</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" placeholder="Заявка на перевозку грузов ГУ-12" disabled="disabled" />
+                    <label class="col-auto col-form-label mb-0 label-custom" required>Тип документа</label>
+                    <div class="col-auto" v-if="document_types[document.id_document_type]">
+                        <input type="text" class="form-control mt-0 disabled-input" v-model="document_types[document.id_document_type].name" disabled="disabled" required />
                     </div>
                 </div>
 
                 <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Дата регистрации</label>
+                    <label class="col-auto col-form-label mb-0 label-custom" required>Дата регистрации</label>
                     <div class="col-auto">
-                        <input type="date" class="form-control mt-0 custom-input" style="width: 150px" />
+                        <input type="date" class="form-control mt-0 custom-input" v-model="document.registration_date" style="width: 150px" required />
                     </div>
                 </div>
 
                 <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Период перевозок с</label>
+                    <label class="col-auto col-form-label mb-0 label-custom" required>Период перевозок с</label>
                     <div class="col-auto">
-                        <input type="date" class="form-control mt-0 custom-input" style="width: 150px" />
+                        <input type="date" class="form-control mt-0 custom-input" v-model="document.transportation_date_from" style="width: 150px" required />
                     </div>
 
-                    <label class="col-auto col-form-label mb-0">по</label>
+                    <label class="col-auto col-form-label mb-0" required>по</label>
                     <div class="col-auto">
-                        <input type="date" class="form-control mt-0 custom-input" style="width: 150px" />
+                        <input type="date" class="form-control mt-0 custom-input" v-model="document.transportation_date_to" style="width: 150px" required />
                     </div>
                 </div>
 
                 <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Вид сообщения</label>
+                    <label class="col-auto col-form-label mb-0 label-custom" required>Вид сообщения</label>
                     <div class="col-3">
-                        <select class="form-select mt-0 custom-input">
+                        <select class="form-select mt-0 custom-input" v-model="document.id_message_type">
                             <option value="">Выберете элемент списка</option>
-                            <option value="Прямое">Прямое</option>
-                            <option value="Прямое смешанное">Прямое смешанное</option>
-                            <option value="Прямое международное через российские погранстанции">Прямое международное через российские погранстанции</option>
-                            <option value="Непрямое международное через российские погранстанции">Непрямое международное через российские погранстанции</option>
-                            <option value="Непрямое международное через российские порты">Непрямое международное через российские порты</option>
-                            <option value="Прямое международное через российские погранстанции">Прямое международное через российские погранстанции</option>
-                            <option value="Прямое международное железнодорожно-паромное через российские порты (паром)">Прямое международное железнодорожно-паромное через российские порты (паром)</option>
+                            <option v-for="message_type in message_types" :value="message_type.id">{{ message_type.name }}</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Признак отправки</label>
+                    <label class="col-auto col-form-label mb-0 label-custom" required>Признак отправки</label>
                     <div class="col-3">
-                        <select class="form-select mt-0 custom-input">
+                        <select class="form-select mt-0 custom-input" v-model="document.id_sign_sending">
                             <option value="">Выберете элемент списка</option>
-                            <option value="Повагонная">Повагонная</option>
-                            <option value="Контейнерная">Контейнерная</option>
-                            <option value="Мелкая">Мелкая</option>
-                            <option value="Групповая">Групповая</option>
-                            <option value="Контрейлерная">Контрейлерная</option>
+                            <option v-for="sign_sending in signs_sending" :value="sign_sending.id">{{ sign_sending.name }}</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Страна отправления</label>
+                    <label class="col-auto col-form-label mb-0 label-custom" required>Страна отправления</label>
                     <div class="col-auto">
                         <div class="input-group" style="width: 270px">
                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
@@ -149,7 +193,7 @@ const page = ref("document");
                 <!----------------------------- -->
 
                 <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Страна отправления/входа в СНГ</label>
+                    <label class="col-auto col-form-label mb-0 label-custom" required>Страна отправления/входа в СНГ</label>
                     <div class="col-auto">
                         <div class="input-group" style="width: 270px">
                             <input type="text" class="form-control" placeholder="Поиск" aria-label="Введите запрос" />
@@ -229,7 +273,7 @@ const page = ref("document");
                 <!----------------------------- -->
 
                 <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Грузоотправитель</label>
+                    <label class="col-auto col-form-label mb-0 label-custom" required>Грузоотправитель</label>
                     <div class="col-auto">
                         <div class="input-group" style="width: 270px">
                             <input type="text" class="form-control" placeholder="Поиск" aria-label="Введите запрос" />
@@ -322,7 +366,7 @@ const page = ref("document");
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Наименование организации грузоотправителя</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 500px" placeholder="" />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 500px" placeholder="" disabled="disabled" />
                     </div>
                 </div>
 
@@ -334,7 +378,7 @@ const page = ref("document");
                 </div>
 
                 <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Принадлежность вагонов/контейнеров</label>
+                    <label class="col-auto col-form-label mb-0 label-custom" required>Принадлежность вагонов/контейнеров</label>
                     <div class="col-3">
                         <select class="form-select mt-0 custom-input">
                             <option value="">Выберете элемент списка</option>
@@ -342,82 +386,6 @@ const page = ref("document");
                             <option value="Косвенное">Арендованные</option>
                             <option value="Косвенное">Собственные и арендованные</option>
                         </select>
-                    </div>
-                </div>
-
-                <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Организатор погрузки</label>
-                    <div class="col-auto">
-                        <div class="input-group" style="width: 270px">
-                            <input type="text" class="form-control" placeholder="Поиск" aria-label="Введите запрос" />
-                            <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#staticOrganizatorPozruzky">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!--Найти Организатор погрузки модальное окно -->
-                <div class="modal fade" id="staticOrganizatorPozruzky" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header" style="background-color: #7da5f0">
-                                <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Организатор погрузки</span>
-                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row justify-content-md-center mb-2">
-                                    <div class="col-12">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                    <i class="fas fa-times"></i>
-                                                </button>
-                                                <button class="btn btn-outline-secondary" type="button">
-                                                    <i class="fas fa-search"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                                    <table class="table table-hover table-bordered border-white">
-                                        <thead style="background-color: #7da5f0; color: white">
-                                            <tr>
-                                                <th>Код ОКПО</th>
-                                                <th>Наименование организатора погрузки</th>
-                                                <th>ИД бизнеса</th>
-                                                <th>ИД холдинга</th>
-                                                <th>Наименование холдинга</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-group-divider">
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="row justify-content-md-end">
-                                    <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
-                                    <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!----------------------------- -->
-
-                <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0" for="customCheck1" style="width: auto">Погрузка на местах общего пользования</label>
-                    <div class="col-auto">
-                        <input class="form-check-input custom-input" style="width: 20px; height: 20px" type="checkbox" id="checkboxNoLabel" value="" />
                     </div>
                 </div>
 
@@ -511,7 +479,7 @@ const page = ref("document");
                 </div>
                 <!-- ------------------------------------------------------ -->
                 <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Группа груза</label>
+                    <label class="col-auto col-form-label mb-0 label-custom" required>Группа груза</label>
                     <div class="col-auto">
                         <div class="input-group" style="width: 270px">
                             <input type="text" class="form-control" placeholder="Поиск" aria-label="Введите запрос" />
@@ -593,7 +561,7 @@ const page = ref("document");
                 <!----------------------------- -->
 
                 <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Способ подачи</label>
+                    <label class="col-auto col-form-label mb-0 label-custom" required>Способ подачи</label>
                     <div class="col-3">
                         <select class="form-select mt-0 custom-input">
                             <option value="">Выберете элемент списка</option>
@@ -602,13 +570,6 @@ const page = ref("document");
                             <option value="По нечетным дням">По нечетным дням</option>
                             <option value="По датам">По датам</option>
                         </select>
-                    </div>
-                </div>
-
-                <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0" for="customCheck1" style="width: auto">Форма3</label>
-                    <div class="col-auto">
-                        <input class="form-check-input custom-input" style="width: 20px; height: 20px" type="checkbox" id="checkboxNoLabel" value="" />
                     </div>
                 </div>
 
@@ -2468,5 +2429,9 @@ body {
 .selected {
     background-color: #2165b6; /* Цвет выделения строки */
     color: white;
+}
+label[required]::after {
+    content: "*";
+    color: red;
 }
 </style>
