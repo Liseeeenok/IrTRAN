@@ -6,7 +6,7 @@ import router from "@/router";
 import { useRoute } from "vue-router";
 import { getDiffDays } from "@/helpers/dateHelper";
 const route = useRoute();
-const date = (new Date()).toISOString().split('T')[0];
+const date = new Date().toISOString().split("T")[0];
 const document_types = ref({});
 const message_types = ref({});
 const signs_sending = ref({});
@@ -26,11 +26,14 @@ const requiredFields = {
     id_message_type: "Не выбран вид сообщения",
     id_sign_sending: "Не указан признак отправки",
     id_country_departure: "Не указана страна отправления",
+    id_country_departure_point: "Не указана станция отправления/входа в СНГ",
+    id_shipper: "Не указан грузоотправитель",
+    id_carriage_ownership: "Не указана принадлежность вагонов/контейнеров",
 };
 function checkRequiredFields() {
     //скип проверки если документ подписан
 
-    updateSubtitle('');
+    updateSubtitle("");
 
     for (let field in requiredFields) {
         if (!document.value[field]) {
@@ -42,24 +45,20 @@ function checkRequiredFields() {
     checkCorrectDate();
 }
 function checkCorrectDate() {
-    if (document.value.registration_date < date)
-    {
-        updateSubtitle('Дата регистрации должна быть не раньше текущей даты');
+    if (document.value.registration_date < date) {
+        updateSubtitle("Дата регистрации должна быть не раньше текущей даты");
         return;
     }
-    if (document.value.transportation_date_from > document.value.transportation_date_to)
-    {
-        updateSubtitle('Начало перевозки должно быть раньше конца перевозки');
+    if (document.value.transportation_date_from > document.value.transportation_date_to) {
+        updateSubtitle("Начало перевозки должно быть раньше конца перевозки");
         return;
     }
-    if (document.value.transportation_date_from < date || document.value.transportation_date_to < date)
-    {
-        updateSubtitle('Период перевозок должен быть не раньше текущей даты');
+    if (document.value.transportation_date_from < date || document.value.transportation_date_to < date) {
+        updateSubtitle("Период перевозок должен быть не раньше текущей даты");
         return;
     }
-    if (getDiffDays(document.value.transportation_date_from, document.value.transportation_date_to) > 45)
-    {
-        updateSubtitle('Перевозка превышает 45 дней');
+    if (getDiffDays(document.value.transportation_date_from, document.value.transportation_date_to) > 45) {
+        updateSubtitle("Перевозка превышает 45 дней");
         return;
     }
 }
@@ -418,25 +417,23 @@ onMounted(() => {
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Наименование организации грузоотправителя</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" style="width: 500px" placeholder="" disabled="disabled" />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 500px" placeholder="" disabled="disabled" v-if="legal_entities[document.id_shipper]" v-model="legal_entities[document.id_shipper].name" />
                     </div>
                 </div>
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Адрес</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 500px" placeholder="" />
+                        <input type="text" class="form-control mt-0 custom-input" style="width: 500px" placeholder="" v-model="document.addr" />
                     </div>
                 </div>
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom" required>Принадлежность вагонов/контейнеров</label>
                     <div class="col-3">
-                        <select class="form-select mt-0 custom-input">
+                        <select class="form-select mt-0 custom-input" v-model="document.id_carriage_ownership" v-on:change="checkRequiredFields">
                             <option value="">Выберете элемент списка</option>
-                            <option value="Прямое">Собственные</option>
-                            <option value="Косвенное">Арендованные</option>
-                            <option value="Косвенное">Собственные и арендованные</option>
+                            <option v-for="ownership in ownerships" :value="ownership.id">{{ ownership.name }}</option>
                         </select>
                     </div>
                 </div>

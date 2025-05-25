@@ -214,11 +214,25 @@ export async function getOwnerships() {
     let response = [
         {
             id: 1,
-            name: "test",
+            name: "Собственные",
             code: 1,
             created_at: "2025-05-25",
             updated_at: "2025-05-25",
         },
+        {
+            id: 2,
+            name: "Арендованные",
+            code: 1,
+            created_at: "2025-05-25",
+            updated_at: "2025-05-25",
+        },
+        {
+            id: 3,
+            name: "Собственные и арендованные",
+            code: 1,
+            created_at: "2025-05-25",
+            updated_at: "2025-05-25",
+        }
     ];
 
     return processingArray(response);
