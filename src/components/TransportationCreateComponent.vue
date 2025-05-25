@@ -441,7 +441,7 @@ onMounted(() => {
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Номер договора</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" placeholder="" />
+                        <input type="text" class="form-control mt-0 custom-input" placeholder="" v-model="document.contract_number"/>
                     </div>
                 </div>
 
@@ -490,9 +490,9 @@ onMounted(() => {
                                             </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
+                                            <tr v-for="owner in owners_non_public_railway">
+                                                <td>Нет полей</td>
+                                                <td>{{ owner.name }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -509,7 +509,7 @@ onMounted(() => {
                 <!----------------------------- -->
 
                 <!-- Появляются при выборе владельца жд пути необщ пользования -->
-                <div class="row mb-1">
+                <div class="row mb-1" v-if="document.contract_number && document.id_owner_non_public_railway">
                     <label class="col-auto col-form-label mb-0 label-custom">Отметка о согласовании владельцем пути</label>
                     <div class="col-3">
                         <select class="form-select mt-0 custom-input">
@@ -520,7 +520,7 @@ onMounted(() => {
                     </div>
                 </div>
 
-                <div class="row mb-1">
+                <div class="row mb-1" v-if="document.contract_number && document.id_owner_non_public_railway">
                     <label class="col-auto col-form-label mb-0 label-custom">Дата согласования с владельцем пути</label>
                     <div class="col-auto">
                         <input type="date" class="form-control mt-0 custom-input" style="width: 150px" />
@@ -607,7 +607,7 @@ onMounted(() => {
                         </div>
                     </div>
                 </div>
-                <!----------------------------- -->
+                <!------------------------------->
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom" required>Способ подачи</label>
