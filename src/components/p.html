@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        .search-container {
+  position: relative;
+  width: 300px;
+}
+
+#search {
+  padding: 10px;
+  width: 300px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+  transition: border 0.3s;
+}
+
+#search:focus {
+  border-color: #4CAF50;
+}
+
+datalist {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 0 0 5px 5px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+    </style>
+    <body>
+        <input type="text" id="search" list="suggestions" placeholder="Начните вводить...">
+<datalist id="suggestions">
+  <option value="JavaScript">
+  <option value="HTML">
+  <option value="CSS">
+  <option value="React">
+  <option value="Vue">
+</datalist>
+    </body>
+   
+</html>
