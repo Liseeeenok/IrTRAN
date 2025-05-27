@@ -26,10 +26,10 @@ import { authorization } from "../helpers/API.js";
                 </a>
             </div>
             <div class="col-md-2">
-                <a class="card-square" style="border-radius: 10px" href="">
+                <router-link to="/beginner-simulator/menu" class="card-square" style="border-radius: 10px" href="">
                     <img src="https://cdn1.iconfinder.com/data/icons/web-design-and-development-1-2/512/48-1024.png" alt="Тренажер" />
                     <span class="card-text">Тренажер</span>
-                </a>
+                </router-link>
             </div>
         </div>
     </div>
@@ -51,10 +51,11 @@ import { authorization } from "../helpers/API.js";
                             </router-link>
                         </div>
                         <div class="col-md-6">
-                            <a class="card-square" style="border-radius: 10px" href="">
+                            
+                            <router-link to="/beginner-instructions/menu" class="card-square" style="border-radius: 10px" href="">
                                 <img src="https://sh-poperechenskaya-r81.gosweb.gosuslugi.ru/netcat_files/114/1883/ikonka_pravila_priema.png" alt="Правила заполнения" />
                                 <span class="card-text">Правила заполнения</span>
-                            </a>
+                            </router-link>
                         </div>
                     </div>
                 </div>
