@@ -5,8 +5,8 @@
         <div class="row">
             <div class="col-auto">
                 <button type="button" class="btn btn-custom">Сохранить</button>
-                <button type="button" class="btn btn-custom">Обновить</button>
                 <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#Podpisatdoc">Подписать</button>
+                <button type="button" class="btn btn-custom">Испортить</button>
             </div>
         </div>
     </div>
@@ -17,14 +17,14 @@
                 <button class="nav-link active" id="home-tab" data-toggle="tab" data-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Документ</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link" id="History-tab" data-toggle="tab" data-target="#History-tab-pane" type="button" role="tab" aria-controls="History-tab-pane" aria-selected="false">История</button>
+                <button class="nav-link" id="History-tab" data-toggle="tab" data-target="#History-tab-pane" type="button" role="tab" aria-controls="History-tab-pane" aria-selected="false" disabled>История</button>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" style="margin-top: 1em" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                 <div class="row mb-1 justify-content-md-end" style="margin-right: 10px">
                     <label class="col-auto col-form-label mb-0 label-custom" style="font-weight: bold">Форма ГУ-45 ЭТД</label>
-                    <label class="col-auto col-form-label mb-0 label-custom" style="border: solid 1px black; width: 100px">0000000</label>
+                    <label class="col-auto col-form-label mb-0 label-custom" style="border: solid 1px black; width: 100px">0367802</label>
                 </div>
 
                 <div class="row mb-1 justify-content-md-end" style="margin-right: 10px">
@@ -60,7 +60,7 @@
                 </div>
 
                 <div class="row mb-1 justify-content-md-center">
-                    <label class="col-4 col-form-label mb-0 label-custom" style="font-weight: bold">ПАМЯТКА ПРИЕМАСДАТЧИКА №000000 на подачу вагонов</label>
+                    <label class="col-4 col-form-label mb-0 label-custom" style="font-weight: bold">ПАМЯТКА ПРИЕМОСДАТЧИКА №000000 на подачу вагонов</label>
                 </div>
 
                 <div class="row mb-1">
@@ -83,7 +83,11 @@
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Подача производилась локомотивом</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" placeholder="" />
+                        <select class="form-select mt-0 custom-input">
+                            <option value="">Выберете элемент списка</option>
+                            <option value="Железная дорога">Железная дорога</option>
+                            <option value="Владелец п/пути">Владелец п/пути</option>
+                        </select>
                     </div>
 
                     <label class="col-auto col-form-label mb-0 label-custom" style="width: 150px">Индекс поезда</label>

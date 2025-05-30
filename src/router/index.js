@@ -156,6 +156,18 @@ const router = createRouter({
                 },
             ],
         },
+         {
+            path: "/beginner-simulator", //Страница Сценарий обучения "Новичок" - Тренажер
+            name: "beginner-simulator",
+            redirect: "/beginner-simulator/menu",
+            children: [
+                {
+                    path: "menu", //Страница меню Сценарий обучения "Новичок" - Тренажер
+                    name: "beginner-simulator-menu",
+                    component: () => import("../views/BeginnerSimulatorMenuView.vue"),
+                },
+            ],
+        },
         {
             path: "/beginner-instructions", //Страница Сценарий "Новичок" - Инструкции
             name: "beginner-instructions",
@@ -182,6 +194,18 @@ const router = createRouter({
                     path: "menu", //Страница меню Сценарий обучения "Продвинутый"
                     name: "advanced-scenario-menu",
                     component: () => import("../views/AdvancedScenarioMenuView.vue"),
+                },
+            ],
+        },
+        {
+            path: "/advanced-simulator", //Страница Сценарий обучения "Продвинутый" - Тренажер
+            name: "advanced-simulator",
+            redirect: "/advanced-simulator/menu",
+            children: [
+                {
+                    path: "menu", //Страница меню Сценарий обучения "Продвинутый" - Тренажер
+                    name: "advanced-simulator-menu",
+                    component: () => import("../views/AdvancedSimulatorMenuView.vue"),
                 },
             ],
         },
