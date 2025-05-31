@@ -11,6 +11,31 @@ import ModalSearchDocumentLarge from './ModalSearchDocumentLarge.vue';
         <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Найти документ</button>
         <ModalSearchDocumentLarge />
     </div>
+
+    <div class="container">
+        <div class="table-responsive" style="border: gray solid 1px">
+            <table class="table table-hover table-bordered border-white">
+                <thead style="background-color: #7DA5F0; color: white;">
+                    <tr>
+                        <th>ID документа</th>
+                        <th>Состояние документа</th>
+                        <th>Дата создания документа</th>
+                        <th>Номер поезда</th>
+                        <th>Номер накладной</th>
+                      </tr>
+                 </thead>
+                <tbody class="table-group-divider">
+                    <tr>
+                        <td></td> 
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+    </div>
 </template>
 
 <style scoped>
