@@ -7,7 +7,8 @@ import { ref } from "vue";
         <div class="row">
             <div class="col-auto">
                 <button type="button" class="btn btn-custom">Сохранить</button>
-                <button type="button" class="btn btn-custom">Обновить</button>
+                <button type="button" class="btn btn-custom">Подписать</button>
+                <button type="button" class="btn btn-custom">Испортить</button>
             </div>
         </div>
     </div>
@@ -279,7 +280,7 @@ import { ref } from "vue";
 
                     <label class="col-auto col-form-label mb-0 label-custom" style="width: 50px">ТНГЛ</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 150px" placeholder="" />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 150px" placeholder="" />
                     </div>
                 </div>
 
@@ -327,6 +328,73 @@ import { ref } from "vue";
                                                 <th>Наименование грузоотправителя</th>
                                                 <th>Краткое наименование</th>
                                                 <th>ИД</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-group-divider">
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="row justify-content-md-end">
+                                    <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
+                                    <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!----------------------------- -->
+
+                <div class="row mb-1">
+                    <label class="col-auto col-form-label mb-0 label-custom">График подач</label>
+                    <div class="col-auto">
+                        <div class="input-group" style="width: 270px">
+                            <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
+                            <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#GrafikPodach">
+                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                                <!--Найти График подач модальное окно -->
+                <div class="modal fade" id="GrafikPodach" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header" style="background-color: #7da5f0">
+                                <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">График подач</span>
+                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row justify-content-md-center mb-2">
+                                    <div class="col-12">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary" type="button" id="clearButton">
+                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
+                                                </button>
+                                                <button class="btn btn-outline-secondary" type="button">
+                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
+                                    <table class="table table-hover table-bordered border-white">
+                                        <thead style="background-color: #7da5f0; color: white">
+                                            <tr>
+                                                <th>Номер отправки</th>
+                                                <th>Дата подачи</th>
+                                                <th>Кол-во вагонов</th>
+                                                <th>Вес</th>
                                             </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
@@ -449,7 +517,7 @@ import { ref } from "vue";
 
                     <label class="col-auto col-form-label mb-0 label-custom" style="width: 50px">ТГНЛ</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 150px" placeholder="" />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 150px" placeholder="" disabled />
                     </div>
                 </div>
 
@@ -1171,6 +1239,7 @@ import { ref } from "vue";
                         <button type="button" class="btn btn-custom">Удалить</button>
                         <button type="button" class="btn btn-custom">Удалить все</button>
                         <button type="button" class="btn btn-custom">Копировать</button>
+                        <button type="button" class="btn btn-custom">Вставить</button>
                     </div>
                 </div>
 
@@ -1246,11 +1315,8 @@ import { ref } from "vue";
                                 <div class="row mb-3">
                                     <div class="col-auto">
                                         <button type="button" class="btn btn-custom">Применить</button>
-                                        <button type="button" class="btn btn-custom">Отменить</button>
-                                        <button type="button" class="btn btn-custom">Предыдущий</button>
-                                        <button type="button" class="btn btn-custom">Следующий</button>
-                                        <button type="button" class="btn btn-custom">Добавить</button>
-                                        <button type="button" class="btn btn-custom">Копировать</button>
+                                        <button type="button" class="btn btn-custom" data-dismiss="modal">Отменить</button>
+
                                     </div>
                                 </div>
 
@@ -1380,6 +1446,7 @@ import { ref } from "vue";
                                         <button type="button" class="btn btn-custom">Удалить</button>
                                         <button type="button" class="btn btn-custom">Удалить все</button>
                                         <button type="button" class="btn btn-custom">Копировать</button>
+                                        <button type="button" class="btn btn-custom">Вставить</button>
                                     </div>
                                 </div>
 
@@ -1407,17 +1474,6 @@ import { ref } from "vue";
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </div>
-                                </div>
-
-                                <div class="row mb-1">
-                                    <label class="col-auto col-form-label mb-0" style="width: auto; font-weight: bold">Дополнительные свойства груза</label>
-                                </div>
-
-                                <div class="row mb-1">
-                                    <div class="col-auto">
-                                        <button type="button" class="btn btn-custom">Удалить</button>
-                                        <button type="button" class="btn btn-custom">Удалить все</button>
                                     </div>
                                 </div>
 
@@ -1551,10 +1607,6 @@ import { ref } from "vue";
                                     <div class="col-auto">
                                         <button type="button" class="btn btn-custom" data-toggle="modal" data-target="">Применить</button>
                                         <button type="button" class="btn btn-custom" data-dismiss="modal">Отменить</button>
-                                        <button type="button" class="btn btn-custom">Предыдущий</button>
-                                        <button type="button" class="btn btn-custom">Следующий</button>
-                                        <button type="button" class="btn btn-custom">Добавить</button>
-                                        <button type="button" class="btn btn-custom">Копировать</button>
                                     </div>
                                 </div>
 
@@ -1643,10 +1695,11 @@ import { ref } from "vue";
                 <div class="row mb-1">
                     <div class="col-auto">
                         <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#RaschetMarhruta">Выполнить расчет маршрута</button>
-                        <button type="button" class="btn btn-custom">Снять промывку</button>
-                        <button type="button" class="btn btn-custom">Перегруз по колее</button>
+                        <button type="button" class="btn btn-custom" disabled>Снять промывку</button>
+                        <button type="button" class="btn btn-custom" disabled>Перегруз по колее</button>
                         <button type="button" class="btn btn-custom">Изменить</button>
                         <button type="button" class="btn btn-custom">Удалить</button>
+                        <button type="button" class="btn btn-custom">Копировать</button>
                         <button type="button" class="btn btn-custom">Вставить</button>
                     </div>
                 </div>
@@ -1720,10 +1773,6 @@ import { ref } from "vue";
                                     <div class="col-auto">
                                         <button type="button" class="btn btn-custom" data-toggle="modal" data-target="">Применить</button>
                                         <button type="button" class="btn btn-custom" data-dismiss="modal">Отменить</button>
-                                        <button type="button" class="btn btn-custom">Предыдущий</button>
-                                        <button type="button" class="btn btn-custom">Следующий</button>
-                                        <button type="button" class="btn btn-custom">Добавить</button>
-                                        <button type="button" class="btn btn-custom">Копировать</button>
                                     </div>
                                 </div>
                             </div>
@@ -1789,10 +1838,6 @@ import { ref } from "vue";
                                     <div class="col-auto">
                                         <button type="button" class="btn btn-custom" data-toggle="modal" data-target="">Применить</button>
                                         <button type="button" class="btn btn-custom" data-dismiss="modal">Отменить</button>
-                                        <button type="button" class="btn btn-custom">Предыдущий</button>
-                                        <button type="button" class="btn btn-custom">Следующий</button>
-                                        <button type="button" class="btn btn-custom">Добавить</button>
-                                        <button type="button" class="btn btn-custom">Копировать</button>
                                     </div>
                                 </div>
 
@@ -1881,6 +1926,7 @@ import { ref } from "vue";
                         <button type="button" class="btn btn-custom">Удалить</button>
                         <button type="button" class="btn btn-custom">Удалить все</button>
                         <button type="button" class="btn btn-custom">Копировать</button>
+                        <button type="button" class="btn btn-custom">Вставить</button>
                     </div>
                 </div>
 
@@ -1948,10 +1994,6 @@ import { ref } from "vue";
                                     <div class="col-auto">
                                         <button type="button" class="btn btn-custom" data-toggle="modal" data-target="">Применить</button>
                                         <button type="button" class="btn btn-custom" data-dismiss="modal">Отменить</button>
-                                        <button type="button" class="btn btn-custom">Предыдущий</button>
-                                        <button type="button" class="btn btn-custom">Следующий</button>
-                                        <button type="button" class="btn btn-custom">Добавить</button>
-                                        <button type="button" class="btn btn-custom">Копировать</button>
                                     </div>
                                 </div>
 
@@ -2107,11 +2149,7 @@ import { ref } from "vue";
                                 <div class="row mb-3">
                                     <div class="col-auto">
                                         <button type="button" class="btn btn-custom">Применить</button>
-                                        <button type="button" class="btn btn-custom">Отменить</button>
-                                        <button type="button" class="btn btn-custom">Предыдущий</button>
-                                        <button type="button" class="btn btn-custom">Следующий</button>
-                                        <button type="button" class="btn btn-custom">Добавить</button>
-                                        <button type="button" class="btn btn-custom">Копировать</button>
+                                        <button type="button" class="btn btn-custom" data-dismiss="modal">Отменить</button>
                                     </div>
                                 </div>
 
@@ -2229,13 +2267,6 @@ import { ref } from "vue";
                                     <label class="col-auto col-form-label mb-0 label-custom">Собственник ОКПО</label>
                                     <div class="col-auto">
                                         <input type="text" class="form-control mt-0 disabled-input" placeholder="" disabled="disabled" />
-                                    </div>
-                                </div>
-
-                                <div class="row mb-1">
-                                    <label class="col-auto col-form-label mb-0 label-custom">ОКПО собственника</label>
-                                    <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" placeholder="" />
                                     </div>
                                 </div>
 
@@ -2481,10 +2512,6 @@ import { ref } from "vue";
                                     <div class="col-auto">
                                         <button type="button" class="btn btn-custom" data-toggle="modal" data-target="">Применить</button>
                                         <button type="button" class="btn btn-custom" data-dismiss="modal">Отменить</button>
-                                        <button type="button" class="btn btn-custom">Предыдущий</button>
-                                        <button type="button" class="btn btn-custom">Следующий</button>
-                                        <button type="button" class="btn btn-custom">Добавить</button>
-                                        <button type="button" class="btn btn-custom">Копировать</button>
                                     </div>
                                 </div>
 
@@ -2750,10 +2777,6 @@ import { ref } from "vue";
                                     <div class="col-auto">
                                         <button type="button" class="btn btn-custom" data-toggle="modal" data-target="">Применить</button>
                                         <button type="button" class="btn btn-custom" data-dismiss="modal">Отменить</button>
-                                        <button type="button" class="btn btn-custom">Предыдущий</button>
-                                        <button type="button" class="btn btn-custom">Следующий</button>
-                                        <button type="button" class="btn btn-custom">Добавить</button>
-                                        <button type="button" class="btn btn-custom">Копировать</button>
                                     </div>
                                 </div>
 
@@ -2886,7 +2909,7 @@ import { ref } from "vue";
                                     </div>
 
                                     <div class="col-auto">
-                                        <button type="button" class="btn btn-custom">Рассчитать</button>
+                                        <button type="button" class="btn btn-custom" disabled>Рассчитать</button>
                                     </div>
                                 </div>
 
@@ -3337,10 +3360,6 @@ import { ref } from "vue";
                                     <div class="col-auto">
                                         <button type="button" class="btn btn-custom" data-toggle="modal" data-target="">Применить</button>
                                         <button type="button" class="btn btn-custom" data-dismiss="modal">Отменить</button>
-                                        <button type="button" class="btn btn-custom">Предыдущий</button>
-                                        <button type="button" class="btn btn-custom">Следующий</button>
-                                        <button type="button" class="btn btn-custom">Добавить</button>
-                                        <button type="button" class="btn btn-custom">Копировать</button>
                                     </div>
                                 </div>
 
@@ -3390,10 +3409,6 @@ import { ref } from "vue";
                                     <div class="col-auto">
                                         <button type="button" class="btn btn-custom" data-toggle="modal" data-target="">Применить</button>
                                         <button type="button" class="btn btn-custom" data-dismiss="modal">Отменить</button>
-                                        <button type="button" class="btn btn-custom">Предыдущий</button>
-                                        <button type="button" class="btn btn-custom">Следующий</button>
-                                        <button type="button" class="btn btn-custom">Добавить</button>
-                                        <button type="button" class="btn btn-custom">Копировать</button>
                                     </div>
                                 </div>
 
@@ -3606,12 +3621,12 @@ import { ref } from "vue";
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Фактические дата и время погрузки МСК</label>
                     <div class="col-auto">
-                        <input type="date" class="form-control mt-0 custom-input" style="width: 150px" />
+                        <input type="datetime-local" class="form-control mt-0 custom-input" style="width: 150px" />
                     </div>
 
                     <label class="col-auto col-form-label mb-0">Фактические дата и время погрузки МЕСТНЫЕ</label>
                     <div class="col-auto">
-                        <input type="date" class="form-control mt-0 custom-input" style="width: 150px" disabled />
+                        <input type="datetime-local" class="form-control mt-0 disabled-input" style="width: 150px" disabled />
                     </div>
                 </div>
 

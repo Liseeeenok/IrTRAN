@@ -24,10 +24,10 @@ import { authorization } from "../helpers/API.js";
                 </a>
             </div>
             <div class="col-md-2">
-                <a class="card-square" style="border-radius: 10px" href="">
+                <router-link to="/advanced-simulator/menu" class="card-square" style="border-radius: 10px" href="">
                     <img src="https://cdn1.iconfinder.com/data/icons/web-design-and-development-1-2/512/48-1024.png" alt="Тренажер" />
                     <span class="card-text">Тренажер</span>
-                </a>
+                </router-link>
             </div>
         </div>
     </div>

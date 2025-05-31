@@ -192,7 +192,7 @@
                         <input type="text" class="form-control mt-0 custom-input" style="width: 450px" />
                     </div>
 
-                    <label class="col-auto col-form-label mb-0 label-custom">Станция назвачения</label>
+                    <label class="col-auto col-form-label mb-0 label-custom">Станция назначения</label>
                     <div class="col-auto">
                         <input type="text" class="form-control mt-0 custom-input" style="width: 450px" />
                     </div>
@@ -382,10 +382,6 @@
                                     <div class="col-auto">
                                         <button type="button" class="btn btn-custom">Применить</button>
                                         <button type="button" class="btn btn-custom">Отменить</button>
-                                        <button type="button" class="btn btn-custom">Предыдущий</button>
-                                        <button type="button" class="btn btn-custom">Следующий</button>
-                                        <button type="button" class="btn btn-custom">Добавить</button>
-                                        <button type="button" class="btn btn-custom">Копировать</button>
                                     </div>
                                 </div>
 
@@ -447,7 +443,7 @@
 
                 <!----------------------------------------------------------------Общие сведения Отправки Контейнер--------------------------------------------------------------->
                 <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0" style="width: auto; font-weight: bold">Контейнер</label>
+                    <label class="col-auto col-form-label mb-0" style="width: auto; font-weight: bold">Контейнеры</label>
                 </div>
 
                 <div class="row mb-1">
@@ -500,15 +496,11 @@
                                     <div class="col-auto">
                                         <button type="button" class="btn btn-custom">Применить</button>
                                         <button type="button" class="btn btn-custom">Отменить</button>
-                                        <button type="button" class="btn btn-custom">Предыдущий</button>
-                                        <button type="button" class="btn btn-custom">Следующий</button>
-                                        <button type="button" class="btn btn-custom">Добавить</button>
-                                        <button type="button" class="btn btn-custom">Копировать</button>
                                     </div>
                                 </div>
 
                                 <div class="row mb-1">
-                                    <label class="col-auto col-form-label mb-0 label-custom">Номер контейнеры</label>
+                                    <label class="col-auto col-form-label mb-0 label-custom">Номер контейнера</label>
 
                                     <div class="col-auto">
                                         <div class="input-group" style="width: 270px">
@@ -617,10 +609,6 @@
                                     <div class="col-auto">
                                         <button type="button" class="btn btn-custom">Применить</button>
                                         <button type="button" class="btn btn-custom">Отменить</button>
-                                        <button type="button" class="btn btn-custom">Предыдущий</button>
-                                        <button type="button" class="btn btn-custom">Следующий</button>
-                                        <button type="button" class="btn btn-custom">Добавить</button>
-                                        <button type="button" class="btn btn-custom">Копировать</button>
                                     </div>
                                 </div>
 
@@ -745,10 +733,6 @@
                                     <div class="col-auto">
                                         <button type="button" class="btn btn-custom">Применить</button>
                                         <button type="button" class="btn btn-custom">Отменить</button>
-                                        <button type="button" class="btn btn-custom">Предыдущий</button>
-                                        <button type="button" class="btn btn-custom">Следующий</button>
-                                        <button type="button" class="btn btn-custom">Добавить</button>
-                                        <button type="button" class="btn btn-custom">Копировать</button>
                                     </div>
                                 </div>
 
@@ -871,10 +855,6 @@
                                     <div class="col-auto">
                                         <button type="button" class="btn btn-custom">Применить</button>
                                         <button type="button" class="btn btn-custom">Отменить</button>
-                                        <button type="button" class="btn btn-custom">Предыдущий</button>
-                                        <button type="button" class="btn btn-custom">Следующий</button>
-                                        <button type="button" class="btn btn-custom">Добавить</button>
-                                        <button type="button" class="btn btn-custom">Копировать</button>
                                     </div>
                                 </div>
 
