@@ -109,52 +109,19 @@
                 </div>
                 <!----------------------------- -->
 
+                <div class="row mb-1">
+                    <label class="col-auto col-form-label mb-0 label-custom">Начало/Окончание простоя</label>
+                    <div class="col-auto">
+                        <select type="date" class="form-control mt-0 custom-input" style="width: 250px">
+                            <option>Выберите элемент списка</option>
+                            <option>Начало простоя</option>
+                            <option>Окончания простоя</option>
+                        </select>
+                    </div>
+                </div>
+
                 <!--------------------------------------------------------------------------------------------->
 
-                <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Станция отправления</label>
-                    <div class="input-group" style="width: 870px">
-                        <input type="text" class="form-control custom-search" style="background-color: #e9ecef" aria-label="Введите запрос" disabled />
-                        <button class="btn btn-outline-secondary" type="button" style="background-color: #e9ecef" data-toggle="modal" data-target="#" disabled>
-                            <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                        </button>
-                    </div>
-
-                    <label class="col-auto col-form-label mb-0 label-custom" style="width: auto">Код</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" placeholder="" style="width: 173px" disabled="disabled" />
-                    </div>
-                </div>
-
-                <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Станция назначения</label>
-                    <div class="input-group" style="width: 870px">
-                        <input type="text" class="form-control custom-search" style="background-color: #e9ecef" placeholder="" aria-label="Введите запрос" disabled />
-                        <button class="btn btn-outline-secondary" type="button" style="background-color: #e9ecef" data-toggle="modal" data-target="#" disabled>
-                            <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                        </button>
-                    </div>
-
-                    <label class="col-auto col-form-label mb-0 label-custom" style="width: auto">Код</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" placeholder="" style="width: 173px" disabled="disabled" />
-                    </div>
-                </div>
-
-                <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Наименование груза</label>
-                    <div class="input-group" style="width: 870px">
-                        <input type="text" class="form-control custom-search" style="background-color: #e9ecef" placeholder="" aria-label="Введите запрос" disabled />
-                        <button class="btn btn-outline-secondary" type="button" style="background-color: #e9ecef" data-toggle="modal" data-target="#" disabled>
-                            <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                        </button>
-                    </div>
-
-                    <label class="col-auto col-form-label mb-0 label-custom" style="width: auto">Код</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" placeholder="" style="width: 173px" disabled="disabled" />
-                    </div>
-                </div>
 
                 <!-------------------------Вагоны, контейнеры отправки-------------------------------------------------------------------->
                 <div class="row mb-1">
@@ -177,15 +144,17 @@
                                     <tr>
                                         <th></th>
                                         <th>№ п/п</th>
-                                        <th>Номер вагона</th>
-                                        <th style="width: 400px">Владелец вагона</th>
-                                        <th style="width: 400px">Грузополучатель</th>
-                                        <th>Номер отправки, дата приема груза к перевозке</th>
+                                        <th>Номер вагона/контейнера</th>
+                                        <th>Номер отправки</th>
+                                        <th>Дата и время начала простоя</th>
+                                        <th>Номер акта на начало простоя</th>
+                                        <th>Кол-во суток простоя</th>
                                     </tr>
                                 </thead>
                                 <tbody class="table-group-divider">
                                     <tr>
                                         <td><input type="checkbox" class="row-checkbox" /></td>
+                                        <td></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -215,6 +184,13 @@
                                 </div>
 
                                 <div class="row mb-1">
+                                    <label class="col-auto col-form-label mb-0 label-custom">Вагон, контейнер №</label>
+                                    <div class="col-auto">
+                                        <input type="text" class="form-control mt-0 custom-input" placeholder="" style="width: 150px"/>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-1">
                                     <label class="col-auto col-form-label mb-0 label-custom">Отправка №</label>
                                     <div class="input-group" style="width: 270px">
                                         <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
@@ -222,25 +198,33 @@
                                             <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                         </button>
                                     </div>
+                                </div>
 
-                                    <label class="col-auto col-form-label mb-0 label-custom" style="width: auto">от</label>
+                                 <div class="row mb-1">
+                                    <label class="col-auto col-form-label mb-0 label-custom">Дата и время начала простоя</label>
                                     <div class="col-auto">
-                                        <input type="date" class="form-control mt-0 custom-input" placeholder="" style="width: 150px" disabled="disabled" />
+                                        <input type="datetime-local" class="form-control mt-0 custom-input" placeholder="" style="width: 150px"/>
                                     </div>
                                 </div>
 
                                 <div class="row mb-1">
-                                    <label class="col-auto col-form-label mb-0 label-custom">Вагон, контейнер №</label>
-                                    <div class="input-group" style="width: 270px">
-                                        <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
-                                        <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#naityVagonCont">
-                                            <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                        </button>
-                                    </div>
-
-                                    <label class="col-auto col-form-label mb-0 label-custom" style="width: auto">Дата приема груза к перевозке</label>
+                                    <label class="col-auto col-form-label mb-0 label-custom">Дата и время окончания простоя</label>
                                     <div class="col-auto">
-                                        <input type="date" class="form-control mt-0 custom-input" placeholder="" style="width: 150px" disabled="disabled" />
+                                        <input type="datetime-local" class="form-control mt-0 custom-input" placeholder="" style="width: 150px"/>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-1">
+                                    <label class="col-auto col-form-label mb-0 label-custom">Номер акта на начало простоя</label>
+                                    <div class="col-auto">
+                                        <input type="text" class="form-control mt-0 disabled-input" placeholder="" style="width: 150px" disabled/>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-1">
+                                    <label class="col-auto col-form-label mb-0 label-custom">Кол-во суток простоя</label>
+                                    <div class="col-auto">
+                                        <input type="text" class="form-control mt-0 disabled-input" placeholder="" style="width: 150px" disabled/>
                                     </div>
                                 </div>
                             </div>
@@ -265,29 +249,6 @@
                     </div>
                 </div>
 
-                <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Отправитель</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" disabled />
-                    </div>
-
-                    <label class="col-auto col-form-label mb-0 label-custom" style="width: auto">Код</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" placeholder="" style="width: 173px" disabled="disabled" />
-                    </div>
-                </div>
-
-                <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Получатель</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" disabled />
-                    </div>
-
-                    <label class="col-auto col-form-label mb-0 label-custom" style="width: auto">Код</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" placeholder="" style="width: 173px" disabled="disabled" />
-                    </div>
-                </div>
 
                 <!--Найти Станция составления акта модальное окно -->
                 <div class="modal fade" id="stationSostAkta" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -393,58 +354,6 @@
                 </div>
                 <!----------------------------- -->
 
-                <!--Найти № Вагона/контейнера модальное окно -->
-                <div class="modal fade" id="naityVagonCont" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header" style="background-color: #7da5f0">
-                                <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">№ Вагона/контейнера </span>
-                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row justify-content-md-center mb-2">
-                                    <div class="col-12">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
-                                                </button>
-                                                <button class="btn btn-outline-secondary" type="button">
-                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                                    <table class="table table-hover table-bordered border-white">
-                                        <thead style="background-color: #7da5f0; color: white">
-                                            <tr>
-                                                <th>Код</th>
-                                                <th>Наименование</th>
-                                                <th>Примечание</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-group-divider">
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="row justify-content-md-end">
-                                    <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
-                                    <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!----------------------------- -->
 
                 <!--Найти Подписать акт модальное окно -->
                 <div class="modal fade" id="podpisat" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
