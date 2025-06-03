@@ -1,7 +1,7 @@
 import axios from "axios";
 import router from "../router";
 
-const host = "mypew.ru:7070"; //имя или ip хоста api
+const host = "mypew.ru:7071"; //имя или ip хоста api
 
 //-----------------Авторизация----------------------
 
@@ -22,342 +22,136 @@ export async function authorization(login, password) {
 //-----------------Геттеры--------------------------
 
 export async function getDocumentTypes() {
-    /*
     let request = {
-        'jwt': localStorage.getItem('skos-token'),
-        'companies': admin.companies.filter((company) => typeof company.status !== "undefined" && company.status != 3),
-        'type_request': 'companies_change',
-    }
-    axios
-        .post('https://' + host + '/companies', request)
-        .then((response) => {
-            getCompany();
-            if (response.data == 'OK') alert('Успешно сохранено!');
-            else console.log(request, response);
-        })
-    */
+        "act": "read",
+        "selection_type": "all"
+    };
 
-    let response = [
-        {
-            id: 1,
-            name: "Заявка на перевозку грузов ГУ-12",
-            code: 1,
-            created_at: "2025-05-25",
-            updated_at: "2025-05-25",
-        },
-    ];
+    let response = await sendRequest('https://' + host + '/document_types', request);
 
     return processingArray(response);
 }
 
 export async function getMessageTypes() {
-    let response = [
-        {
-            id: 1,
-            name: "Прямое",
-            code: 1,
-            created_at: "2025-05-25",
-            updated_at: "2025-05-25",
-        },
-        {
-            id: 2,
-            name: "Прямое смешанное",
-            code: 1,
-            created_at: "2025-05-25",
-            updated_at: "2025-05-25",
-        },
-        {
-            id: 3,
-            name: "Прямое международное через российские погранстанции",
-            code: 1,
-            created_at: "2025-05-25",
-            updated_at: "2025-05-25",
-        },
-        {
-            id: 4,
-            name: "Непрямое международное через российские погранстанции",
-            code: 1,
-            created_at: "2025-05-25",
-            updated_at: "2025-05-25",
-        },
-        {
-            id: 5,
-            name: "Непрямое международное через российские порты",
-            code: 1,
-            created_at: "2025-05-25",
-            updated_at: "2025-05-25",
-        },
-        {
-            id: 6,
-            name: "Прямое международное через российские погранстанции",
-            code: 1,
-            created_at: "2025-05-25",
-            updated_at: "2025-05-25",
-        },
-        {
-            id: 7,
-            name: "Прямое международное железнодорожно-паромное через российские порты (паром)",
-            code: 1,
-            created_at: "2025-05-25",
-            updated_at: "2025-05-25",
-        },
-    ];
+    let request = {
+        "act": "read",
+        "selection_type": "all"
+    };
+
+    let response = await sendRequest('https://' + host + '/message_types', request);
 
     return processingArray(response);
 }
 
 export async function getSignsSending() {
-    let response = [
-        {
-            id: 1,
-            name: "Повагонная",
-            code: 1,
-            created_at: "2025-05-25",
-            updated_at: "2025-05-25",
-        },
-        {
-            id: 2,
-            name: "Контейнерная",
-            code: 1,
-            created_at: "2025-05-25",
-            updated_at: "2025-05-25",
-        },
-        {
-            id: 3,
-            name: "Мелкая",
-            code: 1,
-            created_at: "2025-05-25",
-            updated_at: "2025-05-25",
-        },
-        {
-            id: 4,
-            name: "Групповая",
-            code: 1,
-            created_at: "2025-05-25",
-            updated_at: "2025-05-25",
-        },
-        {
-            id: 5,
-            name: "Контрейлерная",
-            code: 1,
-            created_at: "2025-05-25",
-            updated_at: "2025-05-25",
-        },
-    ];
+    let request = {
+        "act": "read",
+        "selection_type": "all"
+    };
+
+    let response = await sendRequest('https://' + host + '/signs_sending', request);
 
     return processingArray(response);
 }
 
 export async function getCountries() {
-    let response = [
-        {
-            id: 1,
-            name: "Россия",
-            OSCM_code: "test",
-            short_name: "test",
-            COATO_code: "test",
-            OSZhD_code: "test",
-            type_state: 1,
-            administration_code_digit: "test",
-            order_number: "test",
-            administration_code_symbol: "test",
-            country_code_ISO_3166: "test",
-            created_at: "2025-05-25",
-            updated_at: "2025-05-25",
-        },
-        {
-            id: 2,
-            name: "Китай",
-            OSCM_code: "test",
-            short_name: "test",
-            COATO_code: "test",
-            OSZhD_code: "test",
-            type_state: 1,
-            administration_code_digit: "test",
-            order_number: "test",
-            administration_code_symbol: "test",
-            country_code_ISO_3166: "test",
-            created_at: "2025-05-25",
-            updated_at: "2025-05-25",
-        },
-    ];
+    let request = {
+        "act": "read",
+        "selection_type": "all"
+    };
+
+    let response = await sendRequest('https://' + host + '/countries', request);
 
     return processingArray(response);
 }
 
 export async function getLegalEntities() {
-    let response = [
-        {
-            id: 1,
-            name: "test",
-            OKPO: "OKPO test",
-            TGNL_code: "TGNL_code test",
-            INN: "INN test",
-            created_at: "2025-05-25",
-            updated_at: "2025-05-25",
-        },
-        {
-            id: 2,
-            name: "test 2",
-            OKPO: "OKPO test 2",
-            TGNL_code: "TGNL_code test 2",
-            INN: "INN test 2",
-            created_at: "2025-05-25",
-            updated_at: "2025-05-25",
-        },
-    ];
+    let request = {
+        "act": "read",
+        "selection_type": "all"
+    };
+
+    let response = await sendRequest('https://' + host + '/legal_entities', request);
 
     return processingArray(response);
 }
 
 export async function getOwnerships() {
-    let response = [
-        {
-            id: 1,
-            name: "Собственные",
-            code: 1,
-            created_at: "2025-05-25",
-            updated_at: "2025-05-25",
-        },
-        {
-            id: 2,
-            name: "Арендованные",
-            code: 1,
-            created_at: "2025-05-25",
-            updated_at: "2025-05-25",
-        },
-        {
-            id: 3,
-            name: "Собственные и арендованные",
-            code: 1,
-            created_at: "2025-05-25",
-            updated_at: "2025-05-25",
-        }
-    ];
+    let request = {
+        "act": "read",
+        "selection_type": "all"
+    };
+
+    let response = await sendRequest('https://' + host + '/ownerships', request);
 
     return processingArray(response);
 }
 
 export async function getOwnersNonPublicRailway() {
-    let response = [
-        {
-            id: 1,
-            name: "test",
-            code: 1,
-            created_at: "2025-05-25",
-            updated_at: "2025-05-25",
-        },
-    ];
+    let request = {
+        "act": "read",
+        "selection_type": "all"
+    };
+
+    let response = await sendRequest('https://' + host + '/owners_non_public_railway', request);
 
     return processingArray(response);
 }
 
 export async function getApprovalsWithOwner() {
-    let response = [
-        {
-            id: 1,
-            name: "test",
-            code: 1,
-            created_at: "2025-05-25",
-            updated_at: "2025-05-25",
-        },
-    ];
+    let request = {
+        "act": "read",
+        "selection_type": "all"
+    };
+
+    let response = await sendRequest('https://' + host + '/approvals_with_owner', request);
 
     return processingArray(response);
 }
 
 export async function getCargoGroups() {
-    let response = [
-        {
-            id: 1,
-            name: "test",
-            code: 1,
-            created_at: "2025-05-25",
-            updated_at: "2025-05-25",
-        },
-    ];
+    let request = {
+        "act": "read",
+        "selection_type": "all"
+    };
+
+    let response = await sendRequest('https://' + host + '/cargo_groups', request);
 
     return processingArray(response);
 }
 
 export async function getMethodsSubmission() {
-    let response = [
-        {
-            id: 1,
-            name: "test",
-            code: 1,
-            created_at: "2025-05-25",
-            updated_at: "2025-05-25",
-        },
-    ];
+    let request = {
+        "act": "read",
+        "selection_type": "all"
+    };
+
+    let response = await sendRequest('https://' + host + '/methods_submission', request);
 
     return processingArray(response);
 }
 
 export async function getTransportation(id) {
-    let response = {
-        id: 1,
-        id_document_type: 1,
-        registration_date: "2025-05-25",
-        transportation_date_from: "2025-05-25",
-        transportation_date_to: "2025-05-25",
-        id_message_type: 5,
-        id_sign_sending: 3,
-        id_country_departure: 1,
-        id_country_departure_point: 2,
-        id_shipper: 1,
-        is_departure_station: false,
-        addr: "test",
-        id_carriage_ownership: 1,
-        id_loading_organizer: 1,
-        is_common_areas: false,
-        contract_number: "test",
-        id_owner_non_public_railway: 1,
-        id_approval_with_owner: 1,
-        approval_with_owner_date: "2025-05-25",
-        id_cargo_group: 1,
-        id_method_submission: 1,
-        is_form_3: false,
-        description: "test",
-        is_transmitted_by_fax: false,
-        created_at: "2025-05-25",
-        updated_at: "2025-05-25",
+    let request = {
+        "act": "read",
+        "selection_type": "one",
+        "object": {
+            "id": id
+        }
     };
+
+    let response = await sendRequest('https://' + host + '/methods_submission', request);
 
     return response;
 }
 
 export async function getTransportations() {
-    let response = [
-        {
-            id: 1,
-            id_document_type: 1,
-            registration_date: "2025-05-25",
-            transportation_date_from: "2025-05-25",
-            transportation_date_to: "2025-05-25",
-            id_message_type: 1,
-            id_sign_sending: 1,
-            id_country_departure: 1,
-            id_country_departure_point: 1,
-            id_shipper: 1,
-            is_departure_station: false,
-            addr: "test",
-            id_carriage_ownership: 1,
-            id_loading_organizer: 1,
-            is_common_areas: false,
-            contract_number: "test",
-            id_owner_non_public_railway: 1,
-            id_approval_with_owner: 1,
-            approval_with_owner_date: "2025-05-25",
-            id_cargo_group: 1,
-            id_method_submission: 1,
-            is_form_3: false,
-            description: "test",
-            is_transmitted_by_fax: false,
-            created_at: "2025-05-25",
-            updated_at: "2025-05-25",
-        },
-    ];
+    let request = {
+        "act": "read",
+        "selection_type": "all"
+    };
+
+    let response = await sendRequest('https://' + host + '/requests_transportation', request);
 
     return processingArray(response);
 }
@@ -418,4 +212,24 @@ function processingArray(array) {
     });
 
     return object;
+}
+
+async function sendRequest(url, request)
+{
+    let result = [];
+
+    await axios
+        .post(url, request)
+        .then((response) => {
+            if (response.status === 200)
+            {
+                result = response.data;
+            }
+            else
+            {
+                console.log(response);
+            }
+        });
+
+    return result;
 }

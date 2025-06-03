@@ -1,5 +1,26 @@
 <script setup>
+import { onMounted, ref } from "vue";
+import { getCountries, getLegalEntities, getMessageTypes, getSignsSending, getTransportations } from "@/helpers/API";
 import ModalSearchDocumentLarge from "./ModalSearchDocumentLarge.vue";
+
+const transportations = ref([]);
+const signs_sending = ref({});
+const message_types = ref({});
+const legal_entities = ref({});
+const countries = ref({});
+
+async function fetchData() {
+    transportations.value = await getTransportations();
+    signs_sending.value = await getSignsSending();
+    message_types.value = await getMessageTypes();
+    legal_entities.value = await getLegalEntities();
+    countries.value = await getCountries();
+    console.log(transportations.value);
+}
+
+onMounted(async () => {
+    fetchData();
+});
 </script>
 
 <template>
@@ -13,7 +34,7 @@ import ModalSearchDocumentLarge from "./ModalSearchDocumentLarge.vue";
     <div class="container">
         <div class="table-responsive" style="border: gray solid 1px">
             <table class="table table-hover table-bordered border-white">
-                <thead style="background-color: #7DA5F0; color: white;">
+                <thead style="background-color: #7da5f0; color: white">
                     <tr>
                         <th>ID документа</th>
                         <th>Состояние документа</th>
@@ -27,26 +48,26 @@ import ModalSearchDocumentLarge from "./ModalSearchDocumentLarge.vue";
                         <th>Страна назначения</th>
                         <th>Наим. станции назначения</th>
                         <th>Плательщик</th>
-                      </tr>
-                 </thead>
+                    </tr>
+                </thead>
                 <tbody class="table-group-divider">
-                    <tr>
-                        <td></td> 
+                    <tr v-for="transportation in transportations">
+                        <td>{{ transportation.id }}</td>
+                        <td>{{ transportation.document_status }}</td>
+                        <td>{{ transportation.created_at }}</td>
+                        <td>{{ signs_sending[transportation.id_sign_sending]?.name }}</td>
+                        <td>{{ message_types[transportation.id_message_type]?.name }}</td>
+                        <td>{{ legal_entities[transportation.id_shipper]?.name }}</td>
+                        <td>{{ legal_entities[transportation.id_loading_organizer]?.name }}</td>
+                        <td>{{ countries[transportation.id_country_departure]?.name }}</td>
                         <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                      </tr>
-                  </tbody>
-              </table>
-          </div>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </template>
 

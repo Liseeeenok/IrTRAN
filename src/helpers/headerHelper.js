@@ -4,6 +4,7 @@ const mainStore = useMainStore();
 export function updateTitle(title) 
 {
     mainStore.title = title;
+    updateSubtitle('');
 }
 
 export function updateSubtitle(subtitle) 

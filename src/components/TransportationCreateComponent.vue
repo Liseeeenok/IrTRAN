@@ -5,6 +5,7 @@ import { updateTitle, updateSubtitle } from "@/helpers/headerHelper";
 import router from "@/router";
 import { useRoute } from "vue-router";
 import { getDiffDays } from "@/helpers/dateHelper";
+
 const route = useRoute();
 const date = new Date().toISOString().split("T")[0];
 const document_types = ref({});
@@ -65,7 +66,7 @@ function checkCorrectDate() {
 }
 function getDefaultDocument() {
     return {
-        id_document_type: 1,
+        id_document_type: 4,
         registration_date: date,
     };
 }
@@ -106,62 +107,60 @@ async function fetchData() {
     checkRequiredFields();
 }
 
-//<!------------------------------------------------------------>
-// Данные для поиска 
-const searchData = ref([
-  'Результат 1', 'Результат 2', 'Пример', 'Тест', 
-  'Демо', 'Образец', 'Данные', 'Элемент'
-]);
+const dropdowns = ref({});
+const filteredItems = ref({});
+const searchQueries = ref({});
+function openDropdown(key) {
+    dropdowns.value[key] = true;
 
-const searchQuery = ref('');
-const showSuggestions = ref(false);
+    let searchData = [];
 
-const filteredItems = computed(() => {
-  if (!searchQuery.value) return searchData.value;
-  return searchData.value.filter(item =>
-    item.toLowerCase().includes(searchQuery.value.toLowerCase())
-  );
-});
+    switch (key) {
+        case 'country_departure': {
+            searchData = countries.value;
+            break;
+        }
+        case 'station_departure': {
+            searchData = countries.value;
+            break;
+        }
+    }
 
-const handleSearchInput = () => {
-  showSuggestions.value = true;
+    if (!searchQueries.value[key]) {
+        filteredItems.value[key] = Object.values(searchData);
+    }
+    else {
+        filteredItems.value[key] = Object.values(searchData).filter((item) => item.name.toLowerCase().includes(searchQueries.value[key].toLowerCase()));
+    }
 };
+function selectItem(key, value, search)
+{
+    searchQueries.value[key] = search;
+    document.value[key] = value;
+    dropdowns.value[key] = false;
+}
 
-const selectItem = (item) => {
-  searchQuery.value = item;
-  showSuggestions.value = false;
-  performSearch();
-};
+//проблема с передаваемыми параметрами в дропдаун, поэтому пока на каждый дд своя функция закрытия
+function closeDropdownCountryDeparture(event) {
+    dropdowns.value['country_departure'] = false;
+}
+function closeDropdownStation(event) {
+    dropdowns.value['station_departure'] = false;
+}
 
-const performSearch = () => {
-  console.log('Выполняется поиск:', searchQuery.value);
-  showSuggestions.value = false;
-};
-// Закрытие подсказок при клике вне поля не работает
-const handleClickOutside = (event) => {
-  if (!searchContainer.value?.contains(event.target)) {
-    showSuggestions.value = false;
-  }
-};
-onUnmounted(() => {
-  document.removeEventListener('click', handleClickOutside);
-});
-//<!------------------------------------------------------------>
 onMounted(async () => {
-    fetchData(); 
+    fetchData();
 });
-
 </script>
 
 <template>
-    
     <div class="search-box">
         <div class="row">
             <div class="col-auto">
-                <button type="button" class="btn btn-custom" v-on:click="saveDocument">Сохранить</button>
-                <button type="button" class="btn btn-custom" v-on:click="copyDocument" v-if="document.id">Копировать</button>
-                <button type="button" class="btn btn-custom" v-on:click="signDocument" v-if="document.id">Подписать</button>
-                <button type="button" class="btn btn-custom" v-on:click="deleteDocument" v-if="document.id">Испортить</button>
+                <button type="button" class="btn btn-custom" @click="saveDocument">Сохранить</button>
+                <button type="button" class="btn btn-custom" @click="copyDocument" v-if="document.id">Копировать</button>
+                <button type="button" class="btn btn-custom" @click="signDocument" v-if="document.id">Подписать</button>
+                <button type="button" class="btn btn-custom" @click="deleteDocument" v-if="document.id">Испортить</button>
             </div>
         </div>
     </div>
@@ -180,34 +179,34 @@ onMounted(async () => {
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom" required>Тип документа</label>
                     <div class="col-auto" v-if="document_types[document.id_document_type]">
-                        <input type="text" class="form-control mt-0 disabled-input" v-model="document_types[document.id_document_type].name" disabled="disabled" required v-on:change="checkRequiredFields" />
+                        <input type="text" class="form-control mt-0 disabled-input" v-model="document_types[document.id_document_type].name" disabled="disabled" required @change="checkRequiredFields" />
                     </div>
                 </div>
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom" required>Дата регистрации</label>
                     <div class="col-auto">
-                        <input type="date" class="form-control mt-0 custom-input" v-model="document.registration_date" style="width: 150px" required v-on:change="checkRequiredFields" />
+                        <input type="date" class="form-control mt-0 custom-input" v-model="document.registration_date" style="width: 150px" required @change="checkRequiredFields" />
                     </div>
                 </div>
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom" required>Период перевозок с</label>
                     <div class="col-auto">
-                        <input type="date" class="form-control mt-0 custom-input" v-model="document.transportation_date_from" style="width: 150px" required v-on:change="checkRequiredFields" />
+                        <input type="date" class="form-control mt-0 custom-input" v-model="document.transportation_date_from" style="width: 150px" required @change="checkRequiredFields" />
                     </div>
 
                     <label class="col-auto col-form-label mb-0" required>по</label>
                     <div class="col-auto">
-                        <input type="date" class="form-control mt-0 custom-input" v-model="document.transportation_date_to" style="width: 150px" required v-on:change="checkRequiredFields" />
+                        <input type="date" class="form-control mt-0 custom-input" v-model="document.transportation_date_to" style="width: 150px" required @change="checkRequiredFields" />
                     </div>
                 </div>
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom" required>Вид сообщения</label>
                     <div class="col-3">
-                        <select class="form-select mt-0 custom-input" v-model="document.id_message_type" v-on:change="checkRequiredFields">
-                            <option value="">Выберете элемент списка</option>
+                        <select class="form-select mt-0 custom-input" v-model="document.id_message_type" @change="checkRequiredFields">
+                            <option disabled>Выберете элемент списка</option>
                             <option v-for="message_type in message_types" :value="message_type.id">{{ message_type.name }}</option>
                         </select>
                     </div>
@@ -216,50 +215,35 @@ onMounted(async () => {
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom" required>Признак отправки</label>
                     <div class="col-3">
-                        <select class="form-select mt-0 custom-input" v-model="document.id_sign_sending" v-on:change="checkRequiredFields">
-                            <option value="">Выберете элемент списка</option>
+                        <select class="form-select mt-0 custom-input" v-model="document.id_sign_sending" @change="checkRequiredFields">
+                            <option disabled>Выберете элемент списка</option>
                             <option v-for="sign_sending in signs_sending" :value="sign_sending.id">{{ sign_sending.name }}</option>
                         </select>
                     </div>
                 </div>
 
-               <div class="row mb-1">
+                <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom" required>Страна отправления</label>
                     <div class="col-auto">
-                    <div class="dropdown" style="width: 270px">
-                        <div class="input-group">
-                            <input
-                                type="text"
-                                class="form-control custom-search"
-                                placeholder="Поиск..."
-                                aria-label="Введите..."
-                                v-model="searchQuery"
-                                @input="handleSearchInput"
-                                @focus="showSuggestions = true"/>
-                            <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#staticBackdrop">
-                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                            </button>
+                        <div class="dropdown" style="width: 270px" v-click-outside="closeDropdownCountryDeparture">
+                            <div class="input-group">
+                                <input type="text" class="form-control custom-search" placeholder="Поиск..." aria-label="Введите..." v-model="searchQueries['country_departure']" @input="openDropdown('country_departure')" @focus="openDropdown('country_departure')" />
+                                <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#staticBackdrop">
+                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
+                                </button>
+                            </div>
+
+                            <!-- Выпадающий список подсказок -->
+                            <ul v-if="dropdowns['country_departure'] && filteredItems['country_departure']?.length" class="dropdown-menu show" style="width: 270px; max-height: 200px; overflow-y: scroll; overflow-x: hidden">
+                                <li v-for="(item, index) in filteredItems['country_departure']" :key="index" @click="selectItem('id_country_departure', item.id, item.name)">
+                                    <a class="dropdown-item" href="#">{{ item.name }}</a>
+                                </li>
+                            </ul>
+                            <!-- Сообщение "Нет данных" -->
+                            <div v-else-if="dropdowns['country_departure'] && searchQueries['country_departure'] && !filteredItems['country_departure']?.length" class="dropdown-menu show">
+                                <span class="dropdown-item text-muted">Нет данных</span>
+                            </div>
                         </div>
-                        
-                        <!-- Выпадающий список подсказок -->
-                        <ul 
-                        v-if="showSuggestions && filteredItems.length" 
-                        class="dropdown-menu show"
-                        style="width: 270px; max-height: 200px; overflow-y: scroll; overflow-x: hidden;">
-                        <li 
-                            v-for="(item, index) in filteredItems" 
-                            :key="index"
-                            @click="selectItem(item)">
-                            <a class="dropdown-item" href="#">{{ item }}</a>
-                        </li>
-                        </ul>
-                        <!-- Сообщение "Нет данных" -->
-                        <div 
-                        v-else-if="showSuggestions && searchQuery && !filteredItems.length" 
-                        class="dropdown-menu show">
-                        <span class="dropdown-item text-muted">Нет данных</span>
-                        </div>
-                    </div>
                     </div>
                 </div>
 
@@ -319,11 +303,24 @@ onMounted(async () => {
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom" required>Станция отправления/входа в СНГ</label>
                     <div class="col-auto">
-                        <div class="input-group" style="width: 270px">
-                            <input type="text" class="form-control" placeholder="Поиск" aria-label="Введите запрос" />
-                            <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#staticVhodSNG">
-                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                            </button>
+                        <div class="dropdown" style="width: 270px" v-click-outside="closeDropdownStation">
+                            <div class="input-group">
+                                <input type="text" class="form-control custom-search" placeholder="Поиск..." aria-label="Введите..." v-model="searchQueries['station_departure']" @input="openDropdown('station_departure')" @focus="openDropdown('station_departure')" />
+                                <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#staticBackdrop">
+                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
+                                </button>
+                            </div>
+
+                            <!-- Выпадающий список подсказок -->
+                            <ul v-if="dropdowns['station_departure'] && filteredItems['station_departure']?.length" class="dropdown-menu show" style="width: 270px; max-height: 200px; overflow-y: scroll; overflow-x: hidden">
+                                <li v-for="(item, index) in filteredItems['station_departure']" :key="index" @click="selectItem('id_station_departure', item.id, item.name)">
+                                    <a class="dropdown-item" href="#">{{ item.name }}</a>
+                                </li>
+                            </ul>
+                            <!-- Сообщение "Нет данных" -->
+                            <div v-else-if="dropdowns['station_departure'] && searchQueries['station_departure'] && !filteredItems['station_departure']?.length" class="dropdown-menu show">
+                                <span class="dropdown-item text-muted">Нет данных</span>
+                            </div>
                         </div>
                     </div>
 
@@ -504,7 +501,7 @@ onMounted(async () => {
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom" required>Принадлежность вагонов/контейнеров</label>
                     <div class="col-3">
-                        <select class="form-select mt-0 custom-input" v-model="document.id_carriage_ownership" v-on:change="checkRequiredFields">
+                        <select class="form-select mt-0 custom-input" v-model="document.id_carriage_ownership" @change="checkRequiredFields">
                             <option value="">Выберете элемент списка</option>
                             <option v-for="ownership in ownerships" :value="ownership.id">{{ ownership.name }}</option>
                         </select>
@@ -514,7 +511,7 @@ onMounted(async () => {
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Номер договора</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" placeholder="" v-model="document.contract_number"/>
+                        <input type="text" class="form-control mt-0 custom-input" placeholder="" v-model="document.contract_number" />
                     </div>
                 </div>
 
@@ -2159,301 +2156,300 @@ onMounted(async () => {
                         <input type="text" class="form-control mt-0 custom-input" style="height: 100px; min-width: 100%" />
                     </div>
                 </div>
-
             </div>
 
             <!------------------------------------------------------------------Учетная карточка------------------------------------------------------------------------------------------------------------------------------------------->
 
-                    <div class="tab-pane fade" style="margin-top: 1em" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-                        <div class="row mb-1">
-                <div class="col-auto">
-                    <button type="button" class="btn btn-custom" data-toggle="modal" data-target="" >Подписать</button>
-                </div>
-            </div>
-                        <div class="row mb-1">
-                            <label class="col-auto col-form-label mb-0 label-custom">Грузоотправитель</label>
-                            <label class="col-10 col-form-label mb-0 label-custom">(Наименование грузоотправителя из заявки)</label>
-                        </div>
-
-                        <div class="row mb-1">
-                            <label class="col-auto col-form-label mb-0 label-custom">Банковские реквизиты</label>
-                            <label class="col-10 col-form-label mb-0 label-custom">(Банковские реквизиты грузоотправителя из заявки)</label>
-                        </div>
-
-                        <div class="row mb-1">
-                            <label class="col-auto col-form-label mb-0 label-custom">Станция отправления</label>
-                            <label class="col-3 col-form-label mb-0 label-custom">(Станция отправления из заявки)</label>
-                            <label class="col-auto col-form-label mb-0 label-custom">Группа груза</label>
-                            <label class="col-3 col-form-label mb-0 label-custom">(Группа груза из заявки)</label>
-                        </div>
-
-                        <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                            <table class="table table-hover table-bordered border-white">
-                                <thead style="background-color: #7da5f0; color: white">
-                                    <tr>
-                                        <th rowspan="2"></th>
-                                        <th rowspan="2">Дата погрузки</th>
-                                        <th rowspan="2">Станция</th>
-                                        <th colspan="2">Заявлено</th>
-                                        <th>Подано</th>
-                                        <th colspan="2">Погружено</th>
-                                        <th colspan="3">Причины невыполнения заявки</th>
-                                        <th colspan="2">Подпись</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Вагонов(конт.)</td>
-                                        <td>Тонн</td>
-                                        <td>Вагонов(конт.)</td>
-                                        <td>Вагонов(конт.)</td>
-                                        <td>Тонн</td>
-                                        <td>Общий недогруз в вагонах (конт.)</td>
-                                        <td>Ж.Д.</td>
-                                        <td>Отправитель</td>
-                                        <td>Станции</td>
-                                        <td>Грузоотправителя</td>
-                                    </tr>
-                                </thead>
-                                <tbody class="table-group-divider">
-                                    <tr>
-                                        <td><input type="checkbox" class="row-checkbox" /></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td data-toggle="modal" data-target="#NaityPrichiny"></td>
-                                        <td data-toggle="modal" data-target="#NaityPrichiny"></td>
-                                        <td data-toggle="modal" data-target="#NaityPrichiny"></td>
-                                        <td data-toggle="modal" data-target="#PodpisatSutky"></td>
-                                        <td data-toggle="modal" data-target="#PodpisatSutky"></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td>ИТОГО</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        
-            <!--Найти Причины не выполнения модальное окно -->
-            <div class="modal fade" id="NaityPrichiny" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header" style="background-color: #7da5f0">
-                            <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Причины</span>
-                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                                <table class="table table-hover table-bordered border-white">
-                                    <thead style="background-color: #7da5f0; color: white">
-                                        <tr>
-                                            <th>Группа причин</th>
-                                            <th>№</th>
-                                            <th>Причина не выполнения</th>
-                                            <th>Кол-во вагонов (конт.)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="table-group-divider">
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+            <div class="tab-pane fade" style="margin-top: 1em" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                <div class="row mb-1">
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-custom" data-toggle="modal" data-target="">Подписать</button>
                     </div>
                 </div>
-            </div>
-            <!----------------------------- -->
-
-            <div class="row mb-1">
-                <div class="col-auto">
-                    <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#DobavitDatuPogr" disabled>Добавить дату погр.</button>
-                    <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#UdalitDatuPodachy" disabled>Удалить дату погр.</button>
+                <div class="row mb-1">
+                    <label class="col-auto col-form-label mb-0 label-custom">Грузоотправитель</label>
+                    <label class="col-10 col-form-label mb-0 label-custom">(Наименование грузоотправителя из заявки)</label>
                 </div>
-            </div>
 
-            <!--Добавить дату погрузки модальное окно -->
-            <div class="modal fade" id="DobavitDatuPogr" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header" style="background-color: #7da5f0">
-                            <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Добавление даты погрузки</span>
-                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" style="color: white"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row mb-1">
-                                <label class="col-auto col-form-label mb-0 label-custom">Дата погрузки</label>
-                                <div class="col-auto">
-                                    <input type="date" class="form-control mt-0 custom-input" style="width: 150px" />
+                <div class="row mb-1">
+                    <label class="col-auto col-form-label mb-0 label-custom">Банковские реквизиты</label>
+                    <label class="col-10 col-form-label mb-0 label-custom">(Банковские реквизиты грузоотправителя из заявки)</label>
+                </div>
+
+                <div class="row mb-1">
+                    <label class="col-auto col-form-label mb-0 label-custom">Станция отправления</label>
+                    <label class="col-3 col-form-label mb-0 label-custom">(Станция отправления из заявки)</label>
+                    <label class="col-auto col-form-label mb-0 label-custom">Группа груза</label>
+                    <label class="col-3 col-form-label mb-0 label-custom">(Группа груза из заявки)</label>
+                </div>
+
+                <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
+                    <table class="table table-hover table-bordered border-white">
+                        <thead style="background-color: #7da5f0; color: white">
+                            <tr>
+                                <th rowspan="2"></th>
+                                <th rowspan="2">Дата погрузки</th>
+                                <th rowspan="2">Станция</th>
+                                <th colspan="2">Заявлено</th>
+                                <th>Подано</th>
+                                <th colspan="2">Погружено</th>
+                                <th colspan="3">Причины невыполнения заявки</th>
+                                <th colspan="2">Подпись</th>
+                            </tr>
+                            <tr>
+                                <td>Вагонов(конт.)</td>
+                                <td>Тонн</td>
+                                <td>Вагонов(конт.)</td>
+                                <td>Вагонов(конт.)</td>
+                                <td>Тонн</td>
+                                <td>Общий недогруз в вагонах (конт.)</td>
+                                <td>Ж.Д.</td>
+                                <td>Отправитель</td>
+                                <td>Станции</td>
+                                <td>Грузоотправителя</td>
+                            </tr>
+                        </thead>
+                        <tbody class="table-group-divider">
+                            <tr>
+                                <td><input type="checkbox" class="row-checkbox" /></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td data-toggle="modal" data-target="#NaityPrichiny"></td>
+                                <td data-toggle="modal" data-target="#NaityPrichiny"></td>
+                                <td data-toggle="modal" data-target="#NaityPrichiny"></td>
+                                <td data-toggle="modal" data-target="#PodpisatSutky"></td>
+                                <td data-toggle="modal" data-target="#PodpisatSutky"></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>ИТОГО</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!--Найти Причины не выполнения модальное окно -->
+                <div class="modal fade" id="NaityPrichiny" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header" style="background-color: #7da5f0">
+                                <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Причины</span>
+                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
+                                    <table class="table table-hover table-bordered border-white">
+                                        <thead style="background-color: #7da5f0; color: white">
+                                            <tr>
+                                                <th>Группа причин</th>
+                                                <th>№</th>
+                                                <th>Причина не выполнения</th>
+                                                <th>Кол-во вагонов (конт.)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-group-divider">
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <!----------------------------- -->
 
-                            <div class="row mb-1">
-                                <label class="col-auto col-form-label mb-0 label-custom">Станция назначения</label>
-                                <div class="col-3">
-                                    <select class="form-select mt-0 custom-input">
-                                        <option value="">Выберете элемент списка</option>
-                                        <option value="">Станция №1</option>
-                                        <option value="">Станция №2</option>
-                                        <option value="">Станция №3</option>
-                                    </select>
+                <div class="row mb-1">
+                    <div class="col-auto">
+                        <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#DobavitDatuPogr" disabled>Добавить дату погр.</button>
+                        <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#UdalitDatuPodachy" disabled>Удалить дату погр.</button>
+                    </div>
+                </div>
+
+                <!--Добавить дату погрузки модальное окно -->
+                <div class="modal fade" id="DobavitDatuPogr" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header" style="background-color: #7da5f0">
+                                <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Добавление даты погрузки</span>
+                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" style="color: white"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row mb-1">
+                                    <label class="col-auto col-form-label mb-0 label-custom">Дата погрузки</label>
+                                    <div class="col-auto">
+                                        <input type="date" class="form-control mt-0 custom-input" style="width: 150px" />
+                                    </div>
+                                </div>
+
+                                <div class="row mb-1">
+                                    <label class="col-auto col-form-label mb-0 label-custom">Станция назначения</label>
+                                    <div class="col-3">
+                                        <select class="form-select mt-0 custom-input">
+                                            <option value="">Выберете элемент списка</option>
+                                            <option value="">Станция №1</option>
+                                            <option value="">Станция №2</option>
+                                            <option value="">Станция №3</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-1">
+                                    <label class="col-auto col-form-label mb-0 label-custom">Подвижной состав</label>
+                                    <div class="col-3">
+                                        <select class="form-select mt-0 custom-input">
+                                            <option value="">Выберете элемент списка</option>
+                                            <option value="">КО</option>
+                                            <option value="">КО</option>
+                                            <option value="">КО</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row justify-content-md-start">
+                                    <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">ОК</button>
+                                    <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 80px; margin: 10px">Отмена</button>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <!----------------------------- -->
 
-                            <div class="row mb-1">
-                                <label class="col-auto col-form-label mb-0 label-custom">Подвижной состав</label>
-                                <div class="col-3">
-                                    <select class="form-select mt-0 custom-input">
-                                        <option value="">Выберете элемент списка</option>
-                                        <option value="">КО</option>
-                                        <option value="">КО</option>
-                                        <option value="">КО</option>
-                                    </select>
+                <!--Подписать учетные сутки модальное окно -->
+                <div class="modal fade" id="PodpisatSutky" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header" style="background-color: #7da5f0">
+                                <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Подтверждение</span>
+                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row mb-1">
+                                    <label class="col-12 col-form-label mb-0 label-custom">Вы хотите подписать отчётные сутки?</label>
+                                </div>
+                                <div class="row justify-content-md-start">
+                                    <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">ОК</button>
+                                    <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 80px; margin: 10px">Отмена</button>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <!----------------------------- -->
 
-                            <div class="row justify-content-md-start">
-                                <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">ОК</button>
-                                <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 80px; margin: 10px">Отмена</button>
+                <!--Подтвердить удаление даты погрузки модальное окно -->
+                <div class="modal fade" id="UdalitDatuPodachy" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header" style="background-color: #7da5f0">
+                                <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Подтверждение</span>
+                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row mb-1">
+                                    <label class="col-12 col-form-label mb-0 label-custom">Вы хотите удалить дату погрузки?</label>
+                                </div>
+                                <div class="row justify-content-md-start">
+                                    <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">ОК</button>
+                                    <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 80px; margin: 10px">Отмена</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!----------------------------- -->
-
-            <!--Подписать учетные сутки модальное окно -->
-            <div class="modal fade" id="PodpisatSutky" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header" style="background-color: #7da5f0">
-                            <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Подтверждение</span>
-                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row mb-1">
-                                <label class="col-12 col-form-label mb-0 label-custom">Вы хотите подписать отчётные сутки?</label>
-                            </div>
-                            <div class="row justify-content-md-start">
-                                <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">ОК</button>
-                                <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 80px; margin: 10px">Отмена</button>
-                            </div>
-                        </div>
-                    </div>
+                <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
+                    <table class="table table-hover table-bordered border-white">
+                        <thead style="background-color: #7da5f0; color: white">
+                            <tr>
+                                <th colspan="13">Ответственность за невыполнение принятой заявки, начисленная на:</th>
+                                <th rowspan="4">Сальдо по штрафам</th>
+                                <th rowspan="4">№НК / №Ув</th>
+                            </tr>
+                            <tr>
+                                <td colspan="10">Грузоотправителя</td>
+                                <td colspan="3">Железную дорогу</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Невыполненные заявки</td>
+                                <td colspan="3">По дор.(ст.) назначения</td>
+                                <td colspan="4">Сбор за изменение заявки</td>
+                                <td colspan="3">Невыполненные заявки</td>
+                            </tr>
+                            <tr>
+                                <td>В ваг.(конт.)</td>
+                                <td>В тоннах</td>
+                                <td>Сумма штрафа</td>
+                                <td>В тоннах</td>
+                                <td>Сумма сбора</td>
+                                <td>В ваг.(конт.)</td>
+                                <td>Кол-во изм.</td>
+                                <td>В ваг.(конт.)</td>
+                                <td>Тонн</td>
+                                <td>Сумма сбора</td>
+                                <td>В ваг.(конт.)</td>
+                                <td>В тоннах</td>
+                                <td>Сумма штрафа</td>
+                            </tr>
+                        </thead>
+                        <tbody class="table-group-divider">
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <!----------------------------- -->
-
-            <!--Подтвердить удаление даты погрузки модальное окно -->
-            <div class="modal fade" id="UdalitDatuPodachy" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header" style="background-color: #7da5f0">
-                            <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Подтверждение</span>
-                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row mb-1">
-                                <label class="col-12 col-form-label mb-0 label-custom">Вы хотите удалить дату погрузки?</label>
-                            </div>
-                            <div class="row justify-content-md-start">
-                                <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">ОК</button>
-                                <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 80px; margin: 10px">Отмена</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                <table class="table table-hover table-bordered border-white">
-                    <thead style="background-color: #7da5f0; color: white">
-                        <tr>
-                            <th colspan="13">Ответственность за невыполнение принятой заявки, начисленная на:</th>
-                            <th rowspan="4">Сальдо по штрафам</th>
-                            <th rowspan="4">№НК / №Ув</th>
-                        </tr>
-                        <tr>
-                            <td colspan="10">Грузоотправителя</td>
-                            <td colspan="3">Железную дорогу</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3">Невыполненные заявки</td>
-                            <td colspan="3">По дор.(ст.) назначения</td>
-                            <td colspan="4">Сбор за изменение заявки</td>
-                            <td colspan="3">Невыполненные заявки</td>
-                        </tr>
-                        <tr>
-                            <td>В ваг.(конт.)</td>
-                            <td>В тоннах</td>
-                            <td>Сумма штрафа</td>
-                            <td>В тоннах</td>
-                            <td>Сумма сбора</td>
-                            <td>В ваг.(конт.)</td>
-                            <td>Кол-во изм.</td>
-                            <td>В ваг.(конт.)</td>
-                            <td>Тонн</td>
-                            <td>Сумма сбора</td>
-                            <td>В ваг.(конт.)</td>
-                            <td>В тоннах</td>
-                            <td>Сумма штрафа</td>
-                        </tr>
-                    </thead>
-                    <tbody class="table-group-divider">
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            </div>
-            </div>
-</div>
+        </div>
+    </div>
 </template>
 
 <style scoped>
-li{
+li {
     margin-left: -10px;
 }
 .custom-search:focus {
-  border-color: #86b7fe;
-  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
 
 .dropdown-menu {
-  z-index: 100;
-  background-color: #e3e2ff;
+    z-index: 100;
+    background-color: #e3e2ff;
 }
 
 .dropdown-item {
@@ -2462,11 +2458,11 @@ li{
     font-family: "Open Sans", sans-serif;
     font-size: 14px;
     width: 270px;
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .dropdown-item:hover {
-  background-color: #f8f9fa;
+    background-color: #f8f9fa;
 }
 .btn-custom {
     width: auto;
