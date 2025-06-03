@@ -6,7 +6,7 @@
             <div class="col-auto">
                 <button type="button" class="btn btn-custom">Сохранить</button>
                 <button type="button" class="btn btn-custom">Пересчитать</button>
-                <button type="button" class="btn btn-custom">Следующая</button>
+                <button type="button" class="btn btn-custom">Подписать</button>
             </div>
         </div>
     </div>
@@ -108,11 +108,6 @@
                                 <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                             </button>
                         </div>
-                    </div>
-
-                    <label class="col-auto col-form-label mb-0 label-custom" style="width: 100px">ОКПО</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled="disabled" />
                     </div>
                 </div>
 
@@ -460,7 +455,7 @@
 
                     <label class="col-auto col-form-label mb-0">№</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" placeholder="" disabled="disabled" />
+                        <input type="text" class="form-control mt-0 custom-input" placeholder="" />
                     </div>
                 </div>
 
@@ -484,7 +479,7 @@
 
                 <div class="row mb-1">
                     <div class="col-auto">
-                        <button type="button" class="btn btn-custom">Добавить памятки из АСУ ЛР</button>
+                        <button type="button" class="btn btn-custom" disabled>Добавить памятки из АСУ ЛР</button>
                     </div>
                 </div>
 
@@ -512,14 +507,12 @@
                                         <th>Время дополн. маневр. работы</th>
                                         <th>Сбор за маневровую работу</th>
                                         <th>Сбор за пробег локомотива</th>
-                                        <th>По данным АСУЛР</th>
                                         <th>Состояние памятки уборки</th>
                                     </tr>
                                 </thead>
                                 <tbody class="table-group-divider">
                                     <tr>
                                         <td><input type="checkbox" class="row-checkbox" /></td>
-                                        <td></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -549,10 +542,6 @@
                                     <div class="col-auto">
                                         <button type="button" class="btn btn-custom" data-toggle="modal" data-target="">Применить</button>
                                         <button type="button" class="btn btn-custom" data-dismiss="modal">Отменить</button>
-                                        <button type="button" class="btn btn-custom">Предыдущий</button>
-                                        <button type="button" class="btn btn-custom">Следующий</button>
-                                        <button type="button" class="btn btn-custom">Добавить</button>
-                                        <button type="button" class="btn btn-custom">Копировать</button>
                                     </div>
                                 </div>
 
@@ -566,16 +555,6 @@
                                                 <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                             </button>
                                         </div>
-                                    </div>
-
-                                    <label class="col-auto col-form-label mb-0 label-custom" style="width: auto">По данным АСУЛР</label>
-                                    <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" disabled />
-                                    </div>
-
-                                    <label class="col-auto col-form-label mb-0 label-custom" style="width: auto">Разовый клиент</label>
-                                    <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" style="width: 100px" disabled />
                                     </div>
 
                                     <label class="col-auto col-form-label mb-0 label-custom" style="width: 180px">Состояние памятки уборки</label>
@@ -662,19 +641,6 @@
                                     </div>
 
                                     <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" style="width: 100px" disabled />
-                                    </div>
-
-                                    <div class="col-auto">
-                                        <div class="input-group" style="width: 470px">
-                                            <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" disabled />
-                                            <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#NaitySborZaManevrRabotu">
-                                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-auto">
                                         <button type="button" class="btn btn-custom">Расчет</button>
                                     </div>
                                 </div>
@@ -683,19 +649,6 @@
                                     <label class="col-auto col-form-label mb-0 label-custom">Сбор за пробег локомотива</label>
                                     <div class="col-auto">
                                         <input type="text" class="form-control mt-0 custom-input" />
-                                    </div>
-
-                                    <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" style="width: 100px" disabled />
-                                    </div>
-
-                                    <div class="col-auto">
-                                        <div class="input-group" style="width: 470px">
-                                            <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" disabled />
-                                            <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#NaitySborZaProbegLokomotiva">
-                                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                            </button>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -873,119 +826,6 @@
                 </div>
                 <!----------------------------- -->
 
-                <!--Найти Сбор за маневровую работу модальное окно -->
-                <div class="modal fade" id="NaitySborZaManevrRabotu" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header" style="background-color: #7da5f0">
-                                <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Сбор за маневровую работу</span>
-                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row justify-content-md-center mb-2">
-                                    <div class="col-12">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
-                                                </button>
-                                                <button class="btn btn-outline-secondary" type="button">
-                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                                    <table class="table table-hover table-bordered border-white">
-                                        <thead style="background-color: #7da5f0; color: white">
-                                            <tr>
-                                                <th>Код локомотива</th>
-                                                <th>Вид работ</th>
-                                                <th>Наименование работ</th>
-                                                <th>Сумма сбора</th>
-                                                <th>Примечание</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-group-divider">
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="row justify-content-md-end">
-                                    <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
-                                    <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!----------------------------- -->
-
-                <!--Найти Сбор за пробег локомотива модальное окно -->
-                <div class="modal fade" id="NaitySborZaProbegLokomotiva" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header" style="background-color: #7da5f0">
-                                <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Сбор за пробег локомотива</span>
-                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row justify-content-md-center mb-2">
-                                    <div class="col-12">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
-                                                </button>
-                                                <button class="btn btn-outline-secondary" type="button">
-                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                                    <table class="table table-hover table-bordered border-white">
-                                        <thead style="background-color: #7da5f0; color: white">
-                                            <tr>
-                                                <th>Код локомотива</th>
-                                                <th>Пробег</th>
-                                                <th>Наименование сбора</th>
-                                                <th>Сумма сбора</th>
-                                                <th>Примечание</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-group-divider">
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="row justify-content-md-end">
-                                    <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
-                                    <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!----------------------------- -->
 
                 <!----------------------------------------------------------------------------------------------------------------->
 
@@ -996,9 +836,9 @@
 
                 <div class="row mb-1">
                     <div class="col-auto">
-                        <button type="button" class="btn btn-custom">Добавить памятки из АСУ ЛР</button>
-                        <button type="button" class="btn btn-custom">Добавить акты задержки подачи</button>
-                        <button type="button" class="btn btn-custom">Добавить вагоны из памяток подачи</button>
+                        <button type="button" class="btn btn-custom" disabled>Добавить памятки из АСУ ЛР</button>
+                        <button type="button" class="btn btn-custom" disabled>Добавить акты задержки подачи</button>
+                        <button type="button" class="btn btn-custom" disabled>Добавить вагоны из памяток подачи</button>
                     </div>
                 </div>
 
@@ -1069,31 +909,23 @@
                                     <div class="col-auto">
                                         <button type="button" class="btn btn-custom" data-toggle="modal" data-target="">Применить</button>
                                         <button type="button" class="btn btn-custom" data-dismiss="modal">Отменить</button>
-                                        <button type="button" class="btn btn-custom">Предыдущий</button>
-                                        <button type="button" class="btn btn-custom">Следующий</button>
-                                        <button type="button" class="btn btn-custom">Добавить</button>
-                                        <button type="button" class="btn btn-custom">Копировать</button>
                                     </div>
                                 </div>
 
                                 <div class="row mb-1">
-                                    <label class="col-auto col-form-label mb-0 label-custom">Номер памятки уборки</label>
-                                    <div class="col-3">
-                                        <select class="form-select mt-0 custom-input" style="width: auto">
-                                            <option value="">Выберете элемент списка</option>
-                                            <option value=""></option>
-                                            <option value=""></option>
-                                        </select>
+                                    <label class="col-auto col-form-label mb-0 label-custom" style="width: 200px">Без памятки уборки</label>
+                                    <div class="col-auto">
+                                        <input class="form-check-input custom-input" style="width: 20px; height: 20px;" type="checkbox" id="checkboxNoLabel" value="" />
                                     </div>
 
-                                    <label class="col-auto col-form-label mb-0 label-custom" style="width: auto">Без памятки уборки</label>
+                                    <label class="col-auto col-form-label mb-0 label-custom">Номер памятки уборки</label>
                                     <div class="col-auto">
-                                        <input class="form-check-input custom-input" style="width: 20px; height: 20px" type="checkbox" id="checkboxNoLabel" value="" />
+                                        <input class="form-control mt-0 custom-input" style="width: 150px" />
                                     </div>
 
                                     <label class="col-auto col-form-label mb-0 label-custom" style="width: auto">Дата и время памятки уборки</label>
                                     <div class="col-auto">
-                                        <input type="date" class="form-control mt-0 custom-input" style="width: 150px" disabled />
+                                        <input type="datetime-local" class="form-control mt-0 custom-input" style="width: 150px" disabled />
                                     </div>
                                 </div>
 
@@ -1108,10 +940,6 @@
                                     <label class="col-auto col-form-label mb-0 label-custom">Номер вагона</label>
                                     <div class="col-auto">
                                         <input class="form-control mt-0 custom-input" style="width: 150px" />
-                                    </div>
-
-                                    <div class="col-auto">
-                                        <input class="form-control mt-0 custom-input" disabled />
                                     </div>
                                 </div>
 
@@ -1187,7 +1015,7 @@
                                 <div class="row mb-1">
                                     <label class="col-auto col-form-label mb-0 label-custom">Дата и время подачи вагона</label>
                                     <div class="col-auto">
-                                        <input type="date" class="form-control mt-0 custom-input" style="width: 150px" />
+                                        <input type="datetime-local" class="form-control mt-0 custom-input" style="width: 150px" />
                                     </div>
 
                                     <label class="col-auto col-form-label mb-0 label-custom" style="width: auto">по московскому времени</label>
@@ -1196,7 +1024,7 @@
                                 <div class="row mb-1">
                                     <label class="col-auto col-form-label mb-0 label-custom">Время завершения грузовой операции</label>
                                     <div class="col-auto">
-                                        <input type="date" class="form-control mt-0 custom-input" style="width: 150px" />
+                                        <input type="datetime-local" class="form-control mt-0 custom-input" style="width: 150px" />
                                     </div>
 
                                     <label class="col-auto col-form-label mb-0 label-custom" style="width: auto">по московскому времени</label>
@@ -1216,7 +1044,7 @@
                                     </div>
 
                                     <div class="col-auto">
-                                        <button type="button" class="btn btn-custom">Из договора</button>
+                                        <button type="button" class="btn btn-custom" disabled>Из договора</button>
                                     </div>
                                 </div>
 
@@ -1252,12 +1080,12 @@
                                 <div class="row mb-1">
                                     <label class="col-auto col-form-label mb-0 label-custom">Выбор операции для срока оборота</label>
                                     <div class="col-auto">
-                                        <div class="input-group" style="width: 370px">
-                                            <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
-                                            <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#NaityOperationDliaSrokaOborota">
-                                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                            </button>
-                                        </div>
+                                         <select class="form-select mt-0 custom-input" style="width: auto">
+                                            <option value="">Выберете элемент списка</option>
+                                            <option value="">Погрузка</option>
+                                            <option value="">Выгрузка</option>
+                                            <option value="">Сдвоенные операции</option>
+                                        </select>
                                     </div>
                                 </div>
 
@@ -1271,42 +1099,42 @@
                                 <div class="row mb-1">
                                     <label class="col-auto col-form-label mb-0 label-custom" style="width: 400px">Время нахождения вагона на подъездном пути по норме ( код "Ж" для КОО-4):</label>
                                     <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" style="width: 150px" />
+                                        <input type="text" class="form-control mt-0 disabled-input" style="width: 150px" disabled/>
                                     </div>
                                 </div>
 
                                 <div class="row mb-1">
                                     <label class="col-auto col-form-label mb-0 label-custom" style="width: 400px">Время нахождения под грузовой операцией</label>
                                     <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" style="width: 150px" disabled />
+                                        <input type="text" class="form-control mt-0 custom-input" style="width: 150px"  />
                                     </div>
                                 </div>
 
                                 <div class="row mb-1">
                                     <label class="col-auto col-form-label mb-0 label-custom" style="width: 400px">Расч. время нахожд. под гр. операцией (час)</label>
                                     <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" style="width: 150px" disabled />
+                                        <input type="text" class="form-control mt-0 disabled-input" style="width: 150px"  disabled/>
                                     </div>
                                 </div>
 
                                 <div class="row mb-1">
                                     <label class="col-auto col-form-label mb-0 label-custom" style="width: 400px">Время для расчета платы (час)</label>
                                     <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" style="width: 150px" disabled />
+                                        <input type="text" class="form-control mt-0 disabled-input" style="width: 150px"  disabled/>
                                     </div>
                                 </div>
 
                                 <div class="row mb-1">
                                     <label class="col-auto col-form-label mb-0 label-custom" style="width: 400px">Время для расчета штрафа (час)</label>
                                     <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" style="width: 150px" disabled />
+                                        <input type="text" class="form-control mt-0 disabled-input" style="width: 150px"  disabled/>
                                     </div>
                                 </div>
 
                                 <div class="row mb-1">
                                     <label class="col-auto col-form-label mb-0 label-custom" style="width: 400px">Время для расчета платы за нахожд. (час)</label>
                                     <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" style="width: 150px" disabled />
+                                        <input type="text" class="form-control mt-0 disabled-input" style="width: 150px"  disabled/>
                                     </div>
                                 </div>
 
@@ -1416,7 +1244,7 @@
                                 </div>
 
                                 <div class="row mb-1">
-                                    <label class="col-auto col-form-label mb-0 label-custom" style="width: 420px">отказ</label>
+                                    <label class="col-auto col-form-label mb-0 label-custom" style="width: 420px">Отказ</label>
                                     <div class="col-auto">
                                         <input class="form-check-input custom-input" style="width: 20px; height: 20px" type="checkbox" id="checkboxNoLabel" value="" />
                                     </div>
@@ -1485,19 +1313,6 @@
                                     </div>
 
                                     <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 disabled-input" style="width: 150px" placeholder="" disabled="disabled" />
-                                    </div>
-
-                                    <div class="col-auto">
-                                        <div class="input-group" style="width: 370px">
-                                            <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
-                                            <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#NaitySummuOplaty">
-                                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-auto">
                                         <button type="button" class="btn btn-custom">Расчет</button>
                                     </div>
                                 </div>
@@ -1508,24 +1323,12 @@
                                         <input type="text" class="form-control mt-0 custom-input" style="width: 150px" placeholder="" />
                                     </div>
 
-                                    <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 disabled-input" style="width: 150px" placeholder="" disabled="disabled" />
-                                    </div>
-
-                                    <div class="col-auto">
-                                        <div class="input-group" style="width: 370px">
-                                            <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
-                                            <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#NaitySummuShtrafa">
-                                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                            </button>
-                                        </div>
-                                    </div>
                                 </div>
 
                                 <div class="row mb-1">
                                     <label class="col-auto col-form-label mb-0 label-custom" style="width: 360px">Сумма штрафа, переданная в уведомление</label>
                                     <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" style="width: 150px" placeholder="" disabled />
+                                        <input type="text" class="form-control mt-0 disabled-input" style="width: 150px" placeholder="" disabled />
                                     </div>
                                 </div>
 
@@ -1535,18 +1338,6 @@
                                         <input type="text" class="form-control mt-0 custom-input" style="width: 150px" placeholder="" />
                                     </div>
 
-                                    <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 disabled-input" style="width: 150px" placeholder="" disabled="disabled" />
-                                    </div>
-
-                                    <div class="col-auto">
-                                        <div class="input-group" style="width: 370px">
-                                            <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
-                                            <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#NaitySummaPlatyZaNahojdenie">
-                                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                            </button>
-                                        </div>
-                                    </div>
                                 </div>
 
                                 <div class="row mb-1">
@@ -1841,226 +1632,7 @@
                 </div>
                 <!----------------------------- -->
 
-                <!--Найти Выбор операции для срока оборота модальное окно -->
-                <div class="modal fade" id="NaityOperationDliaSrokaOborota" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header" style="background-color: #7da5f0">
-                                <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Выбор операции для срока оборота</span>
-                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row justify-content-md-center mb-2">
-                                    <div class="col-12">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
-                                                </button>
-                                                <button class="btn btn-outline-secondary" type="button">
-                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                                    <table class="table table-hover table-bordered border-white">
-                                        <thead style="background-color: #7da5f0; color: white">
-                                            <tr>
-                                                <th>Код</th>
-                                                <th>Наименование</th>
-                                                <th>Примечание</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-group-divider">
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="row justify-content-md-end">
-                                    <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
-                                    <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!----------------------------- -->
-
-                <!--Найти Сумма платы модальное окно -->
-                <div class="modal fade" id="NaitySummuOplaty" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header" style="background-color: #7da5f0">
-                                <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Сумма платы</span>
-                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row justify-content-md-center mb-2">
-                                    <div class="col-12">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
-                                                </button>
-                                                <button class="btn btn-outline-secondary" type="button">
-                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                                    <table class="table table-hover table-bordered border-white">
-                                        <thead style="background-color: #7da5f0; color: white">
-                                            <tr>
-                                                <th>Код</th>
-                                                <th>Наименование</th>
-                                                <th>Сумма</th>
-                                                <th>Примечание</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-group-divider">
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="row justify-content-md-end">
-                                    <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
-                                    <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!----------------------------- -->
-
-                <!--Найти Сумма штрафа модальное окно -->
-                <div class="modal fade" id="NaitySummuShtrafa" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header" style="background-color: #7da5f0">
-                                <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Сумма штрафа</span>
-                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row justify-content-md-center mb-2">
-                                    <div class="col-12">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
-                                                </button>
-                                                <button class="btn btn-outline-secondary" type="button">
-                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                                    <table class="table table-hover table-bordered border-white">
-                                        <thead style="background-color: #7da5f0; color: white">
-                                            <tr>
-                                                <th>Код</th>
-                                                <th>Наименование</th>
-                                                <th>Сумма</th>
-                                                <th>Причина</th>
-                                                <th>Примечание</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-group-divider">
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="row justify-content-md-end">
-                                    <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
-                                    <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!----------------------------- -->
-
-                <!--Найти Сумма платы за нахождение модальное окно -->
-                <div class="modal fade" id="NaitySummaPlatyZaNahojdenie" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header" style="background-color: #7da5f0">
-                                <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Сумма платы за нахождение</span>
-                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row justify-content-md-center mb-2">
-                                    <div class="col-12">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
-                                                </button>
-                                                <button class="btn btn-outline-secondary" type="button">
-                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                                    <table class="table table-hover table-bordered border-white">
-                                        <thead style="background-color: #7da5f0; color: white">
-                                            <tr>
-                                                <th>Код</th>
-                                                <th>Наименование</th>
-                                                <th>Сумма</th>
-                                                <th>Примечание</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-group-divider">
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="row justify-content-md-end">
-                                    <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
-                                    <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!----------------------------- -->
-
+                
                 <!----------------------------------------------------------------------------------------------------------------->
 
                 <!----------------------------------------- Для расчета сборов за подачу и уборку ------------------------------------------>
@@ -2138,9 +1710,6 @@
                                     <div class="col-auto">
                                         <button type="button" class="btn btn-custom" data-toggle="modal" data-target="">Применить</button>
                                         <button type="button" class="btn btn-custom" data-dismiss="modal">Отменить</button>
-                                        <button type="button" class="btn btn-custom">Предыдущий</button>
-                                        <button type="button" class="btn btn-custom">Следующий</button>
-                                        <button type="button" class="btn btn-custom">Добавить</button>
                                     </div>
                                 </div>
 
@@ -2187,7 +1756,7 @@
                                 <div class="row mb-1">
                                     <label class="col-auto col-form-label mb-0 label-custom">Источник информации</label>
                                     <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" placeholder="" style="width: 220px" disabled />
+                                        <input type="text" class="form-control mt-0 disabled-input" placeholder="" style="width: 220px" disabled />
                                     </div>
                                 </div>
                             </div>
@@ -2205,136 +1774,76 @@
                     </div>
 
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled="disabled" />
-                    </div>
-
-                    <div class="col-auto">
-                        <div class="input-group" style="width: 270px">
-                            <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
-                            <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#NaitySborZaPodachuIUborku">
-                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="col-auto">
                         <button type="button" class="btn btn-custom">Расчет</button>
                     </div>
                 </div>
 
-                <!--Найти Сбор за подачу/уборку модальное окно -->
-                <div class="modal fade" id="NaitySborZaPodachuIUborku" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header" style="background-color: #7da5f0">
-                                <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Сбор за подачу/уборку</span>
-                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row justify-content-md-center mb-2">
-                                    <div class="col-12">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
-                                                </button>
-                                                <button class="btn btn-outline-secondary" type="button">
-                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                                    <table class="table table-hover table-bordered border-white">
-                                        <thead style="background-color: #7da5f0; color: white">
-                                            <tr>
-                                                <th>Код</th>
-                                                <th>Наименование</th>
-                                                <th>Примечание</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-group-divider">
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="row justify-content-md-end">
-                                    <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
-                                    <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!----------------------------- -->
+               
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Коэфф. надбавки на безопасность</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder=""  />
                     </div>
 
                     <label class="col-auto col-form-label mb-0 label-custom">Коэфф. надбавки на компенсацию налогов</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder=""  />
                     </div>
 
                     <label class="col-auto col-form-label mb-0 label-custom">Коэфф. надбавки на кап. ремонт</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder=""  />
+                    </div>
+
+                     <div class="col-auto">
+                        <button type="button" class="btn btn-custom">Расчет</button>
                     </div>
                 </div>
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Сумма платежа без неиндексируемой части тарифа</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled />
                     </div>
 
                     <label class="col-auto col-form-label mb-0 label-custom">Сумма руб без коэф на безопасность</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled />
                     </div>
 
                     <label class="col-auto col-form-label mb-0 label-custom">Сумма руб без коэф на налог</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled />
                     </div>
 
                     <label class="col-auto col-form-label mb-0 label-custom">Сумма руб без доп коэф</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled />
                     </div>
                 </div>
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Доход от надбавки на безопасность</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled />
                     </div>
 
                     <label class="col-auto col-form-label mb-0 label-custom">Доход от надбавки на компенсацию налогов</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled />
                     </div>
 
                     <label class="col-auto col-form-label mb-0 label-custom">Доход от надбавки на капитальный ремонт</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled />
                     </div>
                 </div>
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Количество суток факт.пользования ПП</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder=""  />
                     </div>
                 </div>
 
@@ -2344,126 +1853,68 @@
                         <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" />
                     </div>
 
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
-                    </div>
-
-                    <div class="col-auto">
-                        <div class="input-group" style="width: 270px">
-                            <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
-                            <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#NaitySborZaPolzovaniePP">
-                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                            </button>
-                        </div>
+                     <div class="col-auto">
+                        <button type="button" class="btn btn-custom">Расчет</button>
                     </div>
                 </div>
-
-                <!--Найти Сбор за пользование ПП модальное окно -->
-                <div class="modal fade" id="NaitySborZaPolzovaniePP" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header" style="background-color: #7da5f0">
-                                <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Сбор за пользование ПП</span>
-                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row justify-content-md-center mb-2">
-                                    <div class="col-12">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
-                                                </button>
-                                                <button class="btn btn-outline-secondary" type="button">
-                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                                    <table class="table table-hover table-bordered border-white">
-                                        <thead style="background-color: #7da5f0; color: white">
-                                            <tr>
-                                                <th>Код</th>
-                                                <th>Наименование</th>
-                                                <th>Примечание</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-group-divider">
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="row justify-content-md-end">
-                                    <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
-                                    <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!----------------------------- -->
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Коэфф. надбавки на безопасность</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder=""  />
                     </div>
 
                     <label class="col-auto col-form-label mb-0 label-custom">Коэфф. надбавки на компенсацию налогов</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder=""  />
                     </div>
 
                     <label class="col-auto col-form-label mb-0 label-custom">Коэфф. надбавки на кап. ремонт</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder=""  />
+                    </div>
+
+                     <div class="col-auto">
+                        <button type="button" class="btn btn-custom">Расчет</button>
                     </div>
                 </div>
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Сумма платежа без неиндексируемой части тарифа</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled />
                     </div>
 
                     <label class="col-auto col-form-label mb-0 label-custom">Сумма руб без коэф на безопасность</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled />
                     </div>
 
                     <label class="col-auto col-form-label mb-0 label-custom">Сумма руб без коэф на налог</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled />
                     </div>
 
                     <label class="col-auto col-form-label mb-0 label-custom">Сумма руб без доп коэф</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled />
                     </div>
                 </div>
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Доход от надбавки на безопасность</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled />
                     </div>
 
                     <label class="col-auto col-form-label mb-0 label-custom">Доход от надбавки на компенсацию налогов</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled />
                     </div>
 
                     <label class="col-auto col-form-label mb-0 label-custom">Доход от надбавки на капитальный ремонт</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled />
                     </div>
                 </div>
 
@@ -2475,435 +1926,222 @@
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Начислено</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled />
+                    </div>
+
+                     <div class="col-auto">
+                        <button type="button" class="btn btn-custom">Расчет</button>
                     </div>
                 </div>
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Взыскано</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" />
                     </div>
                 </div>
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">С лицевого счета</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 220px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 custom-input" style="width: 220px" placeholder="" />
                     </div>
                 </div>
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">По уведомлению</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 220px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 custom-input" style="width: 220px" placeholder="" />
                     </div>
 
                     <label class="col-auto col-form-label mb-0 label-custom" style="width: auto">№</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" />
                     </div>
                 </div>
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Плата за пользование</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 220px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 220px" placeholder="" disabled />
+                    </div>
+                     <div class="col-auto">
+                        <button type="button" class="btn btn-custom">Расчет</button>
                     </div>
                 </div>
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Плата за нахождение</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 220px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 220px" placeholder="" disabled />
+                    </div>
+                     <div class="col-auto">
+                        <button type="button" class="btn btn-custom">Расчет</button>
                     </div>
                 </div>
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Коэфф. надбавки на безопасность</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder=""  />
                     </div>
 
                     <label class="col-auto col-form-label mb-0 label-custom">Коэфф. надбавки на компенсацию налогов</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder=""  />
                     </div>
 
                     <label class="col-auto col-form-label mb-0 label-custom">Коэфф. надбавки на кап. ремонт</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder=""  />
+                    </div>
+                     <div class="col-auto">
+                        <button type="button" class="btn btn-custom">Расчет</button>
                     </div>
                 </div>
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Сумма платежа без неиндексируемой части тарифа</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled />
                     </div>
 
                     <label class="col-auto col-form-label mb-0 label-custom">Сумма руб без коэф на безопасность</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled />
                     </div>
 
                     <label class="col-auto col-form-label mb-0 label-custom">Сумма руб без коэф на налог</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled />
                     </div>
 
                     <label class="col-auto col-form-label mb-0 label-custom">Сумма руб без доп коэф</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled />
                     </div>
                 </div>
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Доход от надбавки на безопасность</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled />
                     </div>
 
                     <label class="col-auto col-form-label mb-0 label-custom">Доход от надбавки на компенсацию налогов</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled />
                     </div>
 
                     <label class="col-auto col-form-label mb-0 label-custom">Доход от надбавки на капитальный ремонт</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled />
                     </div>
                 </div>
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Сбор за маневровые операции</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 220px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 220px" placeholder="" disabled />
+                    </div>
+                     <div class="col-auto">
+                        <button type="button" class="btn btn-custom">Расчет</button>
                     </div>
                 </div>
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Сбор за пробег локомотива</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 220px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 220px" placeholder="" disabled />
+                    </div>
+                     <div class="col-auto">
+                        <button type="button" class="btn btn-custom">Расчет</button>
                     </div>
                 </div>
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Итого</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 220px" placeholder="" disabled />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 220px" placeholder="" disabled />
+                    </div>
+
+                     <div class="col-auto">
+                        <button type="button" class="btn btn-custom">Расчет</button>
                     </div>
 
                     <div class="col-auto">
-                        <button type="button" class="btn btn-custom">Чек</button>
+                        <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#Checkforpay">Чек</button>
                     </div>
 
                     <div class="col-auto">
-                        <button type="button" class="btn btn-custom">Извещение по сборам</button>
+                        <button type="button" class="btn btn-custom" disabled>Извещение по сборам</button>
                     </div>
 
                     <div class="col-auto">
-                        <button type="button" class="btn btn-custom">Извещение по штрафам</button>
+                        <button type="button" class="btn btn-custom" disabled>Извещение по штрафам</button>
                     </div>
                 </div>
 
-                <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Коэфф. надбавки на безопасность</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
-                    </div>
-
-                    <label class="col-auto col-form-label mb-0 label-custom">Коэфф. надбавки на компенсацию налогов</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
-                    </div>
-
-                    <label class="col-auto col-form-label mb-0 label-custom">Коэфф. надбавки на кап. ремонт</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
-                    </div>
-                </div>
-
-                <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Сумма платежа без неиндексируемой части тарифа</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
-                    </div>
-
-                    <label class="col-auto col-form-label mb-0 label-custom">Сумма руб без коэф на безопасность</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
-                    </div>
-
-                    <label class="col-auto col-form-label mb-0 label-custom">Сумма руб без коэф на налог</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
-                    </div>
-
-                    <label class="col-auto col-form-label mb-0 label-custom">Сумма руб без доп коэф</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
-                    </div>
-                </div>
-
-                <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Доход от надбавки на безопасность</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
-                    </div>
-
-                    <label class="col-auto col-form-label mb-0 label-custom">Доход от надбавки на компенсацию налогов</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
-                    </div>
-
-                    <label class="col-auto col-form-label mb-0 label-custom">Доход от надбавки на капитальный ремонт</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
-                    </div>
-                </div>
-
-                <!-------------------------------------------------------------------------------->
-
-                <!--------------------------------Для отчета КОО-4----------------------------------------->
-                <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0" style="width: auto; font-weight: bold">Для отчета КОО-4</label>
-                </div>
-
-                <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Погружено вагонов перевозчика</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
-                    </div>
-
-                    <label class="col-auto col-form-label mb-0 label-custom">Выгружено вагонов перевозчика</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
-                    </div>
-                </div>
-
-                <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Погружено собств. и аренд. вагонов</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
-                    </div>
-
-                    <label class="col-auto col-form-label mb-0 label-custom">Выгружено собств. и аренд. вагонов</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
-                    </div>
-                </div>
-
-                <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Погружено собств./аренд. ваг. (не указ. в ведом.)</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" />
-                    </div>
-
-                    <label class="col-auto col-form-label mb-0 label-custom">Выгружено собств./аренд. ваг. (не указ. ведом.)</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" />
-                    </div>
-                </div>
-
-                <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Итого погружено (код "Г")</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
-                    </div>
-
-                    <label class="col-auto col-form-label mb-0 label-custom">Итого выгружено (код "Д")</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
-                    </div>
-                </div>
-
-                <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Задержано ваг. в пути след. (код "Е")</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" />
-                    </div>
-                </div>
-
-                <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Время нахождения вагонов в пути следования на ответственности организации ( код "Л" )</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" />
-                    </div>
-                </div>
-
-                <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Сумма платы за польз. ваг. в пути след. (код "О")</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" />
-                    </div>
-                </div>
-                <!-------------------------------------------------------------------------------->
-
-                <!----------------------------------------- Внесено по квитанциям РС-97 / чекам ------------------------------------------>
-                <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0" style="width: auto; font-weight: bold">Внесено по квитанциям РС-97 / чекам</label>
-                </div>
-
-                <div class="row mb-1">
-                    <div class="col-auto">
-                        <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#DobavitPoKvitaciamRS">Добавить</button>
-                        <button type="button" class="btn btn-custom">Изменить</button>
-                        <button type="button" class="btn btn-custom">Удалить</button>
-                        <button type="button" class="btn btn-custom">Копировать</button>
-                        <button type="button" class="btn btn-custom">Вставить</button>
-                    </div>
-                </div>
-
-                <div class="row mb-1">
-                    <div class="col-auto">
-                        <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 50px">
-                            <table class="table table-hover table-bordered border-white">
-                                <thead style="background-color: #7da5f0; color: white">
-                                    <tr>
-                                        <th></th>
-                                        <th>Серия квитанции</th>
-                                        <th>Номер квитанции / чека</th>
-                                        <th>Статья сбора</th>
-                                        <th>Сумма</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="table-group-divider">
-                                    <tr>
-                                        <td><input type="checkbox" class="row-checkbox" /></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!--Добавить Квитанции РС по ведомости подачи-уборки модальное окно -->
-                <div class="modal fade" id="DobavitPoKvitaciamRS" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg" style="min-width: 60%">
-                        <div class="modal-content">
-                            <div class="modal-header" style="background-color: #7da5f0">
-                                <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Квитанции РС по ведомости подачи-уборки</span>
-                                <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; background-color: red; margin: 0 10%">Выберите статью сбора</span>
-                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row mb-1">
-                                    <div class="col-auto">
-                                        <button type="button" class="btn btn-custom" data-toggle="modal" data-target="">Применить</button>
-                                        <button type="button" class="btn btn-custom" data-dismiss="modal">Отменить</button>
-                                        <button type="button" class="btn btn-custom">Предыдущий</button>
-                                        <button type="button" class="btn btn-custom">Следующий</button>
-                                        <button type="button" class="btn btn-custom">Добавить</button>
-                                        <button type="button" class="btn btn-custom">Копировать</button>
-                                    </div>
-                                </div>
-
-                                <div class="row mb-1">
-                                    <label class="col-auto col-form-label mb-0 label-custom">Статья сбора</label>
-
-                                    <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" disabled />
-                                    </div>
-
-                                    <div class="col-auto">
-                                        <div class="input-group" style="width: 455px">
-                                            <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
-                                            <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#NaityStatiuSbora">
-                                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row mb-1">
-                                    <label class="col-auto col-form-label mb-0 label-custom">Сумма</label>
-
-                                    <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" placeholder="" />
-                                    </div>
-
-                                    <div class="col-auto">
-                                        <button type="button" class="btn btn-custom">Создать КРС</button>
-                                    </div>
-                                </div>
-
-                                <div class="row mb-1">
-                                    <label class="col-auto col-form-label mb-0 label-custom">Серия квитанции</label>
-                                    <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" style="width: 120px" placeholder="" />
-                                    </div>
-
-                                    <label class="col-auto col-form-label mb-0 label-custom" style="width: auto">Номер квитанции / чека</label>
-
-                                    <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" placeholder="" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!----------------------------------------------------------------------->
-
-                <!--Найти Статья сбора модальное окно -->
-                <div class="modal fade" id="NaityStatiuSbora" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <!--Найти Чек модальное окно -->
+                <div class="modal fade" id="Checkforpay" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color: #7da5f0">
-                                <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Статья сбора</span>
+                                <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Чек по сборам и плате</span>
                                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
                             </div>
                             <div class="modal-body">
-                                <div class="row justify-content-md-center mb-2">
-                                    <div class="col-12">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
-                                                </button>
-                                                <button class="btn btn-outline-secondary" type="button">
-                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
+                                <div class="table-responsive" style="border: #c1c1c1 solid 1px;">
                                     <table class="table table-hover table-bordered border-white">
                                         <thead style="background-color: #7da5f0; color: white">
                                             <tr>
-                                                <th>Код</th>
-                                                <th>Наименование</th>
-                                                <th>Примечание</th>
+                                                <th>Наименование сбора/платы с учетом коэф.</th>
+                                                <th>Сумма</th>
                                             </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
                                             <tr>
+                                                <td>Сбор за подачу/уборку</td>
                                                 <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Сбор за пользование ПП</td>
                                                 <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Плата за нахождение</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Сбор за маневровые операции</td>
+                                                <td></td>
+                                            </tr>
+                                             <tr>
+                                                <td>Сбор за пробег локомотива</td>
+                                                <td></td>
+                                            </tr>
+                                             <tr>
+                                                <td>Штрафы</td>
+                                                <td></td>
+                                            </tr>
+                                             <tr>
+                                                <td>Итого</td>
                                                 <td></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
 
-                                <div class="row justify-content-md-end">
-                                    <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
-                                    <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
+                                <div class="row justify-content-md-center">
+                                    <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Ок</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!----------------------------- -->
-                <!----------------------------------------------------------------------------------------------------------------->
+                <!-------------------------------------------------------------------------------->
+
             </div>
         </div>
     </div>
