@@ -11,6 +11,7 @@ const page = ref("document");
         <div class="row">
             <div class="col-auto">
                 <button type="button" class="btn btn-custom">Сохранить</button>
+                <button type="button" class="btn btn-custom">Подписать</button>
                 <button type="button" class="btn btn-custom">Испортить</button>
             </div>
         </div>
@@ -27,7 +28,7 @@ const page = ref("document");
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Вид документа</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" placeholder="" disabled="disabled" />
+                        <input type="text" class="form-control mt-0 disabled-input" placeholder="Накопительная ведомость" disabled="disabled" />
                     </div>
                 </div>
 
@@ -41,7 +42,7 @@ const page = ref("document");
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Номер документа</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" placeholder="" disabled="disabled" />
+                        <input type="text" class="form-control mt-0 custom-input" placeholder=""/>
                     </div>
                 </div>
 
@@ -95,8 +96,7 @@ const page = ref("document");
                     <div class="col-3">
                         <select class="form-select mt-0 custom-input">
                             <option value="">Выберете элемент списка</option>
-                            <option value="Прямое">Прямое</option>
-                            <option value="Прямое смешанное">Прямое смешанное</option>
+                            <option value="ЦФТО">ЦФТО</option>
                         </select>
                     </div>
                 </div>
@@ -126,10 +126,8 @@ const page = ref("document");
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Форма расчета</label>
                     <div class="col-3">
-                        <select class="form-select mt-0 custom-input" disabled>
+                        <select class="form-select mt-0 disabled-input" disabled>
                             <option value="">Безналичный централизованный</option>
-                            <option value=""></option>
-                            <option value=""></option>
                         </select>
                     </div>
                 </div>
@@ -251,12 +249,12 @@ const page = ref("document");
 
                 <div class="row mb-1">
                     <div class="col-auto">
-                        <button type="button" class="btn btn-custom">Добавить</button>
+                        <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#AddSbor">Добавить</button>
                         <button type="button" class="btn btn-custom">Изменить</button>
                         <button type="button" class="btn btn-custom">Удалить</button>
                         <button type="button" class="btn btn-custom">Копировать</button>
                         <button type="button" class="btn btn-custom">Вставить</button>
-                        <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#DannieIzAktov">Данные из актов</button>
+                        <button type="button" class="btn btn-custom" disabled>Данные из актов</button>
                     </div>
                 </div>
 
@@ -269,9 +267,9 @@ const page = ref("document");
                                         <th></th>
                                         <th>Дата</th>
                                         <th>Наименование документа</th>
-                                        <th>номер документа</th>
+                                        <th>Номер документа</th>
                                         <th>Состояние родительского документа</th>
-                                        <th>Шифр статьи</th>
+                                        <th>Код статьи сбора</th>
                                         <th>Наименование сбора</th>
                                         <th>Примечание</th>
                                         <th>Номер ваг/конт</th>
@@ -320,7 +318,7 @@ const page = ref("document");
                 </div>
 
                 <!--Данные по актам Сборов модальное окно -->
-                <div class="modal fade bd-example-modal-lg" id="DannieIzAktov" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal fade bd-example-modal-lg" id="AddSbor" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg" style="max-width: 90%">
                         <div class="modal-content">
                             <div class="modal-header" style="background-color: #7da5f0">
@@ -332,11 +330,7 @@ const page = ref("document");
                                 <div class="row mb-3">
                                     <div class="col-auto">
                                         <button type="button" class="btn btn-custom">Применить</button>
-                                        <button type="button" class="btn btn-custom">Отменить</button>
-                                        <button type="button" class="btn btn-custom">Предыдущий</button>
-                                        <button type="button" class="btn btn-custom">Следующий</button>
-                                        <button type="button" class="btn btn-custom">Добавить</button>
-                                        <button type="button" class="btn btn-custom">Копировать</button>
+                                        <button type="button" class="btn btn-custom" data-dismiss="modal">Отменить</button>
                                     </div>
                                 </div>
 
@@ -352,9 +346,8 @@ const page = ref("document");
                                     <div class="col-3">
                                         <select class="form-select mt-0 custom-input">
                                             <option value="">Выберете элемент списка</option>
-                                            <option value="Повагонная">Повагонная</option>
-                                            <option value="Контейнерная">Контейнерная</option>
-                                            <option value="Контейнерная комплектом на вагон">Контейнерная комплектом на вагон</option>
+                                            <option value="Накладная">Накладная</option>
+                                            <option value="Ведомость подачи и уборки">Ведомость подачи и уборки</option>
                                         </select>
                                     </div>
                                 </div>
@@ -370,17 +363,13 @@ const page = ref("document");
                                         </div>
                                     </div>
 
-                                    <label class="col-auto col-form-label mb-0 label-custom" style="width: 180px">По данным ЭТРАН</label>
-                                    <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 disabled-input" style="width: 100px" placeholder="" disabled="disabled" />
-                                    </div>
 
-                                    <label class="col-auto col-form-label mb-0 label-custom" style="width: 30px">Ид*</label>
+                                    <label class="col-auto col-form-label mb-0 label-custom" style="width: auto">Ид*</label>
                                     <div class="col-auto">
                                         <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled="disabled" />
                                     </div>
 
-                                    <label class="col-auto col-form-label mb-0 label-custom" style="width: 180px">Состояние документа</label>
+                                    <label class="col-auto col-form-label mb-0 label-custom" style="width: auto">Состояние документа</label>
                                     <div class="col-auto">
                                         <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled="disabled" />
                                     </div>
@@ -388,8 +377,8 @@ const page = ref("document");
 
                                 <div class="row mb-1">
                                     <label class="col-auto col-form-label mb-0 label-custom">Статья сбора</label>
-                                    <div class="col-6">
-                                        <div class="input-group" style="min-width: 100%">
+                                    <div class="col-auto">
+                                        <div class="input-group" style="width: 478px">
                                             <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
                                             <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#StatiaSbora">
                                                 <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
@@ -397,7 +386,7 @@ const page = ref("document");
                                         </div>
                                     </div>
 
-                                    <label class="col-1 col-form-label mb-0 label-custom" style="width: auto">Код статьи</label>
+                                    <label class="col-auto col-form-label mb-0 label-custom" style="width: auto">Код статьи</label>
                                     <div class="col-auto">
                                         <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled="disabled" />
                                     </div>
@@ -406,11 +395,10 @@ const page = ref("document");
                                 <div class="row mb-1">
                                     <label class="col-auto col-form-label mb-0 label-custom">Признак НДС</label>
                                     <div class="col-3">
-                                        <select class="form-select mt-0 custom-input" disabled>
+                                        <select class="form-select mt-0 custom-input" >
                                             <option value="">Выберете элемент списка</option>
-                                            <option value="Большая">Большая</option>
-                                            <option value="Грузовая">Грузовая</option>
-                                            <option value="Не указано">Не указано</option>
+                                            <option value="">С НДС 20%</option>
+                                            <option value="">Без НДС</option>
                                         </select>
                                     </div>
                                 </div>
@@ -426,7 +414,7 @@ const page = ref("document");
                                         </div>
                                     </div>
 
-                                    <label class="col-1 col-form-label mb-0 label-custom" style="width: auto">Код</label>
+                                    <label class="col-auto col-form-label mb-0 label-custom" style="width: auto">Код</label>
                                     <div class="col-auto">
                                         <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled="disabled" />
                                     </div>
@@ -435,7 +423,7 @@ const page = ref("document");
                                 <div class="row mb-1">
                                     <label class="col-auto col-form-label mb-0 label-custom">Рассчетная сумма</label>
                                     <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" style="width: 100px" placeholder="" disabled />
+                                        <input type="text" class="form-control mt-0 disabled-input" style="width: 100px" placeholder="" disabled />
                                     </div>
                                 </div>
 
@@ -447,23 +435,27 @@ const page = ref("document");
                                     </div>
 
                                     <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" placeholder="" disabled />
+                                        <input type="text" class="form-control mt-0 disabled-input" style="width: 100px" placeholder="" disabled />
                                     </div>
 
-                                    <label class="col-auto col-form-label mb-0 label-custom" style="width: 110px">Ставка НДС</label>
+                                    <label class="col-auto col-form-label mb-0 label-custom" style="width: auto">Ставка НДС</label>
 
                                     <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" style="width: 100px" placeholder="" disabled />
+                                        <input type="text" class="form-control mt-0 disabled-input" style="width: 100px" placeholder="" disabled/>
                                     </div>
 
-                                    <label class="col-auto col-form-label mb-0 label-custom" style="width: 110px">Сумма НДС</label>
+                                    <label class="col-auto col-form-label mb-0 label-custom" style="width: auto">Сумма НДС</label>
 
                                     <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" style="width: 100px" placeholder="" disabled />
+                                        <input type="text" class="form-control mt-0 disabled-input" style="width: 100px" placeholder="" disabled />
+                                    </div>
+
+                                     <div class="col-auto">
+                                        <button type="button" class="btn btn-custom">Расчет</button>
                                     </div>
 
                                     <div class="col-auto">
-                                        <button type="button" class="btn btn-custom">Формула расчетов</button>
+                                        <button type="button" class="btn btn-custom" disabled>Формула расчетов</button>
                                     </div>
                                 </div>
 
@@ -471,19 +463,23 @@ const page = ref("document");
                                     <label class="col-auto col-form-label mb-0 label-custom">Коэф. надбавки на безопаность</label>
 
                                     <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" style="width: 100px" placeholder="" disabled />
+                                        <input type="text" class="form-control mt-0 custom-input" style="width: 100px" placeholder=""  />
                                     </div>
 
                                     <label class="col-auto col-form-label mb-0 label-custom">Коэф. надбавки на компенсацию налогов</label>
 
                                     <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" style="width: 100px" placeholder="" disabled />
+                                        <input type="text" class="form-control mt-0 custom-input" style="width: 100px" placeholder=""  />
                                     </div>
 
                                     <label class="col-auto col-form-label mb-0 label-custom">Коэф. надбавки на кап. ремонт</label>
 
                                     <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" style="width: 100px" placeholder="" disabled />
+                                        <input type="text" class="form-control mt-0 custom-input" style="width: 100px" placeholder=""  />
+                                    </div>
+
+                                    <div class="col-auto">
+                                        <button type="button" class="btn btn-custom">Расчет</button>
                                     </div>
                                 </div>
 
@@ -491,25 +487,25 @@ const page = ref("document");
                                     <label class="col-auto col-form-label mb-0 label-custom">Сумма без неиндек. части тарифа</label>
 
                                     <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" style="width: 100px" placeholder="" disabled />
+                                        <input type="text" class="form-control mt-0 disabled-input" style="width: 100px" placeholder="" disabled />
                                     </div>
 
                                     <label class="col-auto col-form-label mb-0 label-custom">Сумма без коэф. на безопасность</label>
 
                                     <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" style="width: 100px" placeholder="" disabled />
+                                        <input type="text" class="form-control mt-0 disabled-input" style="width: 100px" placeholder="" disabled />
                                     </div>
 
                                     <label class="col-auto col-form-label mb-0 label-custom">Сумма без коэф. на налог</label>
 
                                     <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" style="width: 100px" placeholder="" disabled />
+                                        <input type="text" class="form-control mt-0 disabled-input" style="width: 100px" placeholder="" disabled />
                                     </div>
 
                                     <label class="col-auto col-form-label mb-0 label-custom">Сумма без доп коэф.</label>
 
                                     <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" style="width: 100px" placeholder="" disabled />
+                                        <input type="text" class="form-control mt-0 disabled-input" style="width: 100px" placeholder="" disabled />
                                     </div>
                                 </div>
 
@@ -517,19 +513,19 @@ const page = ref("document");
                                     <label class="col-auto col-form-label mb-0 label-custom">Доход от надбавки на обесп. безопасности</label>
 
                                     <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" style="width: 100px" placeholder="" disabled />
+                                        <input type="text" class="form-control mt-0 disabled-input" style="width: 100px" placeholder="" disabled />
                                     </div>
 
                                     <label class="col-auto col-form-label mb-0 label-custom">Доход от надбавки на компенсацию налогов</label>
 
                                     <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" style="width: 100px" placeholder="" disabled />
+                                        <input type="text" class="form-control mt-0 disabled-input" style="width: 100px" placeholder="" disabled />
                                     </div>
 
                                     <label class="col-auto col-form-label mb-0 label-custom">Доход от надбавки на кап. ремонт</label>
 
                                     <div class="col-auto">
-                                        <input type="text" class="form-control mt-0 custom-input" style="width: 100px" placeholder="" disabled />
+                                        <input type="text" class="form-control mt-0 disabled-input" style="width: 100px" placeholder="" disabled />
                                     </div>
                                 </div>
 
