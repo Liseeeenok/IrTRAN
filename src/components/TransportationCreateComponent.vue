@@ -76,6 +76,7 @@ function getDefaultDocument() {
 async function saveDocument() {
     let saveDoc = await saveTransporation(document.value);
     document.value = saveDoc;
+    updateTitle("Заявка на перевозку №" + document.value.id);
     router.push("/transporation/create/" + saveDoc.id);
 }
 function copyDocument() {
