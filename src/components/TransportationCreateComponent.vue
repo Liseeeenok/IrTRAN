@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref, computed, onUnmounted } from "vue";
-import { saveTransporation, deleteTransporation, getDocumentTypes, getMessageTypes, getSignsSending, getCountries, getLegalEntities, getOwnerships, getOwnersNonPublicRailway, getApprovalsWithOwner, getCargoGroups, getMethodsSubmission, getTransportation } from "@/helpers/API";
+import { saveTransporation, deleteTransporation, getDocumentTypes, getMessageTypes, getSignsSending, getCountries, getLegalEntities, getOwnerships, getOwnersNonPublicRailway, getApprovalsWithOwner, getCargoGroups, getMethodsSubmission, getTransportation, getStations } from "@/helpers/API";
 import { updateTitle, updateSubtitle } from "@/helpers/headerHelper";
 import router from "@/router";
 import { useRoute } from "vue-router";
@@ -18,6 +18,7 @@ const owners_non_public_railway = ref({});
 const approvals_with_owner = ref({});
 const cargo_groups = ref({});
 const methods_submission = ref({});
+const stations = ref({});
 const document = ref(getDefaultDocument());
 const requiredFields = {
     id_document_type: "Нет типа документа",
@@ -30,6 +31,8 @@ const requiredFields = {
     id_country_departure_point: "Не указана станция отправления/входа в СНГ",
     id_shipper: "Не указан грузоотправитель",
     id_carriage_ownership: "Не указана принадлежность вагонов/контейнеров",
+    id_cargo_group: "Не указана группа груза",
+    id_method_submission: "Не указан способ подачи",
 };
 
 function checkRequiredFields() {
@@ -98,6 +101,7 @@ async function fetchData() {
     approvals_with_owner.value = await getApprovalsWithOwner();
     cargo_groups.value = await getCargoGroups();
     methods_submission.value = await getMethodsSubmission();
+    stations.value = await getStations();
     if (route.params.id) {
         document.value = await getTransportation(route.params.id);
         updateTitle("Заявка на перевозку №" + document.value.id);
@@ -121,7 +125,19 @@ function openDropdown(key) {
             break;
         }
         case 'station_departure': {
-            searchData = countries.value;
+            searchData = stations.value;
+            break;
+        }
+        case 'shipper': {
+            searchData = legal_entities.value;
+            break;
+        }
+        case 'owner_non_public_railway': {
+            searchData = owners_non_public_railway.value;
+            break;
+        }
+        case 'cargo_group': {
+            searchData = cargo_groups.value;
             break;
         }
     }
@@ -133,11 +149,11 @@ function openDropdown(key) {
         filteredItems.value[key] = Object.values(searchData).filter((item) => item.name.toLowerCase().includes(searchQueries.value[key].toLowerCase()));
     }
 };
-function selectItem(key, value, search)
+function selectItem(key, value, dropdown, search)
 {
-    searchQueries.value[key] = search;
+    searchQueries.value[dropdown] = search;
     document.value[key] = value;
-    dropdowns.value[key] = false;
+    dropdowns.value[dropdown] = false;
 }
 
 //проблема с передаваемыми параметрами в дропдаун, поэтому пока на каждый дд своя функция закрытия
@@ -146,6 +162,15 @@ function closeDropdownCountryDeparture(event) {
 }
 function closeDropdownStation(event) {
     dropdowns.value['station_departure'] = false;
+}
+function closeDropdownShipper(event) {
+    dropdowns.value['shipper'] = false;
+}
+function closeDropdownOwnerNonPublicRailway(event) {
+    dropdowns.value['owner_non_public_railway'] = false;
+}
+function closeDropdownCargoGroup(event) {
+    dropdowns.value['cargo_group'] = false;
 }
 
 onMounted(async () => {
@@ -206,7 +231,7 @@ onMounted(async () => {
                     <label class="col-auto col-form-label mb-0 label-custom" required>Вид сообщения</label>
                     <div class="col-3">
                         <select class="form-select mt-0 custom-input" v-model="document.id_message_type" @change="checkRequiredFields">
-                            <option disabled>Выберете элемент списка</option>
+                            <option disabled :value="undefined">Выберете элемент списка</option>
                             <option v-for="message_type in message_types" :value="message_type.id">{{ message_type.name }}</option>
                         </select>
                     </div>
@@ -216,7 +241,7 @@ onMounted(async () => {
                     <label class="col-auto col-form-label mb-0 label-custom" required>Признак отправки</label>
                     <div class="col-3">
                         <select class="form-select mt-0 custom-input" v-model="document.id_sign_sending" @change="checkRequiredFields">
-                            <option disabled>Выберете элемент списка</option>
+                            <option disabled :value="undefined">Выберете элемент списка</option>
                             <option v-for="sign_sending in signs_sending" :value="sign_sending.id">{{ sign_sending.name }}</option>
                         </select>
                     </div>
@@ -235,7 +260,7 @@ onMounted(async () => {
 
                             <!-- Выпадающий список подсказок -->
                             <ul v-if="dropdowns['country_departure'] && filteredItems['country_departure']?.length" class="dropdown-menu show" style="width: 270px; max-height: 200px; overflow-y: scroll; overflow-x: hidden">
-                                <li v-for="(item, index) in filteredItems['country_departure']" :key="index" @click="selectItem('id_country_departure', item.id, item.name)">
+                                <li v-for="(item, index) in filteredItems['country_departure']" :key="index" @click="selectItem('id_country_departure', item.id, 'country_departure', item.name)">
                                     <a class="dropdown-item" href="#">{{ item.name }}</a>
                                 </li>
                             </ul>
@@ -281,7 +306,7 @@ onMounted(async () => {
                                             </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
-                                            <tr v-for="country in countries">
+                                            <tr v-for="country in countries" @dblclick="selectItem('id_country_departure', country.id, 'country_departure', country.name); closeDropdownCountryDeparture">
                                                 <td>{{ country.OSCM_code }}</td>
                                                 <td>{{ country.name }}</td>
                                                 <td>{{ country.short_name }}</td>
@@ -306,14 +331,14 @@ onMounted(async () => {
                         <div class="dropdown" style="width: 270px" v-click-outside="closeDropdownStation">
                             <div class="input-group">
                                 <input type="text" class="form-control custom-search" placeholder="Поиск..." aria-label="Введите..." v-model="searchQueries['station_departure']" @input="openDropdown('station_departure')" @focus="openDropdown('station_departure')" />
-                                <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#staticBackdrop">
+                                <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#staticVhodSNG">
                                     <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                                 </button>
                             </div>
 
                             <!-- Выпадающий список подсказок -->
                             <ul v-if="dropdowns['station_departure'] && filteredItems['station_departure']?.length" class="dropdown-menu show" style="width: 270px; max-height: 200px; overflow-y: scroll; overflow-x: hidden">
-                                <li v-for="(item, index) in filteredItems['station_departure']" :key="index" @click="selectItem('id_station_departure', item.id, item.name)">
+                                <li v-for="(item, index) in filteredItems['station_departure']" :key="index" @click="selectItem('id_station_departure', item.id, 'station_departure', item.name)">
                                     <a class="dropdown-item" href="#">{{ item.name }}</a>
                                 </li>
                             </ul>
@@ -374,10 +399,10 @@ onMounted(async () => {
                                             </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
-                                            <tr v-for="country in countries">
-                                                <td>{{ country.OSCM_code }}</td>
-                                                <td>{{ country.name }}</td>
-                                                <td>{{ country.short_name }}</td>
+                                            <tr v-for="item in stations" @dblclick="selectItem('id_station_departure', item.id, 'station_departure', item.name); closeDropdownStation">
+                                                <td>{{ item.code }}</td>
+                                                <td>{{ item.name }}</td>
+                                                <td>{{ item.short_name }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -396,11 +421,24 @@ onMounted(async () => {
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom" required>Грузоотправитель</label>
                     <div class="col-auto">
-                        <div class="input-group" style="width: 270px">
-                            <input type="text" class="form-control" placeholder="Поиск" aria-label="Введите запрос" />
-                            <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#staticGruzootpravitel">
-                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                            </button>
+                        <div class="dropdown" style="width: 270px" v-click-outside="closeDropdownShipper">
+                            <div class="input-group">
+                                <input type="text" class="form-control custom-search" placeholder="Поиск..." aria-label="Введите..." v-model="searchQueries['shipper']" @input="openDropdown('shipper')" @focus="openDropdown('shipper')" />
+                                <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#staticGruzootpravitel">
+                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
+                                </button>
+                            </div>
+
+                            <!-- Выпадающий список подсказок -->
+                            <ul v-if="dropdowns['shipper'] && filteredItems['shipper']?.length" class="dropdown-menu show" style="width: 270px; max-height: 200px; overflow-y: scroll; overflow-x: hidden">
+                                <li v-for="(item, index) in filteredItems['shipper']" :key="index" @click="selectItem('id_shipper', item.id, 'shipper', item.name)">
+                                    <a class="dropdown-item" href="#">{{ item.name }}</a>
+                                </li>
+                            </ul>
+                            <!-- Сообщение "Нет данных" -->
+                            <div v-else-if="dropdowns['shipper'] && searchQueries['shipper'] && !filteredItems['shipper']?.length" class="dropdown-menu show">
+                                <span class="dropdown-item text-muted">Нет данных</span>
+                            </div>
                         </div>
                     </div>
 
@@ -456,7 +494,7 @@ onMounted(async () => {
                                             </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
-                                            <tr v-for="legal_entity in legal_entities">
+                                            <tr v-for="legal_entity in legal_entities" @dblclick="selectItem('id_shipper', legal_entity.id, 'shipper', legal_entity.name); closeDropdownShipper">
                                                 <td>{{ legal_entity.OKPO }}</td>
                                                 <td>{{ legal_entity.name }}</td>
                                                 <td>Нет полей</td>
@@ -502,7 +540,7 @@ onMounted(async () => {
                     <label class="col-auto col-form-label mb-0 label-custom" required>Принадлежность вагонов/контейнеров</label>
                     <div class="col-3">
                         <select class="form-select mt-0 custom-input" v-model="document.id_carriage_ownership" @change="checkRequiredFields">
-                            <option value="">Выберете элемент списка</option>
+                            <option disabled :value="undefined">Выберете элемент списка</option>
                             <option v-for="ownership in ownerships" :value="ownership.id">{{ ownership.name }}</option>
                         </select>
                     </div>
@@ -518,11 +556,24 @@ onMounted(async () => {
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Владелец жд. пути необщего пользования</label>
                     <div class="col-auto">
-                        <div class="input-group" style="width: 270px">
-                            <input type="text" class="form-control" placeholder="Поиск" aria-label="Введите запрос" />
-                            <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#staticVladelecpury">
-                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                            </button>
+                        <div class="dropdown" style="width: 270px" v-click-outside="closeDropdownOwnerNonPublicRailway">
+                            <div class="input-group">
+                                <input type="text" class="form-control custom-search" placeholder="Поиск..." aria-label="Введите..." v-model="searchQueries['owner_non_public_railway']" @input="openDropdown('owner_non_public_railway')" @focus="openDropdown('owner_non_public_railway')" />
+                                <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#staticVladelecpury">
+                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
+                                </button>
+                            </div>
+
+                            <!-- Выпадающий список подсказок -->
+                            <ul v-if="dropdowns['owner_non_public_railway'] && filteredItems['owner_non_public_railway']?.length" class="dropdown-menu show" style="width: 270px; max-height: 200px; overflow-y: scroll; overflow-x: hidden">
+                                <li v-for="(item, index) in filteredItems['owner_non_public_railway']" :key="index" @click="selectItem('id_owner_non_public_railway', item.id, 'owner_non_public_railway', item.name)">
+                                    <a class="dropdown-item" href="#">{{ item.name }}</a>
+                                </li>
+                            </ul>
+                            <!-- Сообщение "Нет данных" -->
+                            <div v-else-if="dropdowns['owner_non_public_railway'] && searchQueries['owner_non_public_railway'] && !filteredItems['owner_non_public_railway']?.length" class="dropdown-menu show">
+                                <span class="dropdown-item text-muted">Нет данных</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -560,7 +611,7 @@ onMounted(async () => {
                                             </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
-                                            <tr v-for="owner in owners_non_public_railway">
+                                            <tr v-for="owner in owners_non_public_railway" @dblclick="selectItem('id_owner_non_public_railway', owner.id, 'owner_non_public_railway', owner.name); closeDropdownOwnerNonPublicRailway">
                                                 <td>Нет полей</td>
                                                 <td>{{ owner.name }}</td>
                                             </tr>
@@ -582,10 +633,10 @@ onMounted(async () => {
                 <div class="row mb-1" v-if="document.contract_number && document.id_owner_non_public_railway">
                     <label class="col-auto col-form-label mb-0 label-custom">Отметка о согласовании владельцем пути</label>
                     <div class="col-3">
-                        <select class="form-select mt-0 custom-input">
-                            <option value="">Выберете элемент списка</option>
-                            <option value="Согласовано">Согласовано</option>
-                            <option value="Согласовано по доверенности">Согласовано по доверенности</option>
+                        <select class="form-select mt-0 custom-input" v-model="document.is_owner_approval">
+                            <option :value="undefined" disabled>Выберете элемент списка</option>
+                            <option :value="true">Согласовано</option>
+                            <option :value="false">Согласовано по доверенности</option>
                         </select>
                     </div>
                 </div>
@@ -593,34 +644,47 @@ onMounted(async () => {
                 <div class="row mb-1" v-if="document.contract_number && document.id_owner_non_public_railway">
                     <label class="col-auto col-form-label mb-0 label-custom">Дата согласования с владельцем пути</label>
                     <div class="col-auto">
-                        <input type="date" class="form-control mt-0 custom-input" style="width: 150px" />
+                        <input type="date" class="form-control mt-0 custom-input" style="width: 150px" v-model="document.owner_approval_date"/>
                     </div>
                 </div>
                 <!-- ------------------------------------------------------ -->
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom" required>Группа груза</label>
                     <div class="col-auto">
-                        <div class="input-group" style="width: 270px">
-                            <input type="text" class="form-control" placeholder="Поиск" aria-label="Введите запрос" />
-                            <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#staticGruppaGruza">
-                                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                            </button>
+                        <div class="dropdown" style="width: 270px" v-click-outside="closeDropdownCargoGroup">
+                            <div class="input-group">
+                                <input type="text" class="form-control custom-search" placeholder="Поиск..." aria-label="Введите..." v-model="searchQueries['cargo_group']" @input="openDropdown('cargo_group')" @focus="openDropdown('cargo_group')" />
+                                <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#staticGruppaGruza">
+                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
+                                </button>
+                            </div>
+
+                            <!-- Выпадающий список подсказок -->
+                            <ul v-if="dropdowns['cargo_group'] && filteredItems['cargo_group']?.length" class="dropdown-menu show" style="width: 270px; max-height: 200px; overflow-y: scroll; overflow-x: hidden">
+                                <li v-for="(item, index) in filteredItems['cargo_group']" :key="index" @click="selectItem('id_cargo_group', item.id, 'cargo_group', item.name)">
+                                    <a class="dropdown-item" href="#">{{ item.name }}</a>
+                                </li>
+                            </ul>
+                            <!-- Сообщение "Нет данных" -->
+                            <div v-else-if="dropdowns['cargo_group'] && searchQueries['cargo_group'] && !filteredItems['cargo_group']?.length" class="dropdown-menu show">
+                                <span class="dropdown-item text-muted">Нет данных</span>
+                            </div>
                         </div>
                     </div>
 
                     <label class="col-auto col-form-label mb-0 label-custom" style="width: auto">Код группы груза</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" style="width: 100px" placeholder="" disabled="disabled" />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 100px" placeholder="" disabled="disabled" v-if="cargo_groups[document.id_cargo_group]" v-model="cargo_groups[document.id_cargo_group].code"/>
                     </div>
 
                     <label class="col-auto col-form-label mb-0 label-custom" style="width: auto">Мин. норма загр. т.</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" style="width: 100px" placeholder="" disabled="disabled" />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 100px" placeholder="" disabled="disabled" v-if="cargo_groups[document.id_cargo_group]" v-model="cargo_groups[document.id_cargo_group].min_load"/>
                     </div>
 
                     <label class="col-auto col-form-label mb-0 label-custom" style="width: auto">Макс. норма загр. т.</label>
                     <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" style="width: 100px" placeholder="" disabled="disabled" />
+                        <input type="text" class="form-control mt-0 disabled-input" style="width: 100px" placeholder="" disabled="disabled" v-if="cargo_groups[document.id_cargo_group]" v-model="cargo_groups[document.id_cargo_group].max_load"/>
                     </div>
                 </div>
 
@@ -659,11 +723,11 @@ onMounted(async () => {
                                             </tr>
                                         </thead>
                                         <tbody class="table-group-divider">
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                            <tr v-for="(item, key) in cargo_groups" @dblclick="selectItem('id_cargo_group', item.id, 'cargo_group', item.name); closeDropdownCargoGroup">
+                                                <td>{{ item.code }}</td>
+                                                <td>{{ item.name }}</td>
+                                                <td>{{ item.min_load }}</td>
+                                                <td>{{ item.max_load }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -683,11 +747,8 @@ onMounted(async () => {
                     <label class="col-auto col-form-label mb-0 label-custom" required>Способ подачи</label>
                     <div class="col-3">
                         <select class="form-select mt-0 custom-input">
-                            <option value="">Выберете элемент списка</option>
-                            <option value="Ежедневно">Ежедневно</option>
-                            <option value="По четным дням">По четным дням</option>
-                            <option value="По нечетным дням">По нечетным дням</option>
-                            <option value="По датам">По датам</option>
+                            <option :value="undefined">Выберете элемент списка</option>
+                            <option v-for="(item, key) in methods_submission" :value="item.id">{{ item.name }}</option>
                         </select>
                     </div>
                 </div>

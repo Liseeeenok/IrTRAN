@@ -156,6 +156,17 @@ export async function getTransportations() {
     return processingArray(response);
 }
 
+export async function getStations() {
+    let request = {
+        "act": "read",
+        "selection_type": "all"
+    };
+
+    let response = await sendRequest('https://' + host + '/stations', request);
+
+    return processingArray(response);
+}
+
 //--------------------------------------------------
 
 //------------------Сохранение----------------------
