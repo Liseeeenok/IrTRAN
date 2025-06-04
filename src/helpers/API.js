@@ -140,7 +140,7 @@ export async function getTransportation(id) {
         }
     };
 
-    let response = await sendRequest('https://' + host + '/methods_submission', request);
+    let response = await sendRequest('https://' + host + '/requests_transportation', request);
 
     return response;
 }
@@ -189,7 +189,7 @@ export function saveTransporation() {
 
     alert("Успешно сохранено");
 
-    return getTransportation();
+    return getTransportation(11);
 }
 
 //--------------------------------------------------
