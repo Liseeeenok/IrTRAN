@@ -1076,7 +1076,7 @@ onMounted(async () => {
                                 </div>
 
                                 <div class="row mb-1">
-                                    <label class="col-auto col-form-label mb-0" for="customCheck1" style="width: auto">Среди организаций при станции назвачения</label>
+                                    <label class="col-auto col-form-label mb-0" for="customCheck1" style="width: auto">Среди организаций при станции назначения</label>
                                     <div class="col-auto">
                                         <input class="form-check-input custom-input" style="width: 20px; height: 20px" type="checkbox" id="checkboxNoLabel" value="" />
                                     </div>
@@ -1101,7 +1101,7 @@ onMounted(async () => {
                                 </div>
 
                                 <div class="row mb-1">
-                                    <label class="col-auto col-form-label mb-0 label-custom">Код иключительного тарифа</label>
+                                    <label class="col-auto col-form-label mb-0 label-custom">Код исключительного тарифа</label>
                                     <div class="col-auto">
                                         <input type="text" class="form-control mt-0 custom-input" style="width: 150px" placeholder="" />
                                     </div>
