@@ -1,10 +1,11 @@
 <script setup>
-import { onMounted, ref, computed, onUnmounted } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { saveTransporation, deleteTransporation, getDocumentTypes, getMessageTypes, getSignsSending, getCountries, getLegalEntities, getOwnerships, getOwnersNonPublicRailway, getApprovalsWithOwner, getCargoGroups, getMethodsSubmission, getTransportation, getStations } from "@/helpers/API";
 import { updateTitle, updateSubtitle } from "@/helpers/headerHelper";
 import router from "@/router";
 import { useRoute } from "vue-router";
 import { getDiffDays } from "@/helpers/dateHelper";
+import { Transporation } from "@/models/transporation";
 
 const route = useRoute();
 const date = new Date().toISOString().split("T")[0];
@@ -19,25 +20,12 @@ const approvals_with_owner = ref({});
 const cargo_groups = ref({});
 const methods_submission = ref({});
 const stations = ref({});
-const document = ref(getDefaultDocument());
-const requiredFields = {
-    id_document_type: "Нет типа документа",
-    registration_date: "Нет даты регистрации документа",
-    transportation_date_from: "Нет дат периода перевозок",
-    transportation_date_to: "Нет дат периода перевозок",
-    id_message_type: "Не выбран вид сообщения",
-    id_sign_sending: "Не указан признак отправки",
-    id_country_departure: "Не указана страна отправления",
-    id_country_departure_point: "Не указана станция отправления/входа в СНГ",
-    id_shipper: "Не указан грузоотправитель",
-    id_carriage_ownership: "Не указана принадлежность вагонов/контейнеров",
-    id_cargo_group: "Не указана группа груза",
-    id_method_submission: "Не указан способ подачи",
-};
+const document = ref(Transporation.getDefaultDocument());
+const requiredFields = Transporation.getRequiredFields();
 
 function checkRequiredFields() {
     //скип проверки если документ подписан
-
+    console.log("check", document.value);
     updateSubtitle("");
 
     for (let field in requiredFields) {
@@ -49,6 +37,7 @@ function checkRequiredFields() {
 
     checkCorrectDate();
 }
+
 function checkCorrectDate() {
     if (document.value.registration_date < date) {
         updateSubtitle("Дата регистрации должна быть не раньше текущей даты");
@@ -67,116 +56,57 @@ function checkCorrectDate() {
         return;
     }
 }
-function getDefaultDocument() {
-    return {
-        id_document_type: 4,
-        registration_date: date,
-    };
-}
+
 async function saveDocument() {
     let saveDoc = await saveTransporation(document.value);
     document.value = saveDoc;
     updateTitle("Заявка на перевозку №" + document.value.id);
     router.push("/transporation/create/" + saveDoc.id);
 }
+
 function copyDocument() {
     document.id = null;
     saveDocument();
 }
+
 function signDocument() {
     //смена типа документа на "Подписан"
     saveDocument();
 }
+
 function deleteDocument() {
     deleteTransporation(document.value);
     router.push("/menu");
 }
+
 async function fetchData() {
-    document_types.value = await getDocumentTypes();
-    message_types.value = await getMessageTypes();
-    signs_sending.value = await getSignsSending();
-    countries.value = await getCountries();
-    legal_entities.value = await getLegalEntities();
-    ownerships.value = await getOwnerships();
-    owners_non_public_railway.value = await getOwnersNonPublicRailway();
-    approvals_with_owner.value = await getApprovalsWithOwner();
-    cargo_groups.value = await getCargoGroups();
-    methods_submission.value = await getMethodsSubmission();
-    stations.value = await getStations();
+    [document_types.value, message_types.value, signs_sending.value, countries.value, legal_entities.value, ownerships.value, owners_non_public_railway.value, approvals_with_owner.value, cargo_groups.value, methods_submission.value, stations.value] = await Promise.all([getDocumentTypes(), getMessageTypes(), getSignsSending(), getCountries(), getLegalEntities(), getOwnerships(), getOwnersNonPublicRailway(), getApprovalsWithOwner(), getCargoGroups(), getMethodsSubmission(), getStations()]);
+
     if (route.params.id) {
         document.value = await getTransportation(route.params.id);
         updateTitle("Заявка на перевозку №" + document.value.id);
     } else {
         updateTitle("Заявка на перевозку (Новый документ)");
     }
+
     checkRequiredFields();
 }
 
 const dropdowns = ref({});
 const filteredItems = ref({});
 const searchQueries = ref({});
-function openDropdown(key) {
-    dropdowns.value[key] = true;
-
-    let searchData = [];
-
-    switch (key) {
-        case 'country_departure': {
-            searchData = countries.value;
-            break;
-        }
-        case 'station_departure': {
-            searchData = stations.value;
-            break;
-        }
-        case 'shipper': {
-            searchData = legal_entities.value;
-            break;
-        }
-        case 'owner_non_public_railway': {
-            searchData = owners_non_public_railway.value;
-            break;
-        }
-        case 'cargo_group': {
-            searchData = cargo_groups.value;
-            break;
-        }
-    }
-
-    if (!searchQueries.value[key]) {
-        filteredItems.value[key] = Object.values(searchData);
-    }
-    else {
-        filteredItems.value[key] = Object.values(searchData).filter((item) => item.name.toLowerCase().includes(searchQueries.value[key].toLowerCase()));
-    }
-};
-function selectItem(key, value, dropdown, search)
-{
-    searchQueries.value[dropdown] = search;
-    document.value[key] = value;
-    dropdowns.value[dropdown] = false;
-}
-
-//проблема с передаваемыми параметрами в дропдаун, поэтому пока на каждый дд своя функция закрытия
-function closeDropdownCountryDeparture(event) {
-    dropdowns.value['country_departure'] = false;
-}
-function closeDropdownStation(event) {
-    dropdowns.value['station_departure'] = false;
-}
-function closeDropdownShipper(event) {
-    dropdowns.value['shipper'] = false;
-}
-function closeDropdownOwnerNonPublicRailway(event) {
-    dropdowns.value['owner_non_public_railway'] = false;
-}
-function closeDropdownCargoGroup(event) {
-    dropdowns.value['cargo_group'] = false;
-}
 
 onMounted(async () => {
     fetchData();
 });
+
+watch(
+    document,
+    async (newVal) => {
+        checkRequiredFields();
+    },
+    { deep: true }
+);
 </script>
 
 <template>
@@ -190,7 +120,6 @@ onMounted(async () => {
             </div>
         </div>
     </div>
-
     <div class="content-container">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
@@ -203,318 +132,43 @@ onMounted(async () => {
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" style="margin-top: 1em" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
                 <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom" required>Тип документа</label>
-                    <div class="col-auto" v-if="document_types[document.id_document_type]">
-                        <input type="text" class="form-control mt-0 disabled-input" v-model="document_types[document.id_document_type].name" disabled="disabled" required @change="checkRequiredFields" />
-                    </div>
+                    <disable-simple-input title="Тип документа" :dis="true" :value="document_types[document.id_document_type]?.name" :req="true" />
                 </div>
 
                 <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom" required>Дата регистрации</label>
-                    <div class="col-auto">
-                        <input type="date" class="form-control mt-0 custom-input" v-model="document.registration_date" style="width: 150px" required @change="checkRequiredFields" />
-                    </div>
+                    <simple-input title="Дата регистрации" type="date" v-model="document.registration_date" :req="true" />
                 </div>
 
                 <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom" required>Период перевозок с</label>
-                    <div class="col-auto">
-                        <input type="date" class="form-control mt-0 custom-input" v-model="document.transportation_date_from" style="width: 150px" required @change="checkRequiredFields" />
-                    </div>
-
-                    <label class="col-auto col-form-label mb-0" required>по</label>
-                    <div class="col-auto">
-                        <input type="date" class="form-control mt-0 custom-input" v-model="document.transportation_date_to" style="width: 150px" required @change="checkRequiredFields" />
-                    </div>
+                    <simple-input title="Период перевозок с" type="date" v-model="document.transportation_date_from" :req="true" />
+                    <simple-input title="по" type="date" v-model="document.transportation_date_to" :req="true" :fixWidth="false" />
                 </div>
 
                 <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom" required>Вид сообщения</label>
-                    <div class="col-3">
-                        <select class="form-select mt-0 custom-input" v-model="document.id_message_type" @change="checkRequiredFields">
-                            <option disabled :value="undefined">Выберете элемент списка</option>
-                            <option v-for="message_type in message_types" :value="message_type.id">{{ message_type.name }}</option>
-                        </select>
-                    </div>
+                    <simple-select title="Вид сообщения" :values="message_types" valueKey="id" name="name" v-model="document.id_message_type" :req="true" />
                 </div>
 
                 <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom" required>Признак отправки</label>
-                    <div class="col-3">
-                        <select class="form-select mt-0 custom-input" v-model="document.id_sign_sending" @change="checkRequiredFields">
-                            <option disabled :value="undefined">Выберете элемент списка</option>
-                            <option v-for="sign_sending in signs_sending" :value="sign_sending.id">{{ sign_sending.name }}</option>
-                        </select>
-                    </div>
+                    <simple-select title="Признак отправки" :values="signs_sending" valueKey="id" name="name" v-model="document.id_sign_sending" :req="true" />
                 </div>
 
                 <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom" required>Страна отправления</label>
-                    <div class="col-auto">
-                        <div class="dropdown" style="width: 270px" v-click-outside="closeDropdownCountryDeparture">
-                            <div class="input-group">
-                                <input type="text" class="form-control custom-search" placeholder="Поиск..." aria-label="Введите..." v-model="searchQueries['country_departure']" @input="openDropdown('country_departure')" @focus="openDropdown('country_departure')" />
-                                <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#staticBackdrop">
-                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                </button>
-                            </div>
-
-                            <!-- Выпадающий список подсказок -->
-                            <ul v-if="dropdowns['country_departure'] && filteredItems['country_departure']?.length" class="dropdown-menu show" style="width: 270px; max-height: 200px; overflow-y: scroll; overflow-x: hidden">
-                                <li v-for="(item, index) in filteredItems['country_departure']" :key="index" @click="selectItem('id_country_departure', item.id, 'country_departure', item.name)">
-                                    <a class="dropdown-item" href="#">{{ item.name }}</a>
-                                </li>
-                            </ul>
-                            <!-- Сообщение "Нет данных" -->
-                            <div v-else-if="dropdowns['country_departure'] && searchQueries['country_departure'] && !filteredItems['country_departure']?.length" class="dropdown-menu show">
-                                <span class="dropdown-item text-muted">Нет данных</span>
-                            </div>
-                        </div>
-                    </div>
+                    <select-with-search title="Страна отправления" :values="countries" valueKey="id" name="name" v-model="document.id_country_departure" :req="true" modalName="CountryDeparture" :fields="{ 'Код ОСКМ': 'OSCM_code', 'Наименование страны': 'name', 'Краткое наименование': 'short_name' }" />
                 </div>
-
-                <!--Найти Страну отправления модальное окно-->
-                <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header" style="background-color: #7da5f0">
-                                <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Страна отправления</span>
-                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row justify-content-md-center mb-2">
-                                    <div class="col-12">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
-                                                </button>
-                                                <button class="btn btn-outline-secondary" type="button">
-                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                                    <table class="table table-hover table-bordered border-white">
-                                        <thead style="background-color: #7da5f0; color: white">
-                                            <tr>
-                                                <th>Код ОСКМ</th>
-                                                <th>Наименование страны</th>
-                                                <th>Краткое наименование</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-group-divider">
-                                            <tr v-for="country in countries" @dblclick="selectItem('id_country_departure', country.id, 'country_departure', country.name); closeDropdownCountryDeparture">
-                                                <td>{{ country.OSCM_code }}</td>
-                                                <td>{{ country.name }}</td>
-                                                <td>{{ country.short_name }}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="row justify-content-md-end">
-                                    <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
-                                    <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!------------------------------->
 
                 <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom" required>Станция отправления/входа в СНГ</label>
-                    <div class="col-auto">
-                        <div class="dropdown" style="width: 270px" v-click-outside="closeDropdownStation">
-                            <div class="input-group">
-                                <input type="text" class="form-control custom-search" placeholder="Поиск..." aria-label="Введите..." v-model="searchQueries['station_departure']" @input="openDropdown('station_departure')" @focus="openDropdown('station_departure')" />
-                                <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#staticVhodSNG">
-                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                </button>
-                            </div>
-
-                            <!-- Выпадающий список подсказок -->
-                            <ul v-if="dropdowns['station_departure'] && filteredItems['station_departure']?.length" class="dropdown-menu show" style="width: 270px; max-height: 200px; overflow-y: scroll; overflow-x: hidden">
-                                <li v-for="(item, index) in filteredItems['station_departure']" :key="index" @click="selectItem('id_station_departure', item.id, 'station_departure', item.name)">
-                                    <a class="dropdown-item" href="#">{{ item.name }}</a>
-                                </li>
-                            </ul>
-                            <!-- Сообщение "Нет данных" -->
-                            <div v-else-if="dropdowns['station_departure'] && searchQueries['station_departure'] && !filteredItems['station_departure']?.length" class="dropdown-menu show">
-                                <span class="dropdown-item text-muted">Нет данных</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <label class="col-1 col-form-label mb-0 label-custom" style="width: auto">Код дороги</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled="disabled" v-if="countries[document.id_country_departure_point]" />
-                    </div>
-
-                    <label class="col-1 col-form-label mb-0 label-custom" style="width: auto">Код станции</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled="disabled" v-if="countries[document.id_country_departure_point]" />
-                    </div>
-
-                    <label class="col-1 col-form-label mb-0 label-custom" style="width: auto">Параграфы</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" style="width: auto" placeholder="" disabled="disabled" v-if="countries[document.id_country_departure_point]" />
-                    </div>
+                    <select-with-search title="Станция отправления/входа в СНГ" :values="stations" valueKey="id" name="name" v-model="document.id_station_departure" :req="true" modalName="StationDeparture" :fields="{ 'Код станции': 'code', 'Наименование станции': 'name', 'Краткое наименование': 'short_name' }" />
+                    <disable-simple-input title="Код дороги" :dis="true" :value="stations[document.id_station_departure]?.railway" :fixWidth="false" styleInput="width: 120px" />
+                    <disable-simple-input title="Код станции" :dis="true" :value="stations[document.id_station_departure]?.code" :fixWidth="false" styleInput="width: 120px" />
+                    <disable-simple-input title="Параграфы" :dis="true" :value="stations[document.id_station_departure]?.paragraph" :fixWidth="false" styleInput="width: auto" />
                 </div>
-
-                <!--Найти Станция отправления/входа в СНГ модальное окно-->
-                <div class="modal fade" id="staticVhodSNG" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header" style="background-color: #7da5f0">
-                                <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Станция отправления/входа в СНГ</span>
-                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row justify-content-md-center mb-2">
-                                    <div class="col-12">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary" type="reset" id="clearButton">
-                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
-                                                </button>
-                                                <button class="btn btn-outline-secondary" type="button">
-                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                                    <table class="table table-hover table-bordered border-white">
-                                        <thead style="background-color: #7da5f0; color: white">
-                                            <tr>
-                                                <th>Код станции</th>
-                                                <th>Наименование станции</th>
-                                                <th>Краткое наименование</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-group-divider">
-                                            <tr v-for="item in stations" @dblclick="selectItem('id_station_departure', item.id, 'station_departure', item.name); closeDropdownStation">
-                                                <td>{{ item.code }}</td>
-                                                <td>{{ item.name }}</td>
-                                                <td>{{ item.short_name }}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="row justify-content-md-end">
-                                    <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
-                                    <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!------------------------------->
 
                 <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom" required>Грузоотправитель</label>
-                    <div class="col-auto">
-                        <div class="dropdown" style="width: 270px" v-click-outside="closeDropdownShipper">
-                            <div class="input-group">
-                                <input type="text" class="form-control custom-search" placeholder="Поиск..." aria-label="Введите..." v-model="searchQueries['shipper']" @input="openDropdown('shipper')" @focus="openDropdown('shipper')" />
-                                <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#staticGruzootpravitel">
-                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                </button>
-                            </div>
-
-                            <!-- Выпадающий список подсказок -->
-                            <ul v-if="dropdowns['shipper'] && filteredItems['shipper']?.length" class="dropdown-menu show" style="width: 270px; max-height: 200px; overflow-y: scroll; overflow-x: hidden">
-                                <li v-for="(item, index) in filteredItems['shipper']" :key="index" @click="selectItem('id_shipper', item.id, 'shipper', item.name)">
-                                    <a class="dropdown-item" href="#">{{ item.name }}</a>
-                                </li>
-                            </ul>
-                            <!-- Сообщение "Нет данных" -->
-                            <div v-else-if="dropdowns['shipper'] && searchQueries['shipper'] && !filteredItems['shipper']?.length" class="dropdown-menu show">
-                                <span class="dropdown-item text-muted">Нет данных</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <label class="col-1 col-form-label mb-0 label-custom" style="width: auto">ОКПО</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled="disabled" v-if="legal_entities[document.id_shipper]" v-model="legal_entities[document.id_shipper].OKPO" />
-                    </div>
-
-                    <label class="col-1 col-form-label mb-0 label-custom" style="width: auto">Код ТГНЛ</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled="disabled" v-if="legal_entities[document.id_shipper]" v-model="legal_entities[document.id_shipper].TGNL_code" />
-                    </div>
-
-                    <label class="col-1 col-form-label mb-0 label-custom" style="width: auto">ИНН</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" style="width: auto" placeholder="" disabled="disabled" v-if="legal_entities[document.id_shipper]" v-model="legal_entities[document.id_shipper].INN" />
-                    </div>
+                    <select-with-search title="Грузоотправитель" :values="legal_entities" valueKey="id" name="name" v-model="document.id_shipper" :req="true" modalName="Shipper" :fields="{ 'Код ОКПО': 'OKPO', 'Наименование грузоотправителя': 'name', 'ИД бизнеса': 'id_business', 'ИД холдинга': 'id_holding', 'Наименование холдинга': 'name_holding' }" />
+                    <disable-simple-input title="ОКПО" :dis="true" :value="legal_entities[document.id_shipper]?.OKPO" :fixWidth="false" styleInput="width: 120px" />
+                    <disable-simple-input title="Код ТГНЛ" :dis="true" :value="legal_entities[document.id_shipper]?.TGNL_code" :fixWidth="false" styleInput="width: 120px" />
+                    <disable-simple-input title="ИНН" :dis="true" :value="legal_entities[document.id_shipper]?.INN" :fixWidth="false" styleInput="width: auto" />
                 </div>
-
-                <!--Найти Грузоотправитель модальное окно-->
-                <div class="modal fade" id="staticGruzootpravitel" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header" style="background-color: #7da5f0">
-                                <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Грузоотправитель</span>
-                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row justify-content-md-center mb-2">
-                                    <div class="col-12">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
-                                                </button>
-                                                <button class="btn btn-outline-secondary" type="button">
-                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                                    <table class="table table-hover table-bordered border-white">
-                                        <thead style="background-color: #7da5f0; color: white">
-                                            <tr>
-                                                <th>Код ОКПО</th>
-                                                <th>Наименование грузоотправителя</th>
-                                                <th>ИД бизнеса</th>
-                                                <th>ИД холдинга</th>
-                                                <th>Наименование холдинга</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-group-divider">
-                                            <tr v-for="legal_entity in legal_entities" @dblclick="selectItem('id_shipper', legal_entity.id, 'shipper', legal_entity.name); closeDropdownShipper">
-                                                <td>{{ legal_entity.OKPO }}</td>
-                                                <td>{{ legal_entity.name }}</td>
-                                                <td>Нет полей</td>
-                                                <td>Нет полей</td>
-                                                <td>Нет полей</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="row justify-content-md-end">
-                                    <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
-                                    <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!------------------------------->
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0" for="customCheck1" style="width: auto">Среди организаций при станции отправления</label>
@@ -524,234 +178,44 @@ onMounted(async () => {
                 </div>
 
                 <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Наименование организации грузоотправителя</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" style="width: 500px" placeholder="" disabled="disabled" v-if="legal_entities[document.id_shipper]" v-model="legal_entities[document.id_shipper].name" />
-                    </div>
+                    <disable-simple-input title="Наименование организации грузоотправителя" :dis="true" :value="legal_entities[document.id_shipper]?.name" styleInput="width: 500px" />
                 </div>
 
                 <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Адрес</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" style="width: 500px" placeholder="" v-model="document.addr" />
-                    </div>
+                    <simple-input title="Адрес" v-model="document.addr" styleInput="width: 500px" />
                 </div>
 
                 <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom" required>Принадлежность вагонов/контейнеров</label>
-                    <div class="col-3">
-                        <select class="form-select mt-0 custom-input" v-model="document.id_carriage_ownership" @change="checkRequiredFields">
-                            <option disabled :value="undefined">Выберете элемент списка</option>
-                            <option v-for="ownership in ownerships" :value="ownership.id">{{ ownership.name }}</option>
-                        </select>
-                    </div>
+                    <simple-select title="Принадлежность вагонов/контейнеров" :values="ownerships" valueKey="id" name="name" v-model="document.id_carriage_ownership" :req="true" />
                 </div>
 
                 <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Номер договора</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 custom-input" placeholder="" v-model="document.contract_number" />
-                    </div>
+                    <simple-input title="Номер договора" v-model="document.contract_number" />
                 </div>
 
                 <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom">Владелец жд. пути необщего пользования</label>
-                    <div class="col-auto">
-                        <div class="dropdown" style="width: 270px" v-click-outside="closeDropdownOwnerNonPublicRailway">
-                            <div class="input-group">
-                                <input type="text" class="form-control custom-search" placeholder="Поиск..." aria-label="Введите..." v-model="searchQueries['owner_non_public_railway']" @input="openDropdown('owner_non_public_railway')" @focus="openDropdown('owner_non_public_railway')" />
-                                <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#staticVladelecpury">
-                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                </button>
-                            </div>
-
-                            <!-- Выпадающий список подсказок -->
-                            <ul v-if="dropdowns['owner_non_public_railway'] && filteredItems['owner_non_public_railway']?.length" class="dropdown-menu show" style="width: 270px; max-height: 200px; overflow-y: scroll; overflow-x: hidden">
-                                <li v-for="(item, index) in filteredItems['owner_non_public_railway']" :key="index" @click="selectItem('id_owner_non_public_railway', item.id, 'owner_non_public_railway', item.name)">
-                                    <a class="dropdown-item" href="#">{{ item.name }}</a>
-                                </li>
-                            </ul>
-                            <!-- Сообщение "Нет данных" -->
-                            <div v-else-if="dropdowns['owner_non_public_railway'] && searchQueries['owner_non_public_railway'] && !filteredItems['owner_non_public_railway']?.length" class="dropdown-menu show">
-                                <span class="dropdown-item text-muted">Нет данных</span>
-                            </div>
-                        </div>
-                    </div>
+                    <select-with-search title="Владелец жд. пути необщего пользования" :values="owners_non_public_railway" valueKey="id" name="name" v-model="document.id_owner_non_public_railway" modalName="OwnerNonPublicRailway" :fields="{ 'Код ОКПО': 'code', 'Наименование владельца пути': 'name' }" />
                 </div>
-
-                <!--Найти Владелец жд. пути необщего пользования модальное окно -->
-                <div class="modal fade" id="staticVladelecpury" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header" style="background-color: #7da5f0">
-                                <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Владелец жд. пути необщего пользования</span>
-                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row justify-content-md-center mb-2">
-                                    <div class="col-12">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
-                                                </button>
-                                                <button class="btn btn-outline-secondary" type="button">
-                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                                    <table class="table table-hover table-bordered border-white">
-                                        <thead style="background-color: #7da5f0; color: white">
-                                            <tr>
-                                                <th>Код ОКПО</th>
-                                                <th>Наименование владельца пути</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-group-divider">
-                                            <tr v-for="owner in owners_non_public_railway" @dblclick="selectItem('id_owner_non_public_railway', owner.id, 'owner_non_public_railway', owner.name); closeDropdownOwnerNonPublicRailway">
-                                                <td>Нет полей</td>
-                                                <td>{{ owner.name }}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="row justify-content-md-end">
-                                    <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
-                                    <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!----------------------------- -->
 
                 <!-- Появляются при выборе владельца жд пути необщ пользования -->
                 <div class="row mb-1" v-if="document.contract_number && document.id_owner_non_public_railway">
-                    <label class="col-auto col-form-label mb-0 label-custom">Отметка о согласовании владельцем пути</label>
-                    <div class="col-3">
-                        <select class="form-select mt-0 custom-input" v-model="document.is_owner_approval">
-                            <option :value="undefined" disabled>Выберете элемент списка</option>
-                            <option :value="true">Согласовано</option>
-                            <option :value="false">Согласовано по доверенности</option>
-                        </select>
-                    </div>
+                    <simple-select title="Отметка о согласовании владельцем пути" :values="[{ 'id': true, 'name': 'Согласовано'}, {'id': false, 'name': 'Согласовано по доверенности'}]" valueKey="id" name="name" v-model="document.is_owner_approval" :req="true" />
                 </div>
 
                 <div class="row mb-1" v-if="document.contract_number && document.id_owner_non_public_railway">
-                    <label class="col-auto col-form-label mb-0 label-custom">Дата согласования с владельцем пути</label>
-                    <div class="col-auto">
-                        <input type="date" class="form-control mt-0 custom-input" style="width: 150px" v-model="document.owner_approval_date"/>
-                    </div>
+                    <simple-input title="Дата согласования с владельцем пути" type="date" v-model="document.owner_approval_date" />
                 </div>
                 <!-- ------------------------------------------------------ -->
-                <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom" required>Группа груза</label>
-                    <div class="col-auto">
-                        <div class="dropdown" style="width: 270px" v-click-outside="closeDropdownCargoGroup">
-                            <div class="input-group">
-                                <input type="text" class="form-control custom-search" placeholder="Поиск..." aria-label="Введите..." v-model="searchQueries['cargo_group']" @input="openDropdown('cargo_group')" @focus="openDropdown('cargo_group')" />
-                                <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#staticGruppaGruza">
-                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                </button>
-                            </div>
-
-                            <!-- Выпадающий список подсказок -->
-                            <ul v-if="dropdowns['cargo_group'] && filteredItems['cargo_group']?.length" class="dropdown-menu show" style="width: 270px; max-height: 200px; overflow-y: scroll; overflow-x: hidden">
-                                <li v-for="(item, index) in filteredItems['cargo_group']" :key="index" @click="selectItem('id_cargo_group', item.id, 'cargo_group', item.name)">
-                                    <a class="dropdown-item" href="#">{{ item.name }}</a>
-                                </li>
-                            </ul>
-                            <!-- Сообщение "Нет данных" -->
-                            <div v-else-if="dropdowns['cargo_group'] && searchQueries['cargo_group'] && !filteredItems['cargo_group']?.length" class="dropdown-menu show">
-                                <span class="dropdown-item text-muted">Нет данных</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <label class="col-auto col-form-label mb-0 label-custom" style="width: auto">Код группы груза</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" style="width: 100px" placeholder="" disabled="disabled" v-if="cargo_groups[document.id_cargo_group]" v-model="cargo_groups[document.id_cargo_group].code"/>
-                    </div>
-
-                    <label class="col-auto col-form-label mb-0 label-custom" style="width: auto">Мин. норма загр. т.</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" style="width: 100px" placeholder="" disabled="disabled" v-if="cargo_groups[document.id_cargo_group]" v-model="cargo_groups[document.id_cargo_group].min_load"/>
-                    </div>
-
-                    <label class="col-auto col-form-label mb-0 label-custom" style="width: auto">Макс. норма загр. т.</label>
-                    <div class="col-auto">
-                        <input type="text" class="form-control mt-0 disabled-input" style="width: 100px" placeholder="" disabled="disabled" v-if="cargo_groups[document.id_cargo_group]" v-model="cargo_groups[document.id_cargo_group].max_load"/>
-                    </div>
-                </div>
-
-                <!--Найти Группа груза модальное окно -->
-                <div class="modal fade" id="staticGruppaGruza" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header" style="background-color: #7da5f0">
-                                <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Группа груза</span>
-                                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row justify-content-md-center mb-2">
-                                    <div class="col-12">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
-                                            <div class="input-group-append">
-                                                <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                                    <font-awesome-icon icon="fa-solid fa-xmark" />
-                                                </button>
-                                                <button class="btn btn-outline-secondary" type="button">
-                                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                                    <table class="table table-hover table-bordered border-white">
-                                        <thead style="background-color: #7da5f0; color: white">
-                                            <tr>
-                                                <th>Код группы груза</th>
-                                                <th>Наименование группы груза</th>
-                                                <th>Минимальная нагрузка</th>
-                                                <th>Максимальная нагрузка</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-group-divider">
-                                            <tr v-for="(item, key) in cargo_groups" @dblclick="selectItem('id_cargo_group', item.id, 'cargo_group', item.name); closeDropdownCargoGroup">
-                                                <td>{{ item.code }}</td>
-                                                <td>{{ item.name }}</td>
-                                                <td>{{ item.min_load }}</td>
-                                                <td>{{ item.max_load }}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="row justify-content-md-end">
-                                    <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
-                                    <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!------------------------------->
 
                 <div class="row mb-1">
-                    <label class="col-auto col-form-label mb-0 label-custom" required>Способ подачи</label>
-                    <div class="col-3">
-                        <select class="form-select mt-0 custom-input">
-                            <option :value="undefined">Выберете элемент списка</option>
-                            <option v-for="(item, key) in methods_submission" :value="item.id">{{ item.name }}</option>
-                        </select>
-                    </div>
+                    <select-with-search title="Группа груза" :req="true" :values="cargo_groups" valueKey="id" name="name" v-model="document.id_cargo_group" modalName="CargoGroup" :fields="{ 'Код группы груза': 'code', 'Наименование группы груза': 'name', 'Минимальная нагрузка': 'min_load', 'Максимальная нагрузка': 'max_load', }" />
+                    <disable-simple-input title="Код группы груза" :dis="true" :value="cargo_groups[document.id_cargo_group]?.code" :fixWidth="false" styleInput="width: 100px" />
+                    <disable-simple-input title="Мин. норма загр. т" :dis="true" :value="cargo_groups[document.id_cargo_group]?.min_load" :fixWidth="false" styleInput="width: 100px" />
+                    <disable-simple-input title="Макс. норма загр. т" :dis="true" :value="cargo_groups[document.id_cargo_group]?.max_load" :fixWidth="false" styleInput="width: 100px" />
+                </div>
+
+                <div class="row mb-1">
+                    <simple-select title="Способ подачи" :values="methods_submission" valueKey="id" name="name" v-model="document.id_method_submission" :req="true" />
                 </div>
 
                 <!-- Отправки -->
@@ -2504,43 +1968,6 @@ onMounted(async () => {
 li {
     margin-left: -10px;
 }
-.custom-search:focus {
-    border-color: #86b7fe;
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-}
-
-.dropdown-menu {
-    z-index: 100;
-    background-color: #e3e2ff;
-}
-
-.dropdown-item {
-    background-color: #e3e2ff;
-    height: 30px;
-    font-family: "Open Sans", sans-serif;
-    font-size: 14px;
-    width: 270px;
-    cursor: pointer;
-}
-
-.dropdown-item:hover {
-    background-color: #f8f9fa;
-}
-.btn-custom {
-    width: auto;
-    background-color: #7da5f0;
-    color: white;
-    margin: 3px;
-}
-.btn-custom:hover {
-    background-color: #3e6cb4;
-    color: white;
-}
-body {
-    font-family: "Open Sans", sans-serif;
-    font-size: 14px;
-    padding-top: 50px;
-}
 
 .search-box {
     padding-top: 10px;
@@ -2566,43 +1993,7 @@ body {
     height: 30px;
     padding: 3px 50px;
 }
-.disabled-input {
-    background-color: #ffffde;
-    opacity: 1;
-    height: 30px;
-    width: 270px;
-    font-family: "Open Sans", sans-serif;
-    font-size: 14px;
-    border: 1px solid #c1c1c1;
-}
-.custom-input {
-    background-color: #e3e2ff;
-    height: 30px;
-    font-family: "Open Sans", sans-serif;
-    font-size: 14px;
-    width: 270px;
-    border: 1px solid #c1c1c1;
-}
-.input-group .form-control {
-    background-color: #e3e2ff;
-    border: 1px solid #c1c1c1;
-    height: 30px;
-    font-family: "Open Sans", sans-serif;
-    font-size: 14px;
-}
-.input-group .btn {
-    background-color: #e3e2ff; /* Цвет кнопки */
-    border: 1px solid #c1c1c1; /* Цвет границы кнопки */
-    height: 30px;
-    font-family: "Open Sans", sans-serif;
-    font-size: 14px;
-}
-.input-group .btn:hover {
-    background-color: #d1d0ff; /* Цвет кнопки при наведении */
-}
-.label-custom {
-    width: 180px;
-}
+
 .form-check-input-checked-bg-color {
     background-color: #7da5f0;
 }
@@ -2612,11 +2003,20 @@ body {
     position: fixed; /* Закрепление шапки в верхней части страницы */
 }
 
-.modal-title {
-    text-align: center !important;
-}
 .selected {
     background-color: #2165b6; /* Цвет выделения строки */
+    color: white;
+}
+
+.btn-custom {
+    width: auto;
+    background-color: #7da5f0;
+    color: white;
+    margin: 3px;
+}
+
+.btn-custom:hover {
+    background-color: #3e6cb4;
     color: white;
 }
 </style>

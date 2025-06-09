@@ -1,31 +1,39 @@
-import './assets/main.css'
+import '@/assets/main.css';
 
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
 
-import App from './App.vue'
-import router from './router'
+import App from '@/App.vue';
+import router from '@/router';
 
-/* import the fontawesome core */
-import { library } from '@fortawesome/fontawesome-svg-core'
-/* import font awesome icon component */
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-/* import specific icons */
-import { fas } from '@fortawesome/free-solid-svg-icons'
+/* import the UI */
+import UIcomponents from '@/components/UI';
+/* import the UI */
 
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
-import { createVuetify } from 'vuetify'
-const vuetify = createVuetify({ components, directives })
+/* import the fontawesome */
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 
-/* add icons to the library */
 library.add(fas)
+/* import the fontawesome */
 
-const app = createApp(App)
+/* import the vuetify */
+import * as components from 'vuetify/components';
+import * as directives from 'vuetify/directives';
+import { createVuetify } from 'vuetify';
+const vuetify = createVuetify({ components, directives });
+/* import the vuetify */
 
-app.component('font-awesome-icon', FontAwesomeIcon)
-app.use(vuetify)
-app.use(createPinia())
-app.use(router)
+const app = createApp(App);
 
-app.mount('#app')
+UIcomponents.forEach(element => {
+    app.component(element.name, element);
+});
+
+app.component('font-awesome-icon', FontAwesomeIcon);
+app.use(vuetify);
+app.use(createPinia());
+app.use(router);
+
+app.mount('#app');

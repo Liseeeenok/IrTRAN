@@ -18,7 +18,7 @@ body {
     color: #212529;
 }
 
-label[required]::after {
+label.required::after {
     content: "*";
     color: red;
 }
