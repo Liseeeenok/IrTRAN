@@ -92,10 +92,6 @@ async function fetchData() {
     checkRequiredFields();
 }
 
-const dropdowns = ref({});
-const filteredItems = ref({});
-const searchQueries = ref({});
-
 onMounted(async () => {
     fetchData();
 });

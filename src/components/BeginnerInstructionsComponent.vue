@@ -14,7 +14,7 @@ import { authorization } from "../helpers/API.js";
     <div class="content-container">
         <div class="row mt-4 justify-content-center">
             <div class="col-md-3">
-                <router-link to="/beginner-instructions/menu" class="card-square" style="border-radius: 10px" data-dismiss="modal">
+                <router-link to="/beginner-instructions/transporation" class="card-square" style="border-radius: 10px" data-dismiss="modal">
                     <img src="@/assets/IMAGES/AppID_2.png" alt="Заявка на грузоперевозку" />
                     <span class="card-text" style="text-decoration: none">Заявка на грузоперевозку</span>
                 </router-link>

@@ -51,7 +51,7 @@ onMounted(async () => {
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
-                    <tr v-for="transportation in transportations">
+                    <tr v-for="transportation in transportations" @dblclick="$router.push('/transporation/create/' + transportation.id);">
                         <td>{{ transportation.id }}</td>
                         <td>{{ transportation.document_status }}</td>
                         <td>{{ transportation.created_at }}</td>
