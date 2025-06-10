@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref, watch } from "vue";
-import { saveTransporation, deleteTransporation, getDocumentTypes, getMessageTypes, getSignsSending, getCountries, getLegalEntities, getOwnerships, getOwnersNonPublicRailway, getApprovalsWithOwner, getCargoGroups, getMethodsSubmission, getTransportation, getStations } from "@/helpers/API";
+import { saveTransporation, deleteTransporation, getDocumentTypes, getMessageTypes, getSignsSending, getCountries, getLegalEntities, getOwnerships, getOwnersNonPublicRailway, getApprovalsWithOwner, getCargoGroups, getMethodsSubmission, getTransportation, getStations, getSendings, getCargos } from "@/helpers/API";
 import { updateTitle, updateSubtitle } from "@/helpers/headerHelper";
 import router from "@/router";
 import { useRoute } from "vue-router";
@@ -20,8 +20,11 @@ const approvals_with_owner = ref({});
 const cargo_groups = ref({});
 const methods_submission = ref({});
 const stations = ref({});
+const sendings = ref({});
+const cargos = ref({});
 const document = ref(Transporation.getDefaultDocument());
 const requiredFields = Transporation.getRequiredFields();
+const errorSending = ref('Не указано наименование груза');
 
 function checkRequiredFields() {
     //скип проверки если документ подписан
@@ -80,7 +83,7 @@ function deleteDocument() {
 }
 
 async function fetchData() {
-    [document_types.value, message_types.value, signs_sending.value, countries.value, legal_entities.value, ownerships.value, owners_non_public_railway.value, approvals_with_owner.value, cargo_groups.value, methods_submission.value, stations.value] = await Promise.all([getDocumentTypes(), getMessageTypes(), getSignsSending(), getCountries(), getLegalEntities(), getOwnerships(), getOwnersNonPublicRailway(), getApprovalsWithOwner(), getCargoGroups(), getMethodsSubmission(), getStations()]);
+    [document_types.value, message_types.value, signs_sending.value, countries.value, legal_entities.value, ownerships.value, owners_non_public_railway.value, approvals_with_owner.value, cargo_groups.value, methods_submission.value, stations.value, sendings.value, cargos.value] = await Promise.all([getDocumentTypes(), getMessageTypes(), getSignsSending(), getCountries(), getLegalEntities(), getOwnerships(), getOwnersNonPublicRailway(), getApprovalsWithOwner(), getCargoGroups(), getMethodsSubmission(), getStations(), getSendings(), getCargos()]);
 
     if (route.params.id) {
         document.value = await getTransportation(route.params.id);
@@ -289,7 +292,7 @@ watch(
                         <div class="modal-content">
                             <div class="modal-header" style="background-color: #7da5f0">
                                 <span class="modal-title text-center col-auto" id="staticBackdropLabel" style="color: white; font-weight: bold">Отправка</span>
-                                <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; background-color: red; margin: 0 35%">Не указано наименование груза</span>
+                                <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; background-color: red; margin: 0 35%">{{ errorSending }}</span>
                                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
                             </div>
                             <div class="modal-body">

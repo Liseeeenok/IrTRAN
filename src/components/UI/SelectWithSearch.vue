@@ -92,6 +92,9 @@ export default {
         values() {
             this.setValue();
         },
+        modelValue() {
+            this.setValue();
+        },
     },
 };
 </script>
@@ -158,7 +161,7 @@ export default {
                     </div>
 
                     <div class="row justify-content-md-end">
-                        <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px; display: none;">Да</button>
+                        <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px; display: none">Да</button>
                         <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
                     </div>
                 </div>

@@ -141,6 +141,10 @@ export async function getTransportation(id) {
     };
 
     let response = await sendRequest('https://' + host + '/requests_transportation', request);
+    
+    ['approval_with_owner_date', 'registration_date', 'transportation_date_from', 'transportation_date_to', 'created_at'].forEach((item) => {
+        response[item] = convertDate(response[item]);
+    });
 
     return response;
 }
@@ -163,6 +167,28 @@ export async function getStations() {
     };
 
     let response = await sendRequest('https://' + host + '/stations', request);
+
+    return processingArray(response);
+}
+
+export async function getSendings() {
+    let request = {
+        "act": "read",
+        "selection_type": "all"
+    };
+
+    let response = await sendRequest('https://' + host + '/sending', request);
+
+    return processingArray(response);
+}
+
+export async function getCargos() {
+    let request = {
+        "act": "read",
+        "selection_type": "all"
+    };
+
+    let response = await sendRequest('https://' + host + '/cargo', request);
 
     return processingArray(response);
 }
@@ -223,6 +249,11 @@ function processingArray(array) {
     });
 
     return object;
+}
+
+function convertDate(date)
+{
+    return date ? date.split('T')[0] : date;
 }
 
 async function sendRequest(url, request)
