@@ -127,6 +127,9 @@ watch(
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="profile-tab" data-toggle="tab" data-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Учетная карточка</button>
             </li>
+             <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-1-tab" data-toggle="tab" data-target="#profile-1-tab-pane" type="button" role="tab" aria-controls="profile-1-tab-pane" aria-selected="false">Провозная плата</button>
+            </li>
         </ul>
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" style="margin-top: 1em" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
@@ -1498,7 +1501,6 @@ watch(
                                     <div class="col-3">
                                         <select class="form-select mt-0 custom-input">
                                             <option value="">Выберете элемент списка</option>
-                                            <option value="">Экспедитор</option>
                                             <option value="">Грузоотправитель</option>
                                             <option value="">Плательщик</option>
                                         </select>
@@ -1693,19 +1695,27 @@ watch(
                 </div>
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Грузоотправитель</label>
-                    <label class="col-10 col-form-label mb-0 label-custom">(Наименование грузоотправителя из заявки)</label>
+                     <div class="col-auto">
+                             <input type="text" class="form-control mt-0 disabled-input" placeholder="" disabled/>
+                        </div>
                 </div>
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Банковские реквизиты</label>
-                    <label class="col-10 col-form-label mb-0 label-custom">(Банковские реквизиты грузоотправителя из заявки)</label>
+                     <div class="col-auto">
+                             <input type="text" class="form-control mt-0 disabled-input" placeholder="" disabled/>
+                        </div>
                 </div>
 
                 <div class="row mb-1">
                     <label class="col-auto col-form-label mb-0 label-custom">Станция отправления</label>
-                    <label class="col-3 col-form-label mb-0 label-custom">(Станция отправления из заявки)</label>
+                    <div class="col-auto">
+                             <input type="text" class="form-control mt-0 disabled-input" placeholder="" disabled/>
+                        </div>
                     <label class="col-auto col-form-label mb-0 label-custom">Группа груза</label>
-                    <label class="col-3 col-form-label mb-0 label-custom">(Группа груза из заявки)</label>
+                    <div class="col-auto">
+                             <input type="text" class="form-control mt-0 disabled-input" placeholder="" disabled/>
+                        </div>
                 </div>
 
                 <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
@@ -1741,9 +1751,9 @@ watch(
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td><input style="width: 100%; height: 100%; background-color: transparent; border-color: transparent;"/></td>
+                                <td><input style="width: 100%; height: 100%; background-color: transparent; border-color: transparent;"/></td>
+                                <td><input style="width: 100%; height: 100%; background-color: transparent; border-color: transparent;"/></td>
                                 <td data-toggle="modal" data-target="#NaityPrichiny"></td>
                                 <td data-toggle="modal" data-target="#NaityPrichiny"></td>
                                 <td data-toggle="modal" data-target="#NaityPrichiny"></td>
@@ -1959,6 +1969,75 @@ watch(
                     </table>
                 </div>
             </div>
+            <!-------------------------------------------------------------Конец учетной карточки------------------------------------------------------------------------->
+
+            <!--------------------------------------------------------------Провозная плата---------------------------------------------------------------------------------------->
+            <div class="tab-pane fade" style="margin-top: 1em" id="profile-1-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                <div class="row mb-1">
+                    <label class="col-auto col-form-label mb-0 label-custom">Станция отправления из заявки</label>
+                     <div class="col-auto">
+                             <input type="text" class="form-control mt-0 disabled-input" placeholder="" disabled/>
+                        </div>
+                    <label class="col-auto col-form-label mb-0 label-custom">Станция назвачения из заявки</label>
+                     <div class="col-auto">
+                             <input type="text" class="form-control mt-0 disabled-input" placeholder="" disabled/>
+                        </div>
+                </div>
+                <div class="row mb-1">
+                    <label class="col-auto col-form-label mb-0 label-custom">Фактическое расстояние между станциями, км</label>
+                     <div class="col-auto">
+                             <input type="text" class="form-control mt-0 disabled-input" placeholder="" disabled/>
+                        </div>
+                </div>
+
+                <div class="row mb-1">
+                    <label class="col-auto col-form-label mb-0 label-custom">Наименование перевозимого груза из заявки</label>
+                     <div class="col-auto">
+                             <input type="text" class="form-control mt-0 disabled-input" placeholder="" disabled/>
+                        </div>
+                    <label class="col-auto col-form-label mb-0 label-custom">Тарифный класс груза</label>
+                     <div class="col-auto">
+                             <input type="text" class="form-control mt-0 disabled-input" placeholder="" disabled/>
+                        </div>
+                </div>
+
+                <div class="row mb-1">
+                    <label class="col-auto col-form-label mb-0 label-custom">Вид отправки из заявки</label>
+                     <div class="col-auto">
+                             <input type="text" class="form-control mt-0 disabled-input" placeholder="" disabled/>
+                        </div>
+                    <label class="col-auto col-form-label mb-0 label-custom">Род вагонов из заявки</label>
+                    <div class="col-auto">
+                             <input type="text" class="form-control mt-0 disabled-input" placeholder="" disabled/>
+                        </div>
+                    <label class="col-auto col-form-label mb-0 label-custom">Количество вагонов из заявки</label>
+                     <div class="col-auto">
+                             <input type="text" class="form-control mt-0 disabled-input" placeholder="" disabled/>
+                        </div>
+                    <label class="col-auto col-form-label mb-0 label-custom">Загрузка одного вагона, тонн</label>
+                     <div class="col-auto">
+                             <input type="text" class="form-control mt-0 disabled-input" placeholder="" disabled/>
+                        </div>
+                </div>
+                <div class="row mb-1">
+                    <label class="col-auto col-form-label mb-0 label-custom">Используется тарифная схема</label>
+                     <div class="col-auto">
+                             <input type="text" class="form-control mt-0 disabled-input" placeholder="" disabled />
+                        </div>
+                    <div class="col-auto">
+                             <input type="text" class="form-control mt-0 disabled-input" placeholder="" disabled/>
+                        </div>
+                </div>
+                  <div class="row mb-1">
+                    <label class="col-auto col-form-label mb-0 label-custom">Провозная плата составляет</label>
+                        <div class="col-auto">
+                             <input type="text" class="form-control mt-0 disabled-input" placeholder="" disabled/>
+                        </div>
+                    <label class="col-auto col-form-label mb-0 label-custom">руб.</label>
+                </div>
+
+            </div>
+            <!---------------------------------------------------------------Конец провозной платы---------------------------------------------------------------------------------->
         </div>
     </div>
 </template>
@@ -1999,11 +2078,11 @@ li {
 
 .btn-box {
     width: 90%;
-    position: fixed; /* Закрепление шапки в верхней части страницы */
+    position: fixed; 
 }
 
 .selected {
-    background-color: #2165b6; /* Цвет выделения строки */
+    background-color: #2165b6; 
     color: white;
 }
 
@@ -2018,4 +2097,48 @@ li {
     background-color: #3e6cb4;
     color: white;
 }
+
+.disabled-input {
+            background-color: #FFFFDE; 
+            opacity: 1;
+            height: 30px;
+            width: 270px;
+            font-family: "Open Sans", sans-serif;
+            font-size: 14px;
+            border: 1px solid #C1C1C1;
+            
+        }
+        .custom-input {
+            background-color: #E3E2FF; 
+            height: 30px;
+            font-family: "Open Sans", sans-serif;
+            font-size: 14px;
+            width: 270px;
+            border: 1px solid #C1C1C1;
+            
+        }
+        .input-group .form-control {
+            background-color: #E3E2FF; 
+            border: 1px solid #C1C1C1; 
+            height: 30px;
+            font-family: "Open Sans", sans-serif;
+            font-size: 14px;
+            
+        }
+        .input-group .btn {
+            background-color: #E3E2FF;
+            border: 1px solid #C1C1C1; 
+            height: 30px;
+            font-family: "Open Sans", sans-serif;
+            font-size: 14px;
+        }
+        .input-group .btn:hover {
+            background-color: #D1D0FF; 
+        }
+        .label-custom{
+            width: 180px;
+        }
+        .form-check-input-checked-bg-color{
+            background-color:  #7DA5F0;;
+        }
 </style>
