@@ -1,9 +1,11 @@
 <script setup>
+import { getTransportations } from "@/helpers/API";
 import ModalSearchDocumentLarge from "./ModalSearchDocumentLarge.vue";
 import { Transporation } from "@/models/transporation";
 import { useListsStore } from "@/stores/main";
 
 const listsStore = useListsStore();
+getTransportations();
 Transporation.loadLists();
 </script>
 
