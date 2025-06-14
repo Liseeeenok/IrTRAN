@@ -283,7 +283,7 @@ export async function getTransportations() {
 
     let response = await sendRequest('https://' + host + '/requests_transportation', request);
 
-    return processingArray(response);
+    listsStore.transportations = processingArray(response);
 }
 
 export async function getTransportation(id) {

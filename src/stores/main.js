@@ -37,6 +37,7 @@ export const useListsStore = defineStore("lists", {
             payer_types: {},
             send_types: {},
             speed_types: {},
+            transportations: {},
         };
     },
     actions: {},
