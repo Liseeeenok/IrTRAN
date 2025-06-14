@@ -11,3 +11,8 @@ export function updateSubtitle(subtitle)
 {
     mainStore.subtitle = subtitle;
 }
+
+export function updateSubtitleModal(subtitleModal) 
+{
+    mainStore.subtitleModal = subtitleModal;
+}

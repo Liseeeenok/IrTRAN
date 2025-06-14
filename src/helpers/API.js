@@ -1,7 +1,8 @@
 import axios from "axios";
-import router from "../router";
+import { useListsStore } from "@/stores/main";
 
 const host = "mypew.ru:7071"; //имя или ip хоста api
+const listsStore = useListsStore();
 
 //-----------------Авторизация----------------------
 
@@ -29,7 +30,7 @@ export async function getDocumentTypes() {
 
     let response = await sendRequest('https://' + host + '/document_types', request);
 
-    return processingArray(response);
+    listsStore.document_types = processingArray(response);
 }
 
 export async function getMessageTypes() {
@@ -40,7 +41,7 @@ export async function getMessageTypes() {
 
     let response = await sendRequest('https://' + host + '/message_types', request);
 
-    return processingArray(response);
+    listsStore.message_types = processingArray(response);
 }
 
 export async function getSignsSending() {
@@ -51,7 +52,7 @@ export async function getSignsSending() {
 
     let response = await sendRequest('https://' + host + '/signs_sending', request);
 
-    return processingArray(response);
+    listsStore.signs_sending = processingArray(response);
 }
 
 export async function getCountries() {
@@ -62,7 +63,7 @@ export async function getCountries() {
 
     let response = await sendRequest('https://' + host + '/countries', request);
 
-    return processingArray(response);
+    listsStore.countries = processingArray(response);
 }
 
 export async function getLegalEntities() {
@@ -73,7 +74,7 @@ export async function getLegalEntities() {
 
     let response = await sendRequest('https://' + host + '/legal_entities', request);
 
-    return processingArray(response);
+    listsStore.legal_entities = processingArray(response);
 }
 
 export async function getOwnerships() {
@@ -84,7 +85,7 @@ export async function getOwnerships() {
 
     let response = await sendRequest('https://' + host + '/ownerships', request);
 
-    return processingArray(response);
+    listsStore.ownerships = processingArray(response);
 }
 
 export async function getOwnersNonPublicRailway() {
@@ -95,7 +96,7 @@ export async function getOwnersNonPublicRailway() {
 
     let response = await sendRequest('https://' + host + '/owners_non_public_railway', request);
 
-    return processingArray(response);
+    listsStore.owners_non_public_railway = processingArray(response);
 }
 
 export async function getApprovalsWithOwner() {
@@ -106,7 +107,7 @@ export async function getApprovalsWithOwner() {
 
     let response = await sendRequest('https://' + host + '/approvals_with_owner', request);
 
-    return processingArray(response);
+    listsStore.approvals_with_owner = processingArray(response);
 }
 
 export async function getCargoGroups() {
@@ -117,7 +118,7 @@ export async function getCargoGroups() {
 
     let response = await sendRequest('https://' + host + '/cargo_groups', request);
 
-    return processingArray(response);
+    listsStore.cargo_groups = processingArray(response);
 }
 
 export async function getMethodsSubmission() {
@@ -127,6 +128,160 @@ export async function getMethodsSubmission() {
     };
 
     let response = await sendRequest('https://' + host + '/methods_submission', request);
+
+    listsStore.methods_submission = processingArray(response);
+}
+
+export async function getStations() {
+    let request = {
+        "act": "read",
+        "selection_type": "all"
+    };
+
+    let response = await sendRequest('https://' + host + '/stations', request);
+
+    listsStore.stations = processingArray(response);
+}
+
+export async function getSendings() {
+    let request = {
+        "act": "read",
+        "selection_type": "all"
+    };
+
+    let response = await sendRequest('https://' + host + '/sending', request);
+
+    listsStore.sendings = processingArray(response);
+}
+
+export async function getCargos() {
+    let request = {
+        "act": "read",
+        "selection_type": "all"
+    };
+
+    let response = await sendRequest('https://' + host + '/cargo', request);
+
+    listsStore.cargos = processingArray(response);
+}
+
+export async function getTransportPackageTypes() {
+    let request = {
+        "act": "read",
+        "selection_type": "all"
+    };
+
+    let response = await sendRequest('https://' + host + '/transport_package_types', request);
+
+    listsStore.transport_package_types = processingArray(response);
+}
+
+export async function getRollingStockTypes() {
+    let request = {
+        "act": "read",
+        "selection_type": "all"
+    };
+
+    let response = await sendRequest('https://' + host + '/rolling_stock_types', request);
+
+    listsStore.rolling_stock_types = processingArray(response);
+}
+
+export async function getContracts() {
+    let request = {
+        "act": "read",
+        "selection_type": "all"
+    };
+
+    let response = await sendRequest('https://' + host + '/contracts', request);
+
+    listsStore.contracts = processingArray(response);
+}
+
+export async function getDestinationIndications() {
+    let request = {
+        "act": "read",
+        "selection_type": "all"
+    };
+
+    let response = await sendRequest('https://' + host + '/destination_indications', request);
+
+    listsStore.destination_indications = processingArray(response);
+}
+
+export async function getSubmissionSchedules() {
+    let request = {
+        "act": "read",
+        "selection_type": "all"
+    };
+
+    let response = await sendRequest('https://' + host + '/submission_schedules', request);
+
+    listsStore.submission_schedules = processingArray(response);
+}
+
+export async function getSendNumbers() {
+    let request = {
+        "act": "read",
+        "selection_type": "all"
+    };
+
+    let response = await sendRequest('https://' + host + '/send_numbers', request);
+
+    listsStore.send_numbers = processingArray(response);
+}
+
+export async function getPayers() {
+    let request = {
+        "act": "read",
+        "selection_type": "all"
+    };
+
+    let response = await sendRequest('https://' + host + '/payers', request);
+
+    listsStore.payers = processingArray(response);
+}
+
+export async function getPayerTypes() {
+    let request = {
+        "act": "read",
+        "selection_type": "all"
+    };
+
+    let response = await sendRequest('https://' + host + '/payer_types', request);
+
+    listsStore.payer_types = processingArray(response);
+}
+
+export async function getSendTypes() {
+    let request = {
+        "act": "read",
+        "selection_type": "all"
+    };
+
+    let response = await sendRequest('https://' + host + '/send_types', request);
+
+    listsStore.send_types = processingArray(response);
+}
+
+export async function getSpeedTypes() {
+    let request = {
+        "act": "read",
+        "selection_type": "all"
+    };
+
+    let response = await sendRequest('https://' + host + '/speed_types', request);
+
+    listsStore.speed_types = processingArray(response);
+}
+
+export async function getTransportations() {
+    let request = {
+        "act": "read",
+        "selection_type": "all"
+    };
+
+    let response = await sendRequest('https://' + host + '/requests_transportation', request);
 
     return processingArray(response);
 }
@@ -149,73 +304,25 @@ export async function getTransportation(id) {
     return response;
 }
 
-export async function getTransportations() {
-    let request = {
-        "act": "read",
-        "selection_type": "all"
-    };
-
-    let response = await sendRequest('https://' + host + '/requests_transportation', request);
-
-    return processingArray(response);
-}
-
-export async function getStations() {
-    let request = {
-        "act": "read",
-        "selection_type": "all"
-    };
-
-    let response = await sendRequest('https://' + host + '/stations', request);
-
-    return processingArray(response);
-}
-
-export async function getSendings() {
-    let request = {
-        "act": "read",
-        "selection_type": "all"
-    };
-
-    let response = await sendRequest('https://' + host + '/sending', request);
-
-    return processingArray(response);
-}
-
-export async function getCargos() {
-    let request = {
-        "act": "read",
-        "selection_type": "all"
-    };
-
-    let response = await sendRequest('https://' + host + '/cargo', request);
-
-    return processingArray(response);
-}
-
 //--------------------------------------------------
 
 //------------------Сохранение----------------------
 
-export function saveTransporation() {
-    /*
+export async function saveTransporation(object) {
+    let act = object.id ? 'update' : 'create';
+
     let request = {
-        'jwt': localStorage.getItem('skos-token'),
-        'companies': admin.companies.filter((company) => typeof company.status !== "undefined" && company.status != 3),
-        'type_request': 'companies_change',
-    }
-    axios
-        .post('https://' + host + '/companies', request)
-        .then((response) => {
-            getCompany();
-            if (response.data == 'OK') alert('Успешно сохранено!');
-            else console.log(request, response);
-        })
-    */
+        "act": act,
+        "object": {
+            object
+        }
+    };
 
-    alert("Успешно сохранено");
+    let response = await sendRequest('https://' + host + '/requests_transportation', request);
+    
+    console.log('API response', response);
 
-    return getTransportation(11);
+    return getTransportation(response.id);
 }
 
 //--------------------------------------------------
