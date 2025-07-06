@@ -1,26 +1,12 @@
 <script setup>
-import { onMounted, ref } from "vue";
-import { getCountries, getLegalEntities, getMessageTypes, getSignsSending, getTransportations } from "@/helpers/API";
+import { getTransportations } from "@/helpers/API";
 import ModalSearchDocumentLarge from "./ModalSearchDocumentLarge.vue";
+import { Transporation } from "@/models/transporation";
+import { useListsStore } from "@/stores/main";
 
-const transportations = ref([]);
-const signs_sending = ref({});
-const message_types = ref({});
-const legal_entities = ref({});
-const countries = ref({});
-
-async function fetchData() {
-    transportations.value = await getTransportations();
-    signs_sending.value = await getSignsSending();
-    message_types.value = await getMessageTypes();
-    legal_entities.value = await getLegalEntities();
-    countries.value = await getCountries();
-    console.log(transportations.value);
-}
-
-onMounted(async () => {
-    fetchData();
-});
+const listsStore = useListsStore();
+getTransportations();
+Transporation.loadLists();
 </script>
 
 <template>
@@ -51,15 +37,15 @@ onMounted(async () => {
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
-                    <tr v-for="transportation in transportations" @dblclick="$router.push('/transporation/create/' + transportation.id);">
+                    <tr v-for="transportation in listsStore.transportations" @dblclick="$router.push('/transporation/create/' + transportation.id)">
                         <td>{{ transportation.id }}</td>
                         <td>{{ transportation.document_status }}</td>
                         <td>{{ transportation.created_at }}</td>
-                        <td>{{ signs_sending[transportation.id_sign_sending]?.name }}</td>
-                        <td>{{ message_types[transportation.id_message_type]?.name }}</td>
-                        <td>{{ legal_entities[transportation.id_shipper]?.name }}</td>
-                        <td>{{ legal_entities[transportation.id_loading_organizer]?.name }}</td>
-                        <td>{{ countries[transportation.id_country_departure]?.name }}</td>
+                        <td>{{ listsStore.signs_sending[transportation.id_sign_sending]?.name }}</td>
+                        <td>{{ listsStore.message_types[transportation.id_message_type]?.name }}</td>
+                        <td>{{ listsStore.legal_entities[transportation.id_shipper]?.name }}</td>
+                        <td>{{ listsStore.legal_entities[transportation.id_loading_organizer]?.name }}</td>
+                        <td>{{ listsStore.countries[transportation.id_country_departure]?.name }}</td>
                         <td></td>
                         <td></td>
                         <td></td>

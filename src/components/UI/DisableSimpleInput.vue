@@ -2,6 +2,9 @@
 export default {
     name: "disable-simple-input",
     props: {
+        type: {
+            type: String,
+        },
         title: {
             type: String,
         },
@@ -34,7 +37,10 @@ export default {
 
 <template>
     <label class="col-auto col-form-label mb-0" :class="{ label_custom: fixWidth, required: req }" :style="styleLabel">{{ title }}</label>
-    <div class="col-auto">
+    <div class="col-auto" v-if="type === 'checkbox'">
+        <input :type="type" class="form-control form-check-input custom-input" :value="value" :disabled="dis" :required="req" :style="styleInput" />
+    </div>
+    <div class="col-auto" v-else>
         <input type="text" class="form-control mt-0" :value="value" :disabled="dis" :required="req" :style="styleInput" />
     </div>
 </template>

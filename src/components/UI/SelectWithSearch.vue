@@ -73,6 +73,7 @@ export default {
             this.$emit("update:modelValue", key);
             this.searchQueries = value;
             this.closeDropdown();
+            this.closeModal();
         },
         openDropdown() {
             this.dropdownIsOpen = true;
@@ -83,6 +84,17 @@ export default {
         clearSearch() {
             this.searchQueries = "";
             this.getFilteredItems();
+        },
+        openModal() {
+            $("#modalSearch" + this.modalName).show();
+            $("#modalSearch" + this.modalName).css("opacity", "1");
+            $("#modalSearch" + this.modalName + "Backdrop").show();
+            $("body").css("overflow", "hidden");
+        },
+        closeModal() {
+            $("#modalSearch" + this.modalName).hide();
+            $("#modalSearch" + this.modalName + "Backdrop").hide();
+            $("body").css("overflow", "");
         },
     },
     mounted() {
@@ -105,7 +117,14 @@ export default {
         <div class="dropdown" style="width: 270px" v-click-outside="closeDropdown">
             <div class="input-group">
                 <input type="text" class="form-control custom-search" placeholder="Поиск..." aria-label="Введите..." v-model="searchQueries" @input="getFilteredItems" @focus="getFilteredItems" :style="styleInput" />
-                <button class="btn btn-outline-secondary" type="button" data-toggle="modal" :data-target="'#modalSearch' + modalName" @click="getFilteredItems">
+                <button
+                    class="btn btn-outline-secondary"
+                    type="button"
+                    @click="
+                        getFilteredItems();
+                        openModal();
+                    "
+                >
                     <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                 </button>
             </div>
@@ -127,7 +146,7 @@ export default {
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #7da5f0">
                     <span class="modal-title text-center" :id="'modalSearch' + modalName + 'Label'" style="color: white; font-weight: bold">{{ title }}</span>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
+                    <button type="button" class="btn-close" aria-label="Закрыть" style="color: white" @click="closeModal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="row justify-content-md-center mb-2">
@@ -145,7 +164,7 @@ export default {
                             </div>
                         </div>
                     </div>
-                    <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
+                    <div class="table-responsive" style="border: #c1c1c1 solid 1px; height: 70vh">
                         <table class="table table-hover table-bordered border-white">
                             <thead style="background-color: #7da5f0; color: white">
                                 <tr>
@@ -161,13 +180,13 @@ export default {
                     </div>
 
                     <div class="row justify-content-md-end">
-                        <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px; display: none">Да</button>
-                        <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
+                        <simple-button title="Нет" @click="closeModal" styleButton="'width: 70px; margin: 15px'" />
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="modal-backdrop fade show" :id="'modalSearch' + modalName + 'Backdrop'" style="display: none"></div>
 </template>
 
 <style scoped>
@@ -222,15 +241,8 @@ export default {
     text-align: center !important;
 }
 
-.btn-custom {
-    width: auto;
-    background-color: #7da5f0;
-    color: white;
-    margin: 3px;
-}
-
-.btn-custom:hover {
-    background-color: #3e6cb4;
-    color: white;
+.modal {
+    top: 20px;
+    overflow: inherit;
 }
 </style>

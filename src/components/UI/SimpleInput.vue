@@ -3,7 +3,7 @@ export default {
     name: "simple-input",
     props: {
         modelValue: {
-            type: [String, Number],
+            type: [String, Number, Boolean],
         },
         title: {
             type: String,
@@ -32,7 +32,11 @@ export default {
     },
     methods: {
         updateInput(event) {
-            this.$emit("update:modelValue", event.target.value);
+            if (this.type === "checkbox") {
+                this.$emit("update:modelValue", event.target.checked);
+            } else {
+                this.$emit("update:modelValue", event.target.value);
+            }
         },
     },
 };
@@ -40,7 +44,10 @@ export default {
 
 <template>
     <label class="col-auto col-form-label mb-0" :class="{ label_custom: fixWidth, required: req }" :required="req" :style="styleLabel">{{ title }}</label>
-    <div class="col-auto">
+    <div class="col-auto" v-if="type === 'checkbox'">
+        <input :type="type" class="form-control form-check-input custom-input" :value="modelValue" :disabled="dis" :required="req" @change="updateInput" :style="styleInput" />
+    </div>
+    <div class="col-auto" v-else>
         <input :type="type" class="form-control mt-0" :value="modelValue" :disabled="dis" :required="req" @input="updateInput" :style="styleInput" />
     </div>
 </template>
