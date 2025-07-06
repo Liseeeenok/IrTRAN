@@ -304,6 +304,20 @@ export async function getTransportation(id) {
     return response;
 }
 
+export async function getSending(id) {
+    let request = {
+        "act": "read",
+        "selection_type": "one",
+        "object": {
+            "id": id
+        }
+    };
+
+    let response = await sendRequest('https://' + host + '/sending', request);
+
+    return response;
+}
+
 //--------------------------------------------------
 
 //------------------Сохранение----------------------
