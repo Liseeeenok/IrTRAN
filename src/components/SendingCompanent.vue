@@ -1,6 +1,7 @@
 <script>
 import { useMainStore, useListsStore } from "@/stores/main";
 import { Sending } from "@/models/sending";
+import { saveSending } from "@/helpers/API";
 export default {
     props: {
         object: {
@@ -10,6 +11,7 @@ export default {
             type: Number,
         },
     },
+    emits: ["saveSending"],
     data() {
         return {
             errorSending: "Не указано наименование груза",
@@ -19,6 +21,10 @@ export default {
         };
     },
     methods: {
+        async saveDocument() {
+            let saveDoc = await saveSending(this.sending);
+            this.$emit("saveSending", saveDoc.id);
+        }
     },
     created() {
         this.listsStore = useListsStore();
@@ -29,8 +35,7 @@ export default {
             this.sending = Sending.getDefaultDocument();
         }
     },
-    mounted() {
-    },
+    mounted() {},
     computed: {
         watchedComputed() {
             return Object.assign({}, this.sending);
@@ -60,7 +65,7 @@ export default {
                     this.sending = Object.assign({}, this.watchedComputed);
                 }
             },
-        }
+        },
     },
 };
 </script>
@@ -77,8 +82,8 @@ export default {
                 <div class="modal-body">
                     <div class="row mb-3">
                         <div class="col-auto">
-                            <simple-button title="Применить" />
-                            <simple-button title="Отменить" />
+                            <simple-button title="Применить" @click="saveDocument" data-dismiss="modal" aria-label="Закрыть" />
+                            <simple-button title="Отменить" data-dismiss="modal" aria-label="Закрыть" />
                         </div>
                     </div>
 
@@ -109,7 +114,7 @@ export default {
                     </div>
 
                     <div class="row mb-1">
-                        <select-with-search title="Владелец/арендатор вагонов" :values="listsStore.legal_entities" valueKey="id" name="name" v-model="sending.id_owner_wagon" modalName="SendingOwnerWagon" :fixWidth="false" :fields="{ 'ИД холдинга': 'id', 'Наименование холдинга': 'name', 'ОКПО': 'OKPO', 'Наименование грузополучателя': '', 'ИД бизнеса': '', 'Наименование бизнеса': '' }" />
+                        <select-with-search title="Владелец/арендатор вагонов" :values="listsStore.legal_entities" valueKey="id" name="name" v-model="sending.id_owner_wagon" modalName="SendingOwnerWagon" :fixWidth="false" :fields="{ 'ИД холдинга': 'id', 'Наименование холдинга': 'name', ОКПО: 'OKPO', 'Наименование грузополучателя': '', 'ИД бизнеса': '', 'Наименование бизнеса': '' }" />
                         <disable-simple-input title="ОКПО" :dis="true" :value="listsStore.legal_entities[sending.id_owner_wagon]?.OKPO" :fixWidth="false" styleInput="width: 120px" />
                     </div>
 
@@ -122,141 +127,67 @@ export default {
                     </div>
 
                     <div class="row mb-1">
-                        <select-with-search title="Страна назначения" :req="true" :values="listsStore.countries" valueKey="id" name="name" v-model="sending.id_country_destination" modalName="SendingCountryDestination" :fixWidth="false" :fields="{ 'Код ОСКМ': 'OSCM_code', 'Наименование страны': 'name', 'ОКПО': 'OKPO', 'Краткое наименование': 'short_name' }" />
+                        <select-with-search title="Страна назначения" :req="true" :values="listsStore.countries" valueKey="id" name="name" v-model="sending.id_country_destination" modalName="SendingCountryDestination" :fixWidth="false" :fields="{ 'Код ОСКМ': 'OSCM_code', 'Наименование страны': 'name', ОКПО: 'OKPO', 'Краткое наименование': 'short_name' }" />
                     </div>
 
                     <div class="row mb-1">
-                        <select-with-search title="Станция назначения/выхода СНГ" :values="listsStore.stations" valueKey="id" name="name" v-model="sending.id_station_destination" :req="true" modalName="SendingStationDestination" :fields="{ 'Код станции': 'code', 'Наименование станции': 'name', 'Краткое наименование': 'short_name', 'Параграфы': 'paragraph' }" />
+                        <select-with-search title="Станция назначения/выхода СНГ" :values="listsStore.stations" valueKey="id" name="name" v-model="sending.id_station_destination" :req="true" modalName="SendingStationDestination" :fields="{ 'Код станции': 'code', 'Наименование станции': 'name', 'Краткое наименование': 'short_name', Параграфы: 'paragraph' }" />
                         <disable-simple-input title="Код дороги" :dis="true" :value="listsStore.stations[sending.id_station_destination]?.railway" :fixWidth="false" styleInput="width: 120px" />
                         <disable-simple-input title="Код станции" :dis="true" :value="listsStore.stations[sending.id_station_destination]?.code" :fixWidth="false" styleInput="width: 120px" />
                         <disable-simple-input title="Параграфы" :dis="true" :value="listsStore.stations[sending.id_station_destination]?.paragraph" :fixWidth="false" styleInput="width: auto" />
                     </div>
 
                     <div class="row mb-1">
-                        <label class="col-auto col-form-label mb-0 label-custom">Станция выхода из России</label>
-                        <div class="col-auto">
-                            <div class="input-group" style="width: 270px">
-                                <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
-                                <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#staticStanciaVihoda">
-                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                </button>
-                            </div>
-                        </div>
-                        <label class="col-1 col-form-label mb-0 label-custom" style="width: auto">Код дороги</label>
-                        <div class="col-auto">
-                            <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled="disabled" />
-                        </div>
-                        <label class="col-1 col-form-label mb-0 label-custom" style="width: auto">Код станции</label>
-                        <div class="col-auto">
-                            <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled="disabled" />
-                        </div>
+                        <select-with-search title="Станция выхода из России" :values="listsStore.stations" valueKey="id" name="name" v-model="sending.id_station_out" modalName="SendingStationOut" :fields="{ 'Код станции': 'code', 'Наименование станции': 'name', 'Краткое наименование': 'short_name', Параграфы: 'paragraph' }" />
+                        <disable-simple-input title="Код дороги" :dis="true" :value="listsStore.stations[sending.id_station_out]?.railway" :fixWidth="false" styleInput="width: 120px" />
+                        <disable-simple-input title="Код станции" :dis="true" :value="listsStore.stations[sending.id_station_out]?.code" :fixWidth="false" styleInput="width: 120px" />
                     </div>
 
                     <div class="row mb-1">
-                        <label class="col-auto col-form-label mb-0 label-custom">Область назначения</label>
-                        <div class="col-auto">
-                            <input type="text" class="form-control mt-0 disabled-input" placeholder="" disabled="disabled" />
-                        </div>
+                        <disable-simple-input title="Область назначения" :dis="true" :value="''" :fixWidth="false" styleInput="width: 120px" />
+                        <!-- todo нет такого в БД -->
                     </div>
 
                     <div class="row mb-1">
-                        <label class="col-auto col-form-label mb-0 label-custom">Пункт перевалки</label>
-                        <div class="col-auto">
-                            <div class="input-group" style="width: 270px">
-                                <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
-                                <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#staticPunktPerevalky">
-                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                </button>
-                            </div>
-                        </div>
-                        <label class="col-1 col-form-label mb-0 label-custom" style="width: auto">ОКПО</label>
-                        <div class="col-auto">
-                            <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled="disabled" />
-                        </div>
+                        <select-with-search title="Пункт перевалки" :values="listsStore.stations" valueKey="id" name="name" v-model="sending.id_transshipment_point" modalName="SendingTransshipmentPoint" :fields="{ 'Код станции': 'code', 'Наименование станции': 'name', 'Краткое наименование': 'short_name', Параграфы: 'paragraph' }" />
+                        <disable-simple-input title="ОКПО" :dis="true" :value="listsStore.stations[sending.id_transshipment_point]?.OKPO" :fixWidth="false" styleInput="width: 120px" />
+                        <!-- todo проработать ОКПО, так как у станций их нет, надо брать из стран -->
                     </div>
 
                     <div class="row mb-1">
-                        <label class="col-auto col-form-label mb-0 label-custom">Организация в пункте перевалки</label>
-                        <div class="col-auto">
-                            <div class="input-group" style="width: 270px">
-                                <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
-                                <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#staticOrgPunktPerevalky">
-                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                </button>
-                            </div>
-                        </div>
-                        <label class="col-1 col-form-label mb-0 label-custom" style="width: auto">ОКПО</label>
-                        <div class="col-auto">
-                            <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled="disabled" />
-                        </div>
+                        <select-with-search title="Организация в пункте перевалки" :values="listsStore.legal_entities" valueKey="id" name="name" v-model="sending.id_organization_TP" modalName="SendingOrganizationTP" :fields="{ Код: 'TGNL_code', Наименование: 'name', 'Краткое наименование': 'short_name' }" />
+                        <disable-simple-input title="ОКПО" :dis="true" :value="listsStore.legal_entities[sending.id_organization_TP]?.OKPO" :fixWidth="false" styleInput="width: 120px" />
                     </div>
 
                     <div class="row mb-1">
-                        <label class="col-auto col-form-label mb-0" for="customCheck1" style="width: auto">Перевозка по альтернативному маршруту</label>
-                        <div class="col-auto">
-                            <input class="form-check-input custom-input" style="width: 20px; height: 20px" type="checkbox" id="checkboxNoLabel" value="" disabled />
-                        </div>
+                        <disable-simple-input title="Перевозка по альтернативному маршруту" :dis="true" type="checkbox" :value="false" styleLabel="width: auto;" styleInput="width: 20px; height: 20px;" />
                     </div>
 
                     <div class="row mb-1">
-                        <label class="col-auto col-form-label mb-0 label-custom">Грузополучатель</label>
-                        <div class="col-auto">
-                            <div class="input-group" style="width: 270px">
-                                <input type="text" class="form-control" placeholder="Поиск" aria-label="Введите запрос" />
-                                <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#staticGruzopoluchatel">
-                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                </button>
-                            </div>
-                        </div>
-
-                        <label class="col-1 col-form-label mb-0 label-custom" style="width: auto">ОКПО</label>
-                        <div class="col-auto">
-                            <input type="text" class="form-control mt-0 disabled-input" style="width: 120px" placeholder="" disabled="disabled" />
-                        </div>
-
-                        <label class="col-1 col-form-label mb-0 label-custom" style="width: auto">ИНН</label>
-                        <div class="col-auto">
-                            <input type="text" class="form-control mt-0 disabled-input" style="width: auto" placeholder="" disabled="disabled" />
-                        </div>
+                        <select-with-search title="Грузополучатель" :req="true" :values="listsStore.legal_entities" valueKey="id" name="name" v-model="sending.id_receiver" modalName="SendingReceiver" :fields="{ 'Код ОКПО': 'OKPO', 'Наименование грузополучатель': 'name', 'ИД бизнеса': '', 'ИД холдинга': '', 'Наименование холдинга': '' }" />
+                        <disable-simple-input title="ОКПО" :dis="true" :value="listsStore.legal_entities[sending.id_receiver]?.OKPO" :fixWidth="false" styleInput="width: 120px" />
+                        <disable-simple-input title="ИНН" :dis="true" :value="listsStore.legal_entities[sending.id_receiver]?.INN" :fixWidth="false" styleInput="width: 120px" />
                     </div>
 
                     <div class="row mb-1">
-                        <label class="col-auto col-form-label mb-0" for="customCheck1" style="width: auto">Среди организаций при станции назначения</label>
-                        <div class="col-auto">
-                            <input class="form-check-input custom-input" style="width: 20px; height: 20px" type="checkbox" id="checkboxNoLabel" value="" />
-                        </div>
+                        <simple-input title="Среди организаций при станции назначения" type="checkbox" v-model="sending.is_among_as" styleLabel="width: auto;" styleInput="width: 20px; height: 20px;" />
                     </div>
 
                     <div class="row mb-1">
-                        <label class="col-auto col-form-label mb-0 label-custom">ОКПО</label>
-                        <div class="col-auto">
-                            <input type="text" class="form-control mt-0 custom-input" style="width: 150px" placeholder="" />
-                        </div>
-                        <label class="col-auto col-form-label mb-0 label-custom">Наименование</label>
-                        <div class="col-7">
-                            <input type="text" class="form-control mt-0 custom-input" style="min-width: 100%" placeholder="" />
-                        </div>
+                        <simple-input title="ОКПО" type="text" v-model="sending.OKPO" styleLabel="width: auto;" styleInput="width: 150px;" />
+                        <simple-input title="Наименование" type="text" v-model="sending.name" styleLabel="width: auto;" styleInput="min-width: 100%;" />
                     </div>
 
                     <div class="row mb-1">
-                        <label class="col-auto col-form-label mb-0 label-custom">Адрес</label>
-                        <div class="col-10">
-                            <input type="text" class="form-control mt-0 custom-input" style="min-width: 100%" placeholder="" />
-                        </div>
+                        <simple-input title="Адрес" type="text" v-model="sending.addr" styleLabel="width: auto;" styleInput="min-width: 100%; width: 60vw;" />
                     </div>
 
                     <div class="row mb-1">
-                        <label class="col-auto col-form-label mb-0 label-custom">Код исключительного тарифа</label>
-                        <div class="col-auto">
-                            <input type="text" class="form-control mt-0 custom-input" style="width: 150px" placeholder="" />
-                        </div>
+                        <simple-input title="Код исключительного тарифа" type="text" v-model="sending.code_exclusive_tariff" styleLabel="width: auto;" styleInput="width: 150px;" />
                     </div>
 
                     <div class="row mb-1">
-                        <label class="col-auto col-form-label mb-0 label-custom">Примечание</label>
-                        <div class="col-10">
-                            <input type="text" class="form-control mt-0 custom-input" style="height: 100px; min-width: 100%" />
-                        </div>
+                        <simple-input title="Примечание" type="text" v-model="sending.description" styleLabel="width: auto;" styleInput="height: 100px; min-width: 70vw;" />
                     </div>
 
                     <!-----------------Признак назначения------------------>
@@ -264,14 +195,14 @@ export default {
                         <label class="col-auto col-form-label mb-0" style="width: auto; font-weight: bold">Признак назначения</label>
                     </div>
 
-                    <div class="row mb-1">
+                    <div class="row mb-1" style="opacity: 0.5;">
                         <div class="col-auto">
-                            <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#DobavitPriznak">Добавить</button>
-                            <button type="button" class="btn btn-custom">Удалить</button>
+                            <simple-button data-toggle="modal" data-target="#DobavitPriznak" title="Добавить" />
+                            <simple-button title="Удалить" />
                         </div>
                     </div>
 
-                    <div class="row mb-1">
+                    <div class="row mb-1" style="opacity: 0.5;">
                         <div class="col-12">
                             <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 50px">
                                 <table class="table table-hover table-bordered border-white">
@@ -282,617 +213,24 @@ export default {
                                         </tr>
                                     </thead>
                                     <tbody class="table-group-divider">
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
+                                        <tr v-for="(item, key) in sending.DestinationIndications" :key="key">
+                                            <td>{{ item.code }}</td>
+                                            <td>{{ item.name }}</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-
                     <!--------------------------------------------------->
 
-                    <div class="row mb-1">
-                        <label class="col-auto col-form-label mb-0 label-custom">Договор на особых условиях</label>
-                        <div class="col-auto">
-                            <div class="input-group" style="width: 270px">
-                                <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
-                                <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#staticDogovorNaOsob">
-                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                </button>
-                            </div>
-                        </div>
+                    <div class="row mb-1" style="opacity: 0.5;">
+                        <select-with-search title="Договор на особых условиях" :fixWidth=false :values="listsStore.contracts" valueKey="id" name="name" v-model="sending.id_contract_special_terms" modalName="SendingContracts" :fields="{ Код: 'code', Наименование: 'name', 'Краткое': 'short_name' }" />
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!--Найти Груз модальное окно -->
-    <div class="modal fade" id="staticGruz" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticGruzLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #7da5f0">
-                    <span class="modal-title text-center" id="staticGruzLabel" style="color: white; font-weight: bold">Груз</span>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row justify-content-md-center mb-2">
-                        <div class="col-12">
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                        <font-awesome-icon icon="fa-solid fa-xmark" />
-                                    </button>
-                                    <button class="btn btn-outline-secondary" type="button">
-                                        <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                        <table class="table table-hover table-bordered border-white">
-                            <thead style="background-color: #7da5f0; color: white">
-                                <tr>
-                                    <th>Код груза ЕТСНГ</th>
-                                    <th>Наименование груза</th>
-                                    <th>Краткое наименование</th>
-                                    <th>Номер группы груза</th>
-                                    <th>Наименование группы груза</th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-group-divider">
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="row justify-content-md-end">
-                        <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
-                        <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!----------------------------- -->
-
-    <!--Найти Вид транспотртной упаковки модальное окно -->
-    <div class="modal fade" id="staticTransportUpakovka" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #7da5f0">
-                    <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Вид транспотртной упаковки</span>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row justify-content-md-center mb-2">
-                        <div class="col-12">
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                        <font-awesome-icon icon="fa-solid fa-xmark" />
-                                    </button>
-                                    <button class="btn btn-outline-secondary" type="button">
-                                        <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                        <table class="table table-hover table-bordered border-white">
-                            <thead style="background-color: #7da5f0; color: white">
-                                <tr>
-                                    <th>ИД транспортной упаковки</th>
-                                    <th>Код транспортной упаковки</th>
-                                    <th>Наименование транспортной упаковки</th>
-                                    <th>Краткое наименование транспортной упаковки</th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-group-divider">
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="row justify-content-md-end">
-                        <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
-                        <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!----------------------------- -->
-
-    <!--Найти Вид подвижного состава модальное окно -->
-    <div class="modal fade" id="staticVidPodvizSostava" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #7da5f0">
-                    <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Вид подвижного состава</span>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row justify-content-md-center mb-2">
-                        <div class="col-12">
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                        <font-awesome-icon icon="fa-solid fa-xmark" />
-                                    </button>
-                                    <button class="btn btn-outline-secondary" type="button">
-                                        <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                        <table class="table table-hover table-bordered border-white">
-                            <thead style="background-color: #7da5f0; color: white">
-                                <tr>
-                                    <th>Код подвижного состава</th>
-                                    <th>Наименование</th>
-                                    <th>Аббревиатура</th>
-                                    <th>Код для РПП</th>
-                                    <th>Код рода вагонов в накладной</th>
-                                    <th>Наименование рода вагонов в накладной</th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-group-divider">
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="row justify-content-md-end">
-                        <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
-                        <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!----------------------------- -->
-
-    <!--Найти Владелец/арендатор вагонов модальное окно -->
-    <div class="modal fade" id="staticVladelecArendatorVagonov" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #7da5f0">
-                    <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Владелец/арендатор вагонов</span>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row justify-content-md-center mb-2">
-                        <div class="col-12">
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                        <font-awesome-icon icon="fa-solid fa-xmark" />
-                                    </button>
-                                    <button class="btn btn-outline-secondary" type="button">
-                                        <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                        <table class="table table-hover table-bordered border-white">
-                            <thead style="background-color: #7da5f0; color: white">
-                                <tr>
-                                    <th>ИД холдинга</th>
-                                    <th>Наименование холдинга</th>
-                                    <th>ОКПО</th>
-                                    <th>Наименование грузополучателя</th>
-                                    <th>ИД бизнеса</th>
-                                    <th>Наименование бизнеса</th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-group-divider">
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="row justify-content-md-end">
-                        <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
-                        <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!----------------------------- -->
-
-    <!--Найти Страна назначения модальное окно -->
-    <div class="modal fade" id="staticStranaNaznach" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #7da5f0">
-                    <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Страна назначения</span>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row justify-content-md-center mb-2">
-                        <div class="col-12">
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                        <font-awesome-icon icon="fa-solid fa-xmark" />
-                                    </button>
-                                    <button class="btn btn-outline-secondary" type="button">
-                                        <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                        <table class="table table-hover table-bordered border-white">
-                            <thead style="background-color: #7da5f0; color: white">
-                                <tr>
-                                    <th>Код ОСКМ</th>
-                                    <th>Наименование страны</th>
-                                    <th>Краткое наименование</th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-group-divider">
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="row justify-content-md-end">
-                        <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
-                        <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!----------------------------- -->
-
-    <!--Найти Станция назначения/выхода СНГ модальное окно -->
-    <div class="modal fade" id="staticStanciaNaznach" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #7da5f0">
-                    <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Страна отправления</span>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row justify-content-md-center mb-2">
-                        <div class="col-12">
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                        <font-awesome-icon icon="fa-solid fa-xmark" />
-                                    </button>
-                                    <button class="btn btn-outline-secondary" type="button">
-                                        <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                        <table class="table table-hover table-bordered border-white">
-                            <thead style="background-color: #7da5f0; color: white">
-                                <tr>
-                                    <th>Код станции</th>
-                                    <th>Наименование станции</th>
-                                    <th>Краткое наименование</th>
-                                    <th>Код страны</th>
-                                    <th>Наименование страны</th>
-                                    <th>Код дороги</th>
-                                    <th>Код ОСЖД</th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-group-divider">
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="row justify-content-md-end">
-                        <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
-                        <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!----------------------------- -->
-
-    <!--Найти Станция выхода из России модальное окно -->
-    <div class="modal fade" id="staticStanciaVihoda" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #7da5f0">
-                    <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Станция выхода из России</span>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row justify-content-md-center mb-2">
-                        <div class="col-12">
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                        <font-awesome-icon icon="fa-solid fa-xmark" />
-                                    </button>
-                                    <button class="btn btn-outline-secondary" type="button">
-                                        <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                        <table class="table table-hover table-bordered border-white">
-                            <thead style="background-color: #7da5f0; color: white">
-                                <tr>
-                                    <th>Код станции</th>
-                                    <th>Наименование станции</th>
-                                    <th>Краткое наименование</th>
-                                    <th>Код страны</th>
-                                    <th>Наименование страны</th>
-                                    <th>Код дороги</th>
-                                    <th>Код ОСЖД</th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-group-divider">
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="row justify-content-md-end">
-                        <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
-                        <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!----------------------------- -->
-
-    <!--Найти Пункт перевалки модальное окно -->
-    <div class="modal fade" id="staticPunktPerevalky" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #7da5f0">
-                    <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Пункт перевалки</span>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row justify-content-md-center mb-2">
-                        <div class="col-12">
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                        <font-awesome-icon icon="fa-solid fa-xmark" />
-                                    </button>
-                                    <button class="btn btn-outline-secondary" type="button">
-                                        <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                        <table class="table table-hover table-bordered border-white">
-                            <thead style="background-color: #7da5f0; color: white">
-                                <tr>
-                                    <th>Код станции</th>
-                                    <th>Наименование станции</th>
-                                    <th>Краткое наименование</th>
-                                    <th>Код страны</th>
-                                    <th>Наименование страны</th>
-                                    <th>Код дороги</th>
-                                    <th>Код ОСЖД</th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-group-divider">
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="row justify-content-md-end">
-                        <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
-                        <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!----------------------------- -->
-
-    <!--Найти Организация в пункте перевалки модальное окно -->
-    <div class="modal fade" id="staticOrgPunktPerevalky" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #7da5f0">
-                    <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Организация в пункте перевалки</span>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row justify-content-md-center mb-2">
-                        <div class="col-12">
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                        <font-awesome-icon icon="fa-solid fa-xmark" />
-                                    </button>
-                                    <button class="btn btn-outline-secondary" type="button">
-                                        <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                        <table class="table table-hover table-bordered border-white">
-                            <thead style="background-color: #7da5f0; color: white">
-                                <tr>
-                                    <th>Код</th>
-                                    <th>Наименование</th>
-                                    <th>Краткое наименование</th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-group-divider">
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="row justify-content-md-end">
-                        <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
-                        <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!----------------------------- -->
-
-    <!--Найти Грузополучатель модальное окно -->
-    <div class="modal fade" id="staticGruzopoluchatel" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #7da5f0">
-                    <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Грузополучатель</span>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row justify-content-md-center mb-2">
-                        <div class="col-12">
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                        <font-awesome-icon icon="fa-solid fa-xmark" />
-                                    </button>
-                                    <button class="btn btn-outline-secondary" type="button">
-                                        <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                        <table class="table table-hover table-bordered border-white">
-                            <thead style="background-color: #7da5f0; color: white">
-                                <tr>
-                                    <th>Код ОКПО</th>
-                                    <th>Наименование грузополучатель</th>
-                                    <th>ИД бизнеса</th>
-                                    <th>ИД холдинга</th>
-                                    <th>Наименование холдинга</th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-group-divider">
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="row justify-content-md-end">
-                        <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
-                        <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!----------------------------- -->
 
     <!--Добавить Признак назначения модальное окно -->
     <div class="modal fade" id="DobavitPriznak" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -928,64 +266,10 @@ export default {
                                 </tr>
                             </thead>
                             <tbody class="table-group-divider">
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="row justify-content-md-end">
-                        <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
-                        <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!----------------------------- -->
-
-    <!--Найти Договор на особых условиях модальное окно -->
-    <div class="modal fade" id="staticDogovorNaOsob" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #7da5f0">
-                    <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Договор на особых условиях</span>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row justify-content-md-center mb-2">
-                        <div class="col-12">
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                        <font-awesome-icon icon="fa-solid fa-xmark" />
-                                    </button>
-                                    <button class="btn btn-outline-secondary" type="button">
-                                        <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                        <table class="table table-hover table-bordered border-white">
-                            <thead style="background-color: #7da5f0; color: white">
-                                <tr>
-                                    <th>Код</th>
-                                    <th>Наименование</th>
-                                    <th>Краткое</th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-group-divider">
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                <tr v-for="(item, key) in listsStore.destination_indications" :key="key">
+                                    <td>{{ item.code }}</td>
+                                    <td>{{ item.name }}</td>
+                                    <td>{{ item.note }}</td>
                                 </tr>
                             </tbody>
                         </table>

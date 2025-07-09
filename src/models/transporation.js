@@ -1,4 +1,4 @@
-import { getDocumentTypes, getMessageTypes, getSignsSending, getCountries, getLegalEntities, getOwnerships, getOwnersNonPublicRailway, getApprovalsWithOwner, getCargoGroups, getMethodsSubmission, getStations, getSendings, getCargos, getTransportPackageTypes, getSendTypes, getRollingStockTypes, getSpeedTypes } from "@/helpers/API";
+import { getDocumentTypes, getMessageTypes, getSignsSending, getCountries, getLegalEntities, getOwnerships, getOwnersNonPublicRailway, getApprovalsWithOwner, getCargoGroups, getMethodsSubmission, getStations, getSendings, getCargos, getTransportPackageTypes, getSendTypes, getRollingStockTypes, getSpeedTypes, getDestinationIndications, getContracts } from "@/helpers/API";
 import { updateSubtitle } from "@/helpers/headerHelper";
 import { useListsStore } from "@/stores/main";
 import { getDiffDays } from "@/helpers/dateHelper";
@@ -79,6 +79,8 @@ export class Transporation {
         getSendTypes();
         getRollingStockTypes();
         getSpeedTypes();
+        getDestinationIndications();
+        getContracts();
     }
 
     static checkRequiredFields(object) {

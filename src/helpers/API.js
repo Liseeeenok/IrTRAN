@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useListsStore } from "@/stores/main";
 
-const host = "mypew.ru:7071"; //имя или ip хоста api
+const host = "irtran.mypew.ru:7071"; //имя или ip хоста api
 const listsStore = useListsStore();
 
 //-----------------Авторизация----------------------
@@ -304,6 +304,20 @@ export async function getTransportation(id) {
     return response;
 }
 
+export async function getSending(id) {
+    let request = {
+        "act": "read",
+        "selection_type": "one",
+        "object": {
+            "id": id
+        }
+    };
+
+    let response = await sendRequest('https://' + host + '/sending', request);
+
+    return response;
+}
+
 //--------------------------------------------------
 
 //------------------Сохранение----------------------
@@ -313,9 +327,7 @@ export async function saveTransporation(object) {
 
     let request = {
         "act": act,
-        "object": {
-            object
-        }
+        "object": object
     };
 
     let response = await sendRequest('https://' + host + '/requests_transportation', request);
@@ -323,6 +335,23 @@ export async function saveTransporation(object) {
     console.log('API response', response);
 
     return getTransportation(response.id);
+}
+
+export async function saveSending(object) {
+    let act = object.id ? 'update' : 'create';
+
+    let request = {
+        "act": act,
+        "object": object
+    };
+    
+    let response = await sendRequest('https://' + host + '/sending', request);
+    
+    console.log('API response', response);
+
+    getSendings();
+
+    return response;
 }
 
 //--------------------------------------------------

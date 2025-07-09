@@ -13,12 +13,15 @@ export class Sending {
             count_wagon: "Не указано количество вагонов",
             id_country_destination: "Не указана страна назначения",
             id_station_destination: "Не указана станция назначения/выхода из СНГ",
+            //id_station_out: "Не указана станция выхода из России",
+            id_receiver: "Не указан грузополучатель",
         };
     }
 
     static getDefaultDocument() {
         return {
             count_wagon: -1,
+            DestinationIndications: [],
         };
     }
 
@@ -53,6 +56,12 @@ export class Sending {
                 newVal.id_country_destination = idRussia;
                 newVal.update = true;
             }
+        }
+        if (newVal.id_receiver !== oldVal.id_receiver) {
+            newVal.OKPO = listsStore.legal_entities[newVal.id_receiver]?.OKPO;
+            newVal.name = listsStore.legal_entities[newVal.id_receiver]?.name;
+            newVal.addr = listsStore.legal_entities[newVal.id_receiver]?.addr;
+            newVal.update = true;
         }
         console.log(newVal, oldVal);
     }
