@@ -9,7 +9,7 @@ export default {
             type: String,
         },
         value: {
-            type: [String, Number],
+            type: [String, Number, Boolean],
         },
         dis: {
             type: Boolean,

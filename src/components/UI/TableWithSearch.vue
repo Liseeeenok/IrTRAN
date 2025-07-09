@@ -1,6 +1,6 @@
 <script>
 export default {
-    name: "select-with-search",
+    name: "table-with-search",
     props: {
         modelValue: {
             type: [String, Number],
@@ -28,29 +28,10 @@ export default {
             type: [Array, Object],
             default: [],
         },
-        dis: {
-            type: Boolean,
-        },
-        req: {
-            type: Boolean,
-        },
-        fixWidth: {
-            type: Boolean,
-            default: true,
-        },
-        styleLabel: {
-            type: String,
-            default: "",
-        },
-        styleInput: {
-            type: String,
-            default: "",
-        },
     },
     data() {
         return {
             searchQueries: "",
-            dropdownIsOpen: false,
             filteredItems: [],
         };
     },
@@ -62,7 +43,6 @@ export default {
             }
         },
         getFilteredItems() {
-            this.openDropdown();
             if (!this.searchQueries) {
                 this.filteredItems = Object.values(this.values);
             } else {
@@ -72,14 +52,7 @@ export default {
         changeOption(key, value) {
             this.$emit("update:modelValue", key);
             this.searchQueries = value;
-            this.closeDropdown();
             this.closeModal();
-        },
-        openDropdown() {
-            this.dropdownIsOpen = true;
-        },
-        closeDropdown() {
-            this.dropdownIsOpen = false;
         },
         clearSearch() {
             this.searchQueries = "";
@@ -112,35 +85,6 @@ export default {
 </script>
 
 <template>
-    <label class="col-auto col-form-label mb-0" :class="{ label_custom: fixWidth, required: req }" :style="styleLabel">{{ title }}</label>
-    <div class="col-auto">
-        <div class="dropdown" style="width: 270px" v-click-outside="closeDropdown">
-            <div class="input-group">
-                <input type="text" class="form-control custom-search" placeholder="Поиск..." aria-label="Введите..." v-model="searchQueries" @input="getFilteredItems" @focus="getFilteredItems" :style="styleInput" />
-                <button
-                    class="btn btn-outline-secondary"
-                    type="button"
-                    @click="
-                        getFilteredItems();
-                        openModal();
-                    "
-                >
-                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                </button>
-            </div>
-            <!-- Выпадающий список подсказок -->
-            <ul v-if="dropdownIsOpen && filteredItems?.length" class="dropdown-menu show" style="width: 270px; max-height: 200px; overflow-y: scroll; overflow-x: hidden">
-                <li v-for="(item, index) in filteredItems" :key="item[valueKey]" @click="changeOption(item[valueKey], item[name])">
-                    <a class="dropdown-item">{{ item[name] }}</a>
-                </li>
-            </ul>
-            <!-- Сообщение "Нет данных" -->
-            <div v-else-if="dropdownIsOpen && searchQueries && !filteredItems?.length" class="dropdown-menu show">
-                <span class="dropdown-item text-muted">Нет данных</span>
-            </div>
-        </div>
-    </div>
-
     <div class="modal fade" :id="'modalSearch' + modalName" data-backdrop="static" data-keyboard="false" tabindex="-1" :aria-labelledby="'#modalSearch' + modalName + 'Label'" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
@@ -190,15 +134,6 @@ export default {
 </template>
 
 <style scoped>
-.label_custom {
-    width: 180px;
-}
-
-.custom-search:focus {
-    border-color: #86b7fe;
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-}
-
 .input-group .btn {
     background-color: #e3e2ff; /* Цвет кнопки */
     border: 1px solid #c1c1c1; /* Цвет границы кнопки */
@@ -217,24 +152,6 @@ export default {
     height: 30px;
     font-family: "Open Sans", sans-serif;
     font-size: 14px;
-}
-
-.dropdown-menu {
-    z-index: 100;
-    background-color: #e3e2ff;
-}
-
-.dropdown-item {
-    background-color: #e3e2ff;
-    height: 30px;
-    font-family: "Open Sans", sans-serif;
-    font-size: 14px;
-    width: 270px;
-    cursor: pointer;
-}
-
-.dropdown-item:hover {
-    background-color: #f8f9fa;
 }
 
 .modal-title {

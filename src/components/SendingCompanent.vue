@@ -1,6 +1,7 @@
 <script>
 import { useMainStore, useListsStore } from "@/stores/main";
 import { Sending } from "@/models/sending";
+import { saveSending } from "@/helpers/API";
 export default {
     props: {
         object: {
@@ -10,6 +11,7 @@ export default {
             type: Number,
         },
     },
+    emits: ["saveSending"],
     data() {
         return {
             errorSending: "Не указано наименование груза",
@@ -18,7 +20,12 @@ export default {
             sending: {},
         };
     },
-    methods: {},
+    methods: {
+        async saveDocument() {
+            let saveDoc = await saveSending(this.sending);
+            this.$emit("saveSending", saveDoc.id);
+        }
+    },
     created() {
         this.listsStore = useListsStore();
         this.mainStore = useMainStore();
@@ -75,8 +82,8 @@ export default {
                 <div class="modal-body">
                     <div class="row mb-3">
                         <div class="col-auto">
-                            <simple-button title="Применить" />
-                            <simple-button title="Отменить" />
+                            <simple-button title="Применить" @click="saveDocument" data-dismiss="modal" aria-label="Закрыть" />
+                            <simple-button title="Отменить" data-dismiss="modal" aria-label="Закрыть" />
                         </div>
                     </div>
 
@@ -188,14 +195,14 @@ export default {
                         <label class="col-auto col-form-label mb-0" style="width: auto; font-weight: bold">Признак назначения</label>
                     </div>
 
-                    <div class="row mb-1">
+                    <div class="row mb-1" style="opacity: 0.5;">
                         <div class="col-auto">
                             <simple-button data-toggle="modal" data-target="#DobavitPriznak" title="Добавить" />
                             <simple-button title="Удалить" />
                         </div>
                     </div>
 
-                    <div class="row mb-1">
+                    <div class="row mb-1" style="opacity: 0.5;">
                         <div class="col-12">
                             <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 50px">
                                 <table class="table table-hover table-bordered border-white">
@@ -215,19 +222,10 @@ export default {
                             </div>
                         </div>
                     </div>
-
                     <!--------------------------------------------------->
 
-                    <div class="row mb-1">
-                        <label class="col-auto col-form-label mb-0 label-custom">Договор на особых условиях</label>
-                        <div class="col-auto">
-                            <div class="input-group" style="width: 270px">
-                                <input type="text" class="form-control custom-search" placeholder="Поиск" aria-label="Введите запрос" />
-                                <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#staticDogovorNaOsob">
-                                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                </button>
-                            </div>
-                        </div>
+                    <div class="row mb-1" style="opacity: 0.5;">
+                        <select-with-search title="Договор на особых условиях" :fixWidth=false :values="listsStore.contracts" valueKey="id" name="name" v-model="sending.id_contract_special_terms" modalName="SendingContracts" :fields="{ Код: 'code', Наименование: 'name', 'Краткое': 'short_name' }" />
                     </div>
                 </div>
             </div>
@@ -272,60 +270,6 @@ export default {
                                     <td>{{ item.code }}</td>
                                     <td>{{ item.name }}</td>
                                     <td>{{ item.note }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="row justify-content-md-end">
-                        <button type="button" class="btn btn-custom" style="width: 70px; margin: 10px">Да</button>
-                        <button type="button" class="btn btn-custom" data-dismiss="modal" style="width: 70px; margin: 10px">Нет</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!----------------------------- -->
-
-    <!--Найти Договор на особых условиях модальное окно -->
-    <div class="modal fade" id="staticDogovorNaOsob" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header" style="background-color: #7da5f0">
-                    <span class="modal-title text-center" id="staticBackdropLabel" style="color: white; font-weight: bold">Договор на особых условиях</span>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть" style="color: white"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row justify-content-md-center mb-2">
-                        <div class="col-12">
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="clearimput" placeholder="Поиск" aria-label="Поиск" />
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button" id="clearButton">
-                                        <font-awesome-icon icon="fa-solid fa-xmark" />
-                                    </button>
-                                    <button class="btn btn-outline-secondary" type="button">
-                                        <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="table-responsive" style="border: #c1c1c1 solid 1px; padding-bottom: 200px">
-                        <table class="table table-hover table-bordered border-white">
-                            <thead style="background-color: #7da5f0; color: white">
-                                <tr>
-                                    <th>Код</th>
-                                    <th>Наименование</th>
-                                    <th>Краткое</th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-group-divider">
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
                                 </tr>
                             </tbody>
                         </table>
