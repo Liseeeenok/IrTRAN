@@ -39,6 +39,16 @@ function deleteDocument() {
     router.push("/menu");
 }
 
+function updateSending(sendingId)
+{
+    if(document.value['Sendings'].includes(sendingId))
+    {
+        return;
+    }
+
+    document.value['Sendings'].push(sendingId);
+}
+
 async function fetchData() {
     if (route.params.id) {
         document.value = await getTransportation(route.params.id);
@@ -225,13 +235,13 @@ watch(
                                     </tr>
                                 </thead>
                                 <tbody class="table-group-divider">
-                                    <tr>
+                                    <tr v-for="(idSending, index) in document.Sendings" :key="idSending">
                                         <td><input type="checkbox" class="row-checkbox" /></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{ listsStore.sendings[idSending].id }}</td>
+                                        <td>{{ listsStore.cargos[listsStore.sendings[idSending].id_cargo]?.code_ETSNG }}</td>
+                                        <td>{{ listsStore.cargos[listsStore.sendings[idSending].id_cargo]?.name }}</td>
+                                        <td>{{ listsStore.rolling_stock_types[listsStore.sendings[idSending].id_rolling_stock_type]?.name }}</td>
+                                        <td>{{ listsStore.sendings[idSending].count_wagon }}</td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -249,7 +259,7 @@ watch(
                 </div>
 
                 <!--Создание новой Отправки модальное окно -->
-                <SendingCompanent :object="document"/>
+                <SendingCompanent :object="document" @saveSending="updateSending"/>
                 <!------------------------------->
 
                 <!-- Стат нагрузка появляется после заполнения отправки -->
